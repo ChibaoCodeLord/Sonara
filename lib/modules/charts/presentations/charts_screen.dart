@@ -161,6 +161,7 @@ class ChartsScreen extends StatelessWidget {
         // List of Chart Items
         ListView.separated(
           shrinkWrap: true,
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: state.chartItems.length,
           separatorBuilder: (_, _) => const SizedBox(height: 10),

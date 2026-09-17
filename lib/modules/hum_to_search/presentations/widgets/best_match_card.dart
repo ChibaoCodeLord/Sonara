@@ -92,29 +92,35 @@ class _BestMatchCardState extends State<BestMatchCard>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.10),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.auto_awesome,
-                            color: AppColors.primary,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Khớp nhất ${match.matchPercentage}% giai điệu',
-                            style: AppTextStyles.labelMd.copyWith(
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.10),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.auto_awesome,
                               color: AppColors.primary,
-                              fontWeight: FontWeight.w700,
+                              size: 14,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                'Khớp nhất ${match.matchPercentage}% giai điệu',
+                                style: AppTextStyles.labelMd.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Container(

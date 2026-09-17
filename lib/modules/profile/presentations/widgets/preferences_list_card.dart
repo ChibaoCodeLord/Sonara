@@ -214,41 +214,50 @@ class PreferencesListCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceContainer,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
-                  Icons.dark_mode_rounded,
-                  color: AppColors.textCharcoal,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Giao diện ứng dụng',
-                    style: AppTextStyles.labelLg.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+          Expanded(
+            child: Row(
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceContainer,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  Text(
-                    'Hệ thống (Tự động)',
-                    style: AppTextStyles.bodySm.copyWith(
-                      color: AppColors.textMuted,
-                    ),
+                  child: const Icon(
+                    Icons.dark_mode_rounded,
+                    color: AppColors.textCharcoal,
+                    size: 20,
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Giao diện ứng dụng',
+                        style: AppTextStyles.labelLg.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        'Hệ thống (Tự động)',
+                        style: AppTextStyles.bodySm.copyWith(
+                          color: AppColors.textMuted,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+          const SizedBox(width: 8),
 
           // 3-way toggle pill
           Container(

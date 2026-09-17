@@ -151,10 +151,14 @@ class LikedSongsHeroCard extends StatelessWidget {
                                     size: 14,
                                   ),
                                   const SizedBox(width: 4),
-                                  Text(
-                                    'Đã đồng bộ 96kHz',
-                                    style: AppTextStyles.bodySm.copyWith(
-                                      color: Colors.white.withValues(alpha: 0.85),
+                                  Flexible(
+                                    child: Text(
+                                      'Đã đồng bộ 96kHz',
+                                      style: AppTextStyles.bodySm.copyWith(
+                                        color: Colors.white.withValues(alpha: 0.85),
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],

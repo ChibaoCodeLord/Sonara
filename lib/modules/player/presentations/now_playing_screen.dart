@@ -200,37 +200,43 @@ class NowPlayingScreen extends StatelessWidget {
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'PHÁT TỪ GỢI Ý',
-                style: AppTextStyles.labelSm.copyWith(
-                  color: AppColors.textMuted,
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.w700,
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'PHÁT TỪ GỢI Ý',
+                  style: AppTextStyles.labelSm.copyWith(
+                    color: AppColors.textMuted,
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.graphic_eq_rounded,
-                    color: AppColors.primary,
-                    size: 15,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    contextHint,
-                    style: AppTextStyles.labelMd.copyWith(
+                const SizedBox(height: 2),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.graphic_eq_rounded,
                       color: AppColors.primary,
-                      fontWeight: FontWeight.w800,
+                      size: 15,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: Text(
+                        contextHint,
+                        style: AppTextStyles.labelMd.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           IconButton(
             icon: const Icon(

@@ -125,6 +125,7 @@ class PlaylistDetailScreen extends StatelessWidget {
 
                             // Track List
                             ListView.separated(
+                              padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: state.playlist.tracks.length,

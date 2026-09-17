@@ -26,22 +26,29 @@ class AiAcousticEngineCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.graphic_eq_rounded,
-                  color: AppColors.primary,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Resonance AI Engine',
-                  style: AppTextStyles.headlineSm.copyWith(
-                    fontWeight: FontWeight.w700,
+            Expanded(
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.graphic_eq_rounded,
+                    color: AppColors.primary,
+                    size: 20,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      'Resonance AI Engine',
+                      style: AppTextStyles.headlineSm.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(width: 8),
             Text(
               'ACOUSTIC PRO',
               style: AppTextStyles.labelSm.copyWith(
@@ -214,27 +221,38 @@ class AiAcousticEngineCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Độ nhạy AI Hum-to-Search',
-                            style: AppTextStyles.labelMd.copyWith(
-                              fontWeight: FontWeight.w700,
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                'Độ nhạy AI Hum-to-Search',
+                                style: AppTextStyles.labelMd.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 4),
-                          const Icon(
-                            Icons.info_outline_rounded,
-                            color: AppColors.textMuted,
-                            size: 15,
-                          ),
-                        ],
+                            const SizedBox(width: 4),
+                            const Icon(
+                              Icons.info_outline_rounded,
+                              color: AppColors.textMuted,
+                              size: 15,
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        settings.sensitivityLabel,
-                        style: AppTextStyles.labelMd.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w700,
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          settings.sensitivityLabel,
+                          style: AppTextStyles.labelMd.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -318,43 +336,52 @@ class AiAcousticEngineCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                            color: AppColors.surfaceCrisp,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.music_note_rounded,
-                              color: AppColors.primary,
-                              size: 20,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceCrisp,
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Chất lượng phát trực tuyến',
-                              style: AppTextStyles.bodySm.copyWith(
-                                color: AppColors.textMuted,
+                            child: const Center(
+                              child: Icon(
+                                Icons.music_note_rounded,
+                                color: AppColors.primary,
+                                size: 20,
                               ),
                             ),
-                            Text(
-                              settings.streamingQuality,
-                              style: AppTextStyles.labelMd.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Chất lượng phát trực tuyến',
+                                  style: AppTextStyles.bodySm.copyWith(
+                                    color: AppColors.textMuted,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  settings.streamingQuality,
+                                  style: AppTextStyles.labelMd.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,

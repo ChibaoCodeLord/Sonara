@@ -97,40 +97,45 @@ class HumToSearchScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_rounded,
-                  color: AppColors.textCharcoal,
-                  size: 24,
+          Expanded(
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: AppColors.textCharcoal,
+                    size: 24,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              Container(
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  gradient: AppColors.aiGradient,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.graphic_eq_rounded,
-                    color: Colors.white,
-                    size: 16,
+                Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    gradient: AppColors.aiGradient,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.graphic_eq_rounded,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'Hum To Search',
-                style: AppTextStyles.headlineSm.copyWith(
-                  fontWeight: FontWeight.w700,
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    'Hum To Search',
+                    style: AppTextStyles.headlineSm.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,

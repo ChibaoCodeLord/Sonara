@@ -183,11 +183,15 @@ class ChartRankTile extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Text(
-                                item.playsText,
-                                style: AppTextStyles.bodySm.copyWith(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 11,
+                              Flexible(
+                                child: Text(
+                                  item.playsText,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.bodySm.copyWith(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 11,
+                                  ),
                                 ),
                               ),
                             ],
@@ -337,11 +341,15 @@ class ChartRankTile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        item.playsText,
-                        style: AppTextStyles.bodySm.copyWith(
-                          color: AppColors.textSecondary,
-                          fontSize: 11,
+                      Flexible(
+                        child: Text(
+                          item.playsText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodySm.copyWith(
+                            color: AppColors.textSecondary,
+                            fontSize: 11,
+                          ),
                         ),
                       ),
                     ],

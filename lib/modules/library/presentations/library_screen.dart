@@ -270,6 +270,7 @@ class LibraryScreen extends StatelessWidget {
         const SizedBox(height: 12),
         ListView.separated(
           shrinkWrap: true,
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: state.playlists.length,
           separatorBuilder: (_, _) => const SizedBox(height: 10),

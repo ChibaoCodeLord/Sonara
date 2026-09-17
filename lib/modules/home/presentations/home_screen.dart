@@ -307,8 +307,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 12),
         ListView.builder(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: state.recommendedTracks.length,

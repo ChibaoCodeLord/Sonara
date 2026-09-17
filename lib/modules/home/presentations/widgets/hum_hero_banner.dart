@@ -86,34 +86,41 @@ class _HumHeroBannerState extends State<HumHeroBanner>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.auto_awesome,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Resonance AI Engine 3.0',
-                            style: AppTextStyles.labelSm.copyWith(
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.auto_awesome,
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              size: 14,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                'Resonance AI Engine 3.0',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.labelSm.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 8),
                     const Icon(
                       Icons.graphic_eq_rounded,
                       color: Colors.white70,

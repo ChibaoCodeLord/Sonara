@@ -80,6 +80,7 @@ class TrendingChartCard extends StatelessWidget {
           ),
           child: ListView.separated(
             shrinkWrap: true,
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: charts.length,
             separatorBuilder: (_, _) => const SizedBox(height: 14),

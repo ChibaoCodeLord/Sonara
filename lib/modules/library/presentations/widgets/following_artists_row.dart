@@ -67,7 +67,7 @@ class FollowingArtistsRow extends StatelessWidget {
 
         // Horizontal artist avatar list
         SizedBox(
-          height: 96,
+          height: 104,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),

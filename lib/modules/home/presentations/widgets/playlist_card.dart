@@ -69,6 +69,7 @@ class PlaylistCard extends StatelessWidget {
                     top: 10,
                     left: 10,
                     child: Container(
+                      constraints: const BoxConstraints(maxWidth: 130),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 3,
@@ -79,6 +80,8 @@ class PlaylistCard extends StatelessWidget {
                       ),
                       child: Text(
                         playlist.tag,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.labelSm.copyWith(
                           color: AppColors.textCharcoal,
                           fontWeight: FontWeight.w800,

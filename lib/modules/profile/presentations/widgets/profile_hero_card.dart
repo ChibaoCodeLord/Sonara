@@ -96,10 +96,14 @@ class ProfileHeroCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          profile.name,
-                          style: AppTextStyles.headlineSm.copyWith(
-                            fontWeight: FontWeight.w800,
+                        Flexible(
+                          child: Text(
+                            profile.name,
+                            style: AppTextStyles.headlineSm.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         if (profile.isVerified) ...[

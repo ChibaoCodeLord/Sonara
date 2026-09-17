@@ -23,24 +23,29 @@ class MoodGenreGrid extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tâm Trạng & Thể Loại',
-                  style: AppTextStyles.headlineMd.copyWith(
-                    fontWeight: FontWeight.w700,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tâm Trạng & Thể Loại',
+                    style: AppTextStyles.headlineMd.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Tùy chọn phong cách theo tần số cảm xúc của bạn',
-                  style: AppTextStyles.bodySm.copyWith(
-                    color: AppColors.textMuted,
+                  const SizedBox(height: 2),
+                  Text(
+                    'Tùy chọn phong cách theo tần số cảm xúc của bạn',
+                    style: AppTextStyles.bodySm.copyWith(
+                      color: AppColors.textMuted,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            const SizedBox(width: 8),
             const Icon(
               Icons.tune_rounded,
               color: AppColors.textMuted,
@@ -53,6 +58,7 @@ class MoodGenreGrid extends StatelessWidget {
         // 2x2 Grid
         GridView.builder(
           shrinkWrap: true,
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: moods.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
