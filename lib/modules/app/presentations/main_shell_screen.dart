@@ -53,36 +53,37 @@ class MainShellScreen extends StatelessWidget {
                 ],
               ),
 
-              // Floating Sticky Mini Player Bar
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 80,
-                child: BlocBuilder<PlayerCubit, PlayerState>(
-                  builder: (context, playerState) {
-                    final cubit = context.read<PlayerCubit>();
-                    return MiniPlayerBar(
-                      song: playerState.song,
-                      isPlaying: playerState.isPlaying,
-                      onTap: () => _openNowPlaying(context),
-                      onPlayPauseTap: () => cubit.togglePlayPause(),
-                      onNextTap: () => cubit.playNext(),
-                    );
-                  },
-                ),
-              ),
-
-              // Bottom Navigation Bar
+              // Bottom Overlay: Floating Sticky Mini Player Bar & Bottom Navigation Bar
               Positioned(
                 left: 0,
                 right: 0,
                 bottom: 0,
-                child: MainBottomNavBar(
-                  currentIndex: appState.currentTabIndex,
-                  onTabSelected: (index) {
-                    context.read<AppCubit>().setTab(index);
-                  },
-                  onHumTap: () => _openHumToSearch(context),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    BlocBuilder<PlayerCubit, PlayerState>(
+                      builder: (context, playerState) {
+                        final cubit = context.read<PlayerCubit>();
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: MiniPlayerBar(
+                            song: playerState.song,
+                            isPlaying: playerState.isPlaying,
+                            onTap: () => _openNowPlaying(context),
+                            onPlayPauseTap: () => cubit.togglePlayPause(),
+                            onNextTap: () => cubit.playNext(),
+                          ),
+                        );
+                      },
+                    ),
+                    MainBottomNavBar(
+                      currentIndex: appState.currentTabIndex,
+                      onTabSelected: (index) {
+                        context.read<AppCubit>().setTab(index);
+                      },
+                      onHumTap: () => _openHumToSearch(context),
+                    ),
+                  ],
                 ),
               ),
             ],

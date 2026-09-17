@@ -54,13 +54,17 @@ class _MiniPlayerBarState extends State<MiniPlayerBar>
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: AppColors.surfaceCrisp.withValues(alpha: 0.95),
+          color: AppColors.surfaceCrisp,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: AppColors.borderSubtle.withValues(alpha: 0.8),
+            width: 1,
+          ),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x1F1A1A1A),
-              blurRadius: 28,
-              offset: Offset(0, 10),
+              color: Color(0x1A1A1A14),
+              blurRadius: 24,
+              offset: Offset(0, 6),
             ),
           ],
         ),

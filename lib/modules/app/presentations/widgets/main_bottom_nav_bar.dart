@@ -17,9 +17,9 @@ class MainBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surfaceCrisp.withValues(alpha: 0.96),
-        boxShadow: const [
+      decoration: const BoxDecoration(
+        color: AppColors.surfaceCrisp,
+        boxShadow: [
           BoxShadow(
             color: Color(0x0F1A1A1A),
             blurRadius: 20,
@@ -109,7 +109,7 @@ class MainBottomNavBar extends StatelessWidget {
         maxHeight: 90,
         alignment: Alignment.center,
         child: Transform.translate(
-          offset: const Offset(0, -10),
+          offset: const Offset(0, -6),
           child: GestureDetector(
             onTap: onHumTap,
             child: Column(

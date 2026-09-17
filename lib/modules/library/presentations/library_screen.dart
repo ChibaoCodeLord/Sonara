@@ -44,7 +44,7 @@ class LibraryScreen extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 140),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 200),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -166,18 +166,21 @@ class PlaylistDetailScreen extends StatelessWidget {
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: 20,
-                  child: PlaylistFloatingHumCapsule(
-                    onHumTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => BlocProvider(
-                            create: (_) => HumSearchCubit(),
-                            child: const HumToSearchScreen(),
+                  bottom: 12,
+                  child: SafeArea(
+                    top: false,
+                    child: PlaylistFloatingHumCapsule(
+                      onHumTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (_) => HumSearchCubit(),
+                              child: const HumToSearchScreen(),
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
