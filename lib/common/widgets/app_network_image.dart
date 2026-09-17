@@ -26,6 +26,15 @@ class AppNetworkImage extends StatelessWidget {
     Widget imageWidget;
     if (imageUrl.isEmpty) {
       imageWidget = _buildFallback();
+    } else if (imageUrl.startsWith('assets/')) {
+      imageWidget = Image.asset(
+        imageUrl,
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (context, error, stackTrace) =>
+            errorWidget ?? _buildFallback(),
+      );
     } else {
       imageWidget = Image.network(
         imageUrl,
@@ -45,7 +54,9 @@ class AppNetworkImage extends StatelessWidget {
                     height: 20,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.primary,
+                      ),
                     ),
                   ),
                 ),

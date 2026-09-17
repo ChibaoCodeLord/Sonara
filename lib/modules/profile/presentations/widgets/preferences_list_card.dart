@@ -21,9 +21,7 @@ class PreferencesListCard extends StatelessWidget {
         // Header
         Text(
           'Thiết lập âm học & Ứng dụng',
-          style: AppTextStyles.headlineSm.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+          style: AppTextStyles.headlineSm.copyWith(fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 12),
 
@@ -49,7 +47,11 @@ class PreferencesListCard extends StatelessWidget {
                 subtitle: '142 bản ghi phân tích âm phổ',
                 onTap: () {},
               ),
-              const Divider(height: 1, indent: 64, color: AppColors.borderSubtle),
+              const Divider(
+                height: 1,
+                indent: 64,
+                color: AppColors.borderSubtle,
+              ),
 
               // Item 2: Paired Devices
               _buildDeviceRow(
@@ -58,17 +60,25 @@ class PreferencesListCard extends StatelessWidget {
                 deviceName: settings.pairedDevice,
                 onTap: () {},
               ),
-              const Divider(height: 1, indent: 64, color: AppColors.borderSubtle),
+              const Divider(
+                height: 1,
+                indent: 64,
+                color: AppColors.borderSubtle,
+              ),
 
               // Item 3: Equalizer
               _buildNavRow(
                 icon: Icons.graphic_eq_rounded,
-                title: 'Bộ cân bằng Equalizer (Resonance EQ)',
+                title: 'Bộ cân bằng (Sonara EQ)',
                 subtitle: settings.equalizerProfile,
                 subtitleColor: AppColors.primary,
                 onTap: () {},
               ),
-              const Divider(height: 1, indent: 64, color: AppColors.borderSubtle),
+              const Divider(
+                height: 1,
+                indent: 64,
+                color: AppColors.borderSubtle,
+              ),
 
               // Item 4: Theme Mode Selector
               _buildThemeSelectorRow(),
@@ -186,10 +196,14 @@ class PreferencesListCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 6),
-                      Text(
-                        deviceName,
-                        style: AppTextStyles.bodySm.copyWith(
-                          color: AppColors.textMuted,
+                      Flexible(
+                        child: Text(
+                          deviceName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodySm.copyWith(
+                            color: AppColors.textMuted,
+                          ),
                         ),
                       ),
                     ],
@@ -211,53 +225,55 @@ class PreferencesListCard extends StatelessWidget {
   Widget _buildThemeSelectorRow() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceContainer,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.dark_mode_rounded,
-                    color: AppColors.textCharcoal,
-                    size: 20,
-                  ),
+          Row(
+            children: [
+              Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceContainer,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Giao diện ứng dụng',
-                        style: AppTextStyles.labelLg.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        'Hệ thống (Tự động)',
-                        style: AppTextStyles.bodySm.copyWith(
-                          color: AppColors.textMuted,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
+                child: const Icon(
+                  Icons.dark_mode_rounded,
+                  color: AppColors.textCharcoal,
+                  size: 20,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Giao diện ứng dụng',
+                      style: AppTextStyles.labelLg.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      settings.themeMode == 'light'
+                          ? 'Chế độ sáng'
+                          : settings.themeMode == 'dark'
+                          ? 'Chế độ tối'
+                          : 'Theo hệ thống',
+                      style: AppTextStyles.bodySm.copyWith(
+                        color: AppColors.textMuted,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 8),
+          const SizedBox(height: 10),
 
           // 3-way toggle pill
           Container(
@@ -295,7 +311,7 @@ class PreferencesListCard extends StatelessWidget {
                     color: Color(0x0D000000),
                     blurRadius: 4,
                     offset: Offset(0, 1),
-                  )
+                  ),
                 ]
               : null,
         ),

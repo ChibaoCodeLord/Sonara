@@ -72,15 +72,19 @@ class LibraryPlaylistTile extends StatelessWidget {
                   const SizedBox(height: 3),
                   Row(
                     children: [
-                      Text(
-                        playlist.creator,
-                        style: AppTextStyles.bodySm.copyWith(
-                          color: playlist.badgeType == 'ai_mood'
-                              ? AppColors.primary
-                              : AppColors.textMuted,
-                          fontWeight: playlist.badgeType == 'ai_mood'
-                              ? FontWeight.w600
-                              : FontWeight.w400,
+                      Flexible(
+                        child: Text(
+                          playlist.creator,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodySm.copyWith(
+                            color: playlist.badgeType == 'ai_mood'
+                                ? AppColors.primary
+                                : AppColors.textMuted,
+                            fontWeight: playlist.badgeType == 'ai_mood'
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                          ),
                         ),
                       ),
                       Padding(
@@ -113,14 +117,15 @@ class LibraryPlaylistTile extends StatelessWidget {
               ),
               onPressed: onPlayTap,
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.more_vert_rounded,
-                color: AppColors.textMuted,
-                size: 20,
+            if (onMoreTap != null)
+              IconButton(
+                icon: const Icon(
+                  Icons.more_vert_rounded,
+                  color: AppColors.textMuted,
+                  size: 20,
+                ),
+                onPressed: onMoreTap,
               ),
-              onPressed: onMoreTap ?? () {},
-            ),
           ],
         ),
       ),

@@ -4,12 +4,11 @@ class PlaylistMockService {
   PlaylistDetailModel getPlaylistDetail(String id) {
     return const PlaylistDetailModel(
       id: 'ai_curated_01',
-      title: 'Resonance AI Curated Mix #01',
-      engineTag: 'HUM-TO-SEARCH ENGINE',
+      title: 'Sonara AI Mix #01',
+      engineTag: 'SONARA AI TUYỂN CHỌN',
       description:
-          'Tự động tạo dựa trên 5 bài hát bạn vừa Hum-to-Search tuần này • 2 giờ 15 phút • Cập nhật hôm nay',
-      coverUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDxJ0wA0Fjahrr-T10lBJmzSJyD1-I_F65RxQ5qSW9LuTm9l95D7b9MlDneeNTtMuBQJP7GYI2jS-kgKSebfUQmz12_-fD9LQzOQg_6SVoWsoQcKPP5AkMGfWm3q49lka_CxuFH42rd7wZwCRGmSIMyvCeqe9l_jANsetnGUZiNLOG8zBC0u-KFmrTSRklqw9aAoqRoBVqr5Q2GMnVpIvK3g7uQOgXazrEjzg_g5yA9t6asMuns9yhCXg',
+          'Tạo từ 5 bài hát bạn tìm bằng giai điệu tuần này • 2 giờ 15 phút • Cập nhật hôm nay',
+      coverUrl: 'assets/images/sonara_ai_mix.jpg',
       emotionAnalysis: 'Trầm lắng & Hoài niệm',
       tracks: [
         PlaylistTrackItemModel(
@@ -20,8 +19,7 @@ class PlaylistMockService {
           durationText: '3:45',
           qualityBadge: 'LOSSLESS',
           matchPercentage: '98% Khớp gu',
-          coverUrl:
-              'https://lh3.googleusercontent.com/aida-public/AB6AXuDE3blTjWTUhpjHlsddas_V6ICYqXRC_mFcKM2R78-LcHboPPfg7WVCcZTQu1AMJ6jn5M8WJd8DZqcTYYcrpj4hQAwKsaFFt_2iDEG6h074qArON9hl7ufMqPSzKm4EQQOpikaqz1mNMBzcSyeyWroYwTERWCXdjkVj7cHn6JGxauRG_NKBXmhrnt0y6w4al9u6XuQNx0ltJf2yV5zysN8k4U0xAgSnzkmLDv3ZCIU3OlvN3b0tEF3RIQ',
+          coverUrl: 'assets/images/bau_troi_moi.jpg',
         ),
         PlaylistTrackItemModel(
           id: 'track_2',

@@ -27,72 +27,59 @@ class PlaylistActionControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Play & Smart Shuffle cluster
-        Row(
-          children: [
-            // Big Gradient Play Button
-            GestureDetector(
-              onTap: onPlayToggle,
-              child: Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: AppColors.aiGradient,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x66B3122E),
-                      blurRadius: 18,
-                      offset: Offset(0, 6),
-                    ),
-                  ],
+        GestureDetector(
+          onTap: onPlayToggle,
+          child: Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: AppColors.aiGradient,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x44B3122E),
+                  blurRadius: 14,
+                  offset: Offset(0, 5),
                 ),
-                child: Center(
-                  child: Icon(
-                    isPlaying
-                        ? Icons.pause_rounded
-                        : Icons.play_arrow_rounded,
-                    color: Colors.white,
-                    size: 32,
-                  ),
-                ),
-              ),
+              ],
             ),
-            const SizedBox(width: 12),
-
-            // Smart Shuffle AI button
-            GestureDetector(
-              onTap: onShuffleToggle,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: 44,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: isSmartShuffle
-                      ? AppColors.textCharcoal
-                      : AppColors.surfaceCrisp,
-                  borderRadius: BorderRadius.circular(999),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x0F000000),
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.bolt_rounded,
-                      color: isSmartShuffle ? Colors.white : AppColors.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Smart Shuffle',
+            child: Icon(
+              isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+              color: Colors.white,
+              size: 32,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: GestureDetector(
+            onTap: onShuffleToggle,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: 44,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: isSmartShuffle
+                    ? AppColors.textCharcoal
+                    : AppColors.surfaceCrisp,
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: AppColors.borderSubtle),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.bolt_rounded,
+                    color: isSmartShuffle ? Colors.white : AppColors.primary,
+                    size: 18,
+                  ),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Text(
+                      'Trộn thông minh',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.labelMd.copyWith(
                         color: isSmartShuffle
                             ? Colors.white
@@ -100,81 +87,50 @@ class PlaylistActionControls extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-
-        // Secondary Utility Buttons
-        Row(
-          children: [
-            // Download button
-            GestureDetector(
-              onTap: onDownloadToggle,
-              child: Container(
-                width: 44,
-                height: 44,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.surfaceCrisp,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x0A000000),
-                      blurRadius: 6,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    isDownloaded
-                        ? Icons.check_circle_rounded
-                        : Icons.download_for_offline_rounded,
-                    color: isDownloaded
-                        ? AppColors.primary
-                        : AppColors.textCharcoal,
-                    size: 22,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-
-            // Favorite button
-            GestureDetector(
-              onTap: onFavoriteToggle,
-              child: Container(
-                width: 44,
-                height: 44,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.surfaceCrisp,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x0A000000),
-                      blurRadius: 6,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    isFavorite
-                        ? Icons.favorite_rounded
-                        : Icons.favorite_border_rounded,
-                    color: isFavorite
-                        ? AppColors.primary
-                        : AppColors.textCharcoal,
-                    size: 22,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        const SizedBox(width: 8),
+        _utilityButton(
+          onTap: onDownloadToggle,
+          icon: isDownloaded
+              ? Icons.check_circle_rounded
+              : Icons.download_for_offline_rounded,
+          isActive: isDownloaded,
+        ),
+        const SizedBox(width: 4),
+        _utilityButton(
+          onTap: onFavoriteToggle,
+          icon: isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+          isActive: isFavorite,
         ),
       ],
+    );
+  }
+
+  Widget _utilityButton({
+    required VoidCallback onTap,
+    required IconData icon,
+    required bool isActive,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.surfaceCrisp,
+        ),
+        child: Icon(
+          icon,
+          color: isActive ? AppColors.primary : AppColors.textCharcoal,
+          size: 22,
+        ),
+      ),
     );
   }
 }

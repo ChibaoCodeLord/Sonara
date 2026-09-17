@@ -6,14 +6,14 @@ import '../../models/following_artist_model.dart';
 
 class FollowingArtistsRow extends StatelessWidget {
   final List<FollowingArtistModel> artists;
-  final VoidCallback onSeeAllTap;
+  final VoidCallback? onSeeAllTap;
   final ValueChanged<FollowingArtistModel>? onArtistTap;
   final VoidCallback onAddArtistTap;
 
   const FollowingArtistsRow({
     super.key,
     required this.artists,
-    required this.onSeeAllTap,
+    this.onSeeAllTap,
     this.onArtistTap,
     required this.onAddArtistTap,
   });
@@ -24,18 +24,19 @@ class FollowingArtistsRow extends StatelessWidget {
       children: [
         // Header
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Text(
+            Expanded(
+              child: Text(
                   'Nghệ sĩ đang theo dõi',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.headlineSm.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
-                ),
-                const SizedBox(width: 8),
-                Container(
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: AppColors.surfaceContainer,
@@ -48,19 +49,20 @@ class FollowingArtistsRow extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-              ],
             ),
-            GestureDetector(
-              onTap: onSeeAllTap,
-              child: Text(
-                'Xem tất cả',
-                style: AppTextStyles.labelMd.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
+            if (onSeeAllTap != null) ...[
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: onSeeAllTap,
+                child: Text(
+                  'Xem tất cả',
+                  style: AppTextStyles.labelMd.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
         const SizedBox(height: 12),

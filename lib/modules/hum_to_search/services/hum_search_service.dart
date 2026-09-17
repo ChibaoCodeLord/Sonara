@@ -8,8 +8,7 @@ class HumSearchService {
         id: 'hum_match_1',
         title: 'Bầu Trời Mới',
         artist: 'Da LAB ft. Miu Lê',
-        coverUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuDyWzJQ_ykh4Go9R6ERjWZWLeH0YazfpVILLk7Cn5KFnC5L0eKQ83-oJ46xWLu0To24G-TZaBe-JOO-Zo_Rb70vpcnIpb4vAbuwxCYuF12ZDPhP4esGvmpvRugW2U9vzQm7L5uNDIhrdGcgQkgGBHJccVBF1hRh0g3Ge4qBF_j5U1gKXJG-8TBs0ExTQIh7f0z9ZuZmuemFU_99z34Q44_LrbDDd7o226tP_kg76e6uque7Sl25t4hhzw',
+        coverUrl: 'assets/images/bau_troi_moi.jpg',
         album: 'Album Single (2024)',
         matchPercentage: 96,
         matchReason: 'Trùng khớp cao độ giọng hát',

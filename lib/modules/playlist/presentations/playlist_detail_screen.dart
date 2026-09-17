@@ -104,8 +104,11 @@ class PlaylistDetailScreen extends StatelessWidget {
                             const SizedBox(height: 24),
 
                             // Tracklist Section Header
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 8,
+                              runSpacing: 4,
                               children: [
                                 Text(
                                   'Danh sách bài hát',

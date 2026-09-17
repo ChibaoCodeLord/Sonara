@@ -23,9 +23,7 @@ class ProfileScreen extends StatelessWidget {
           return Column(
             children: [
               // Header
-              ProfileHeader(
-                onSearchTap: () {},
-              ),
+              const ProfileHeader(),
 
               // Scrollable content
               Expanded(
@@ -46,7 +44,8 @@ class ProfileScreen extends StatelessWidget {
                       AiAcousticEngineCard(
                         settings: state.settings,
                         onSpatialToggle: (val) => cubit.toggleSpatialAudio(val),
-                        onVocalToggle: (val) => cubit.toggleVocalSeparation(val),
+                        onVocalToggle: (val) =>
+                            cubit.toggleVocalSeparation(val),
                         onSensitivityChanged: (val) =>
                             cubit.setSensitivity(val),
                       ),

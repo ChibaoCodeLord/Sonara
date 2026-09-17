@@ -38,7 +38,6 @@ class ChartsScreen extends StatelessWidget {
             children: [
               // Header
               ChartsHeader(
-                onSearchTap: () {},
                 onProfileTap: onProfileTap,
               ),
 
@@ -112,12 +111,17 @@ class ChartsScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Top 5 tuần này',
-              style: AppTextStyles.headlineSm.copyWith(
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                'Top 5 tuần này',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.headlineSm.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
+            const SizedBox(width: 8),
             GestureDetector(
               onTap: () {},
               child: Text(

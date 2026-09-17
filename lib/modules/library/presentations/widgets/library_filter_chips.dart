@@ -14,7 +14,7 @@ class LibraryFilterChips extends StatelessWidget {
 
   static const _filters = [
     {'key': 'all', 'label': 'Tất cả'},
-    {'key': 'playlist', 'label': 'Playlists'},
+    {'key': 'playlist', 'label': 'Danh sách phát'},
     {'key': 'liked', 'label': 'Bài hát đã thích (328)'},
     {'key': 'ai-hum', 'label': 'Lịch sử AI Hum (14)'},
     {'key': 'artists', 'label': 'Nghệ sĩ & Album'},
@@ -27,7 +27,7 @@ class LibraryFilterChips extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.zero,
         itemCount: _filters.length,
         separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
@@ -51,7 +51,7 @@ class LibraryFilterChips extends StatelessWidget {
                           color: Color(0x1F000000),
                           blurRadius: 4,
                           offset: Offset(0, 2),
-                        )
+                        ),
                       ]
                     : null,
               ),

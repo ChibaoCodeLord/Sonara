@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
-import '../../../common/widgets/app_network_image.dart';
 import '../../../common/widgets/pulsing_dot.dart';
 import '../../../core/utils/formatters.dart';
 import '../bloc/hum_search_cubit.dart';
@@ -10,6 +9,7 @@ import '../bloc/hum_search_state.dart';
 import 'hum_search_result_screen.dart';
 import 'widgets/animated_mic_visualizer.dart';
 import 'widgets/hint_rotator_card.dart';
+import 'widgets/hum_flow_header.dart';
 import 'widgets/mode_segmented_switch.dart';
 
 class HumToSearchScreen extends StatelessWidget {
@@ -32,7 +32,10 @@ class HumToSearchScreen extends StatelessWidget {
       },
       builder: (context, state) {
         final cubit = context.read<HumSearchCubit>();
-        final progress = (state.recordedSeconds / state.maxSeconds).clamp(0.0, 1.0);
+        final progress = (state.recordedSeconds / state.maxSeconds).clamp(
+          0.0,
+          1.0,
+        );
 
         return Scaffold(
           backgroundColor: AppColors.surface,
@@ -40,13 +43,16 @@ class HumToSearchScreen extends StatelessWidget {
             child: Column(
               children: [
                 // Top Header
-                _buildHeader(context),
+                HumFlowHeader(onBackTap: () => Navigator.of(context).pop()),
 
                 // Main Content
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 8,
+                    ),
                     child: Column(
                       children: [
                         // Status & Quality Pills
@@ -60,13 +66,15 @@ class HumToSearchScreen extends StatelessWidget {
                         const SizedBox(height: 14),
 
                         // Timer & Progress Track
-                        _buildTimerProgress(state.recordedSeconds, state.maxSeconds, progress),
+                        _buildTimerProgress(
+                          state.recordedSeconds,
+                          state.maxSeconds,
+                          progress,
+                        ),
                         const SizedBox(height: 22),
 
                         // Guidance Hint Card
-                        HintRotatorCard(
-                          hintText: state.currentHint,
-                        ),
+                        HintRotatorCard(hintText: state.currentHint),
                         const SizedBox(height: 22),
 
                         // Mode Switcher (Hum vs Ambient)
@@ -91,90 +99,11 @@ class HumToSearchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_rounded,
-                    color: AppColors.textCharcoal,
-                    size: 24,
-                  ),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.aiGradient,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.graphic_eq_rounded,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    'Hum To Search',
-                    style: AppTextStyles.headlineSm.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.share_rounded,
-                  color: AppColors.textCharcoal,
-                  size: 22,
-                ),
-                onPressed: () {},
-              ),
-              Container(
-                width: 34,
-                height: 34,
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.25),
-                    width: 1.5,
-                  ),
-                ),
-                child: const AppNetworkImage(
-                  imageUrl:
-                      'https://lh3.googleusercontent.com/aida-public/AB6AXuD7duxPs1DpjO6pOuSivTM7hDgDn1CrarsTO1-5t9k7n2pg7ZEjcFNr0ZMzHssB3UfCVaaynS09o4TvAh4O56tfzkxG4SJ3rD8eoWA1yYo-gtp2XHrwxfF32iOaFhIwlbcUO5uiYmtpyfMS9ttmmhvuj4x2Ys3hI6QZhz4CEWhLoVRag1dpg3ctZI21MA9bTvRyZaPt9vMXhbTVVeV9NJSNSESPTHqdkpo4VvrQkJ-dsh-WastTqTnNlQ',
-                  borderRadius: 999,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildStatusRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      spacing: 8,
+      runSpacing: 8,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -185,10 +114,7 @@ class HumToSearchScreen extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const PulsingDot(
-                color: AppColors.aiGradientEnd,
-                size: 7,
-              ),
+              const PulsingDot(color: AppColors.aiGradientEnd, size: 7),
               const SizedBox(width: 8),
               Text(
                 'Đang lắng nghe',
@@ -274,7 +200,11 @@ class HumToSearchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomActions(BuildContext context, HumSearchCubit cubit, bool isAnalyzing) {
+  Widget _buildBottomActions(
+    BuildContext context,
+    HumSearchCubit cubit,
+    bool isAnalyzing,
+  ) {
     return Column(
       children: [
         SizedBox(

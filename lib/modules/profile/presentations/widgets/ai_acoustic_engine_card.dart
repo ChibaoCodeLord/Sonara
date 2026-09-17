@@ -58,10 +58,7 @@ class AiAcousticEngineCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surfaceCrisp,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: AppColors.borderSubtle,
-              width: 1,
-            ),
+            border: Border.all(color: AppColors.borderSubtle, width: 1),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x051A1A1A),
@@ -102,10 +99,13 @@ class AiAcousticEngineCard extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    'Resonance 3D Spatial',
-                                    style: AppTextStyles.labelLg.copyWith(
-                                      fontWeight: FontWeight.w700,
+                                  Flexible(
+                                    child: Text(
+                                      'Sonara Spatial 3D',
+                                      maxLines: 2,
+                                      style: AppTextStyles.labelLg.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 6),
@@ -281,37 +281,45 @@ class AiAcousticEngineCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Tiết kiệm',
-                          style: AppTextStyles.labelSm.copyWith(
-                            color: settings.sensitivityLevel == 1
-                                ? AppColors.primary
-                                : AppColors.textMuted,
-                            fontWeight: settings.sensitivityLevel == 1
-                                ? FontWeight.w700
-                                : FontWeight.w500,
+                        Expanded(
+                          child: Text(
+                            'Tiết kiệm',
+                            style: AppTextStyles.labelSm.copyWith(
+                              color: settings.sensitivityLevel == 1
+                                  ? AppColors.primary
+                                  : AppColors.textMuted,
+                              fontWeight: settings.sensitivityLevel == 1
+                                  ? FontWeight.w700
+                                  : FontWeight.w500,
+                            ),
                           ),
                         ),
-                        Text(
-                          'Tiêu chuẩn',
-                          style: AppTextStyles.labelSm.copyWith(
-                            color: settings.sensitivityLevel == 2
-                                ? AppColors.primary
-                                : AppColors.textMuted,
-                            fontWeight: settings.sensitivityLevel == 2
-                                ? FontWeight.w700
-                                : FontWeight.w500,
+                        Expanded(
+                          child: Text(
+                            'Tiêu chuẩn',
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.labelSm.copyWith(
+                              color: settings.sensitivityLevel == 2
+                                  ? AppColors.primary
+                                  : AppColors.textMuted,
+                              fontWeight: settings.sensitivityLevel == 2
+                                  ? FontWeight.w700
+                                  : FontWeight.w500,
+                            ),
                           ),
                         ),
-                        Text(
-                          'Ultra Clean',
-                          style: AppTextStyles.labelSm.copyWith(
-                            color: settings.sensitivityLevel == 3
-                                ? AppColors.primary
-                                : AppColors.textMuted,
-                            fontWeight: settings.sensitivityLevel == 3
-                                ? FontWeight.w800
-                                : FontWeight.w500,
+                        Expanded(
+                          child: Text(
+                            'Ultra Clean',
+                            textAlign: TextAlign.right,
+                            style: AppTextStyles.labelSm.copyWith(
+                              color: settings.sensitivityLevel == 3
+                                  ? AppColors.primary
+                                  : AppColors.textMuted,
+                              fontWeight: settings.sensitivityLevel == 3
+                                  ? FontWeight.w800
+                                  : FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],

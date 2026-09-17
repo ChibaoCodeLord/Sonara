@@ -49,7 +49,10 @@ class ChartRankTile extends StatelessWidget {
                 child: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [AppColors.aiGradientStart, AppColors.aiGradientEnd],
+                      colors: [
+                        AppColors.aiGradientStart,
+                        AppColors.aiGradientEnd,
+                      ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -64,15 +67,18 @@ class ChartRankTile extends StatelessWidget {
                   children: [
                     // Big typography rank
                     SizedBox(
-                      width: 36,
+                      width: 48,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             item.rank,
+                            maxLines: 1,
+                            softWrap: false,
                             style: AppTextStyles.displayLgMobile.copyWith(
                               color: AppColors.primary,
                               fontWeight: FontWeight.w800,
+                              fontSize: 29,
                               height: 1.0,
                             ),
                           ),
@@ -148,7 +154,9 @@ class ChartRankTile extends StatelessWidget {
                             children: [
                               _buildRankDelta(),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
                                 child: Text(
                                   '•',
                                   style: AppTextStyles.bodySm.copyWith(
@@ -217,23 +225,22 @@ class ChartRankTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surfaceCrisp,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: AppColors.borderSubtle,
-            width: 1,
-          ),
+          border: Border.all(color: AppColors.borderSubtle, width: 1),
         ),
         child: Row(
           children: [
             // Big typography rank
             SizedBox(
-              width: 32,
+              width: 46,
               child: Center(
                 child: Text(
                   item.rank,
+                  maxLines: 1,
+                  softWrap: false,
                   style: AppTextStyles.displayLgMobile.copyWith(
                     color: AppColors.textCharcoal.withValues(alpha: 0.8),
                     fontWeight: FontWeight.w800,
-                    fontSize: 26,
+                    fontSize: 25,
                   ),
                 ),
               ),

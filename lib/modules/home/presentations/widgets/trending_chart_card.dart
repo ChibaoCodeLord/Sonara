@@ -149,7 +149,7 @@ class TrendingChartCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // Title & Artist & Delta
+          // Keep song details together so the row fits compact phones.
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,40 +164,33 @@ class TrendingChartCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 3),
+                Text(
+                  item.artist,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodySm.copyWith(
+                    color: AppColors.textMuted,
+                  ),
+                ),
+                const SizedBox(height: 2),
                 Row(
                   children: [
+                    _buildDeltaBadge(item.rankDelta),
+                    const SizedBox(width: 6),
                     Flexible(
                       child: Text(
-                        item.artist,
+                        item.plays,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.bodySm.copyWith(
+                        style: AppTextStyles.labelSm.copyWith(
                           color: AppColors.textMuted,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
-                    Container(
-                      width: 3,
-                      height: 3,
-                      margin: const EdgeInsets.symmetric(horizontal: 6),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.borderMuted,
-                      ),
-                    ),
-                    _buildDeltaBadge(item.rankDelta),
                   ],
                 ),
               ],
-            ),
-          ),
-          const SizedBox(width: 8),
-          // Plays
-          Text(
-            item.plays,
-            style: AppTextStyles.labelSm.copyWith(
-              color: AppColors.textMuted,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],

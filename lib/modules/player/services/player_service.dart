@@ -7,8 +7,7 @@ class PlayerService {
       id: 'song_bau_troi_moi',
       title: 'Bầu Trời Mới',
       artist: 'Da LAB, Miu Lê',
-      coverUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuB2pv8cLoliC1o0qBT0hHaT5sXrWNQtyO7hj2l8f5s6HU7WC2c6IJyCUcx_JoQE71NomvmSfAuxf0VFaaQUMvWlxMSzbCfKx2hPsqQueX5SRSVKIDTg3Du5y4Bfr-LEo6Vdgia9IIaTjl_sL8-abyd_G_dYZhX9ARcc83JNzV8kfyLkyH9PAb2VDK1sdwBnOOSm7_DK2PjYAkrA3BOosqxvnJd_W--Rj-MdxcwnrSJOvrBv73qR_yk1ww',
+      coverUrl: 'assets/images/bau_troi_moi.jpg',
       album: 'Album Single (2024)',
       durationSeconds: 235, // 03:55 total (01:42 current, 02:13 remaining)
       currentSeconds: 102,
@@ -28,7 +27,8 @@ class PlayerService {
       ),
       LyricLineModel(
         timeSeconds: 102,
-        text: 'Hãy hứa với anh rằng em sẽ tìm được một bầu trời mới thật bình yên.',
+        text:
+            'Hãy hứa với anh rằng em sẽ tìm được một bầu trời mới thật bình yên.',
         isCurrent: true,
       ),
       LyricLineModel(

@@ -22,10 +22,7 @@ class ProfileHeroCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceCrisp,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.borderSubtle,
-          width: 1,
-        ),
+        border: Border.all(color: AppColors.borderSubtle, width: 1),
         boxShadow: const [
           BoxShadow(
             color: Color(0x051A1A1A),
@@ -123,25 +120,25 @@ class ProfileHeroCard extends StatelessWidget {
                     const SizedBox(height: 4),
 
                     // VIP Lossless pill
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const PulsingDot(
-                              color: AppColors.primary,
-                              size: 5,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const PulsingDot(color: AppColors.primary, size: 5),
+                          const SizedBox(width: 5),
+                          Flexible(
+                            child: Text(
                               profile.vipTier.toUpperCase(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.labelSm.copyWith(
                                 color: AppColors.primary,
                                 fontSize: 9,
@@ -149,9 +146,10 @@ class ProfileHeroCard extends StatelessWidget {
                                 letterSpacing: 0.3,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
                     const SizedBox(height: 8),
 
                     // Edit profile button
@@ -182,11 +180,15 @@ class ProfileHeroCard extends StatelessWidget {
                               size: 14,
                             ),
                             const SizedBox(width: 4),
-                            Text(
-                              'Chỉnh sửa hồ sơ',
-                              style: AppTextStyles.labelMd.copyWith(
-                                color: AppColors.textCharcoal,
-                                fontWeight: FontWeight.w600,
+                            Flexible(
+                              child: Text(
+                                'Chỉnh sửa hồ sơ',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.labelMd.copyWith(
+                                  color: AppColors.textCharcoal,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ],
@@ -216,26 +218,18 @@ class ProfileHeroCard extends StatelessWidget {
                     isPrimaryColor: true,
                   ),
                 ),
-                Container(
-                  width: 1,
-                  height: 28,
-                  color: AppColors.borderSubtle,
-                ),
+                Container(width: 1, height: 28, color: AppColors.borderSubtle),
                 Expanded(
                   child: _buildStatItem(
                     value: '${profile.humMatchesCount}',
                     label: 'Hum AI Match',
                   ),
                 ),
-                Container(
-                  width: 1,
-                  height: 28,
-                  color: AppColors.borderSubtle,
-                ),
+                Container(width: 1, height: 28, color: AppColors.borderSubtle),
                 Expanded(
                   child: _buildStatItem(
                     value: '${profile.playlistsCount}',
-                    label: 'Playlists',
+                    label: 'Danh sách',
                   ),
                 ),
               ],
@@ -263,6 +257,9 @@ class ProfileHeroCard extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.labelSm.copyWith(
             color: AppColors.textMuted,
             fontWeight: FontWeight.w500,

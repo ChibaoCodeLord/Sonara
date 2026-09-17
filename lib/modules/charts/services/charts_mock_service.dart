@@ -33,8 +33,7 @@ class ChartsMockService {
         artist: 'Da LAB ft. Miu Lê',
         rankDelta: 5,
         playsText: '1.2M lượt nghe',
-        imageUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuBFvMFZOb-ugTj17pmjBgB0YChlAJlF6D6I-dijNr9_6xBBGQrZdAvPKT8oMbhyxGvwWb8u1oTrwg64Ok0gmgHR82PIukh9LOvNjASJoDjRvfQ-43D86YRgifaEYvDpdZvCTFfiIqCZMrTm2REkx7QAbVGeg5QvfoULykEYdG-yWZVbw7G60Lyi6tz7tCGPsL49xL7Ps2QCHQRa0IshBiOzr4WjyBx2aFNuhtZTHPgplcxaBnlu16pJvg',
+        imageUrl: 'assets/images/bau_troi_moi.jpg',
         isHumHot: true,
         badgeLabel: 'Hum Hot',
       ),

@@ -22,19 +22,22 @@ class ModeSegmentedSwitch extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          _buildSegmentButton(
-            title: 'Hát / Hum',
-            icon: Icons.record_voice_over_rounded,
-            isSelected: currentMode == HumAcousticMode.hum,
-            onTap: () => onModeChanged(HumAcousticMode.hum),
+          Expanded(
+            child: _buildSegmentButton(
+              title: 'Hát / Hum',
+              icon: Icons.record_voice_over_rounded,
+              isSelected: currentMode == HumAcousticMode.hum,
+              onTap: () => onModeChanged(HumAcousticMode.hum),
+            ),
           ),
-          _buildSegmentButton(
-            title: 'Nghe quanh đây',
-            icon: Icons.music_note_rounded,
-            isSelected: currentMode == HumAcousticMode.ambient,
-            onTap: () => onModeChanged(HumAcousticMode.ambient),
+          Expanded(
+            child: _buildSegmentButton(
+              title: 'Nghe quanh đây',
+              icon: Icons.music_note_rounded,
+              isSelected: currentMode == HumAcousticMode.ambient,
+              onTap: () => onModeChanged(HumAcousticMode.ambient),
+            ),
           ),
         ],
       ),
@@ -51,7 +54,7 @@ class ModeSegmentedSwitch extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.surfaceCrisp : Colors.transparent,
           borderRadius: BorderRadius.circular(999),
@@ -66,7 +69,7 @@ class ModeSegmentedSwitch extends StatelessWidget {
               : null,
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
@@ -74,11 +77,15 @@ class ModeSegmentedSwitch extends StatelessWidget {
               color: isSelected ? AppColors.primary : AppColors.textMuted,
             ),
             const SizedBox(width: 6),
-            Text(
-              title,
-              style: AppTextStyles.labelMd.copyWith(
-                color: isSelected ? AppColors.primary : AppColors.textMuted,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+            Flexible(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.labelMd.copyWith(
+                  color: isSelected ? AppColors.primary : AppColors.textMuted,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                ),
               ),
             ),
           ],

@@ -112,20 +112,20 @@ class TroubleshootingCard extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Icon(icon, color: AppColors.primary, size: 18),
-                const SizedBox(width: 10),
-                Text(
-                  title,
-                  style: AppTextStyles.labelMd.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+            Icon(icon, color: AppColors.primary, size: 18),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.labelMd.copyWith(
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
+              ),
             ),
+            const SizedBox(width: 8),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.textMuted,

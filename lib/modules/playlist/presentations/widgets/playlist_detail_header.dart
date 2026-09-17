@@ -62,7 +62,7 @@ class PlaylistDetailHeader extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  'Chi Tiết Playlist',
+                  'Danh sách phát',
                   style: AppTextStyles.headlineSm.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -70,22 +70,24 @@ class PlaylistDetailHeader extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.share_rounded,
-                  color: AppColors.textCharcoal,
-                  size: 22,
+              if (onShareTap != null)
+                IconButton(
+                  icon: const Icon(
+                    Icons.share_rounded,
+                    color: AppColors.textCharcoal,
+                    size: 22,
+                  ),
+                  onPressed: onShareTap,
                 ),
-                onPressed: onShareTap ?? () {},
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.more_vert_rounded,
-                  color: AppColors.textCharcoal,
-                  size: 22,
+              if (onMoreTap != null)
+                IconButton(
+                  icon: const Icon(
+                    Icons.more_vert_rounded,
+                    color: AppColors.textCharcoal,
+                    size: 22,
+                  ),
+                  onPressed: onMoreTap,
                 ),
-                onPressed: onMoreTap ?? () {},
-              ),
             ],
           ),
         ),

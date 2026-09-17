@@ -35,7 +35,6 @@ class HomeScreen extends StatelessWidget {
           return Column(
             children: [
               HomeHeader(
-                onNotificationTap: () {},
                 onProfileTap: onProfileTap,
               ),
               Expanded(
@@ -96,8 +95,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildGreetingBar() {
+    final hour = DateTime.now().hour;
+    final greeting = hour < 11
+        ? 'Chào buổi sáng'
+        : hour < 18
+            ? 'Chào buổi chiều'
+            : 'Chào buổi tối';
     return Text(
-      'Chào buổi tối 👋',
+      '$greeting 👋',
       style: AppTextStyles.headlineMd.copyWith(
         fontWeight: FontWeight.w700,
       ),
@@ -112,12 +117,17 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              'Mixes cho bạn',
-              style: AppTextStyles.headlineSm.copyWith(
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                'Mixes cho bạn',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.headlineSm.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
+            const SizedBox(width: 8),
             GestureDetector(
               onTap: () {},
               child: Row(
@@ -159,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                           PlayingSongModel(
                             id: playlist.id,
                             title: playlist.title,
-                            artist: 'Resonance AI Curated',
+                            artist: 'Sonara AI tuyển chọn',
                             coverUrl: playlist.imageUrl,
                             durationSeconds: 220,
                             currentSeconds: 0,
@@ -173,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                         PlayingSongModel(
                           id: playlist.id,
                           title: playlist.title,
-                          artist: 'Resonance AI Curated',
+                          artist: 'Sonara AI tuyển chọn',
                           coverUrl: playlist.imageUrl,
                           durationSeconds: 220,
                           currentSeconds: 0,

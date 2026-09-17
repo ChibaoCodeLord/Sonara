@@ -20,10 +20,13 @@ class ChartTabSwitcher extends StatelessWidget {
     return Column(
       children: [
         // Subheader timestamp & sonic indicator
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          spacing: 8,
+          runSpacing: 6,
           children: [
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const PulsingDot(
                   color: AppColors.primary,
@@ -40,6 +43,7 @@ class ChartTabSwitcher extends StatelessWidget {
               ],
             ),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.sync_rounded,
@@ -126,11 +130,15 @@ class ChartTabSwitcher extends StatelessWidget {
               size: 16,
             ),
             const SizedBox(width: 6),
-            Text(
-              title,
-              style: AppTextStyles.labelMd.copyWith(
-                color: isActive ? Colors.white : AppColors.textMuted,
-                fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
+            Flexible(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.labelMd.copyWith(
+                  color: isActive ? Colors.white : AppColors.textMuted,
+                  fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
+                ),
               ),
             ),
           ],

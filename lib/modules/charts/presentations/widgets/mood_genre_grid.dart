@@ -22,12 +22,17 @@ class MoodGenreGrid extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Tâm trạng & Thể loại',
-              style: AppTextStyles.headlineSm.copyWith(
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                'Tâm trạng & Thể loại',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.headlineSm.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
+            const SizedBox(width: 8),
             const Icon(
               Icons.tune_rounded,
               color: AppColors.textMuted,

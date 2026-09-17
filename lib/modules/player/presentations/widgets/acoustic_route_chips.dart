@@ -42,7 +42,7 @@ class AcousticRouteChips extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Resonance Spatial 3D',
+                  'Sonara Spatial 3D',
                   style: AppTextStyles.labelMd.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

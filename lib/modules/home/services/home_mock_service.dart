@@ -46,7 +46,7 @@ class HomeMockService {
       TrackModel(
         id: 'track_2',
         title: 'Chạm Vào Giai Điệu',
-        artist: 'Resonance AI Mastered',
+        artist: 'Sonara AI Mastered',
         matchPercentage: '95%',
         imageUrl:
             'https://lh3.googleusercontent.com/aida-public/AB6AXuBySUc5GA-Fx3mDooypAGPUC8E6Rk0T7O9-4K9W8erI2unTulH3tzzto2qaSlSei3C6FMYnnE8SZrbNBf22j9L_u_OtAzaJwPxRh6wGXT-HD6T25U0x2kTH8IifVcxMvUwb58VgpCEadEAXkyRDkHy1VGBHhMOgaIKqK0TZEpYH9h5Nf5K_h4byGBjwMd3rdoD4O2a2NxbPNtXgtCP4GrUDbIeFbsXZB0YnfnKMz-FtR0CXRmaCQTxroA',

@@ -46,7 +46,7 @@ class LibraryMockService {
       LibraryPlaylistModel(
         id: 'playlist_lofi_chill',
         title: 'Đêm Mưa & Lo-Fi Chill',
-        creator: 'Resonance AI Mood',
+        creator: 'Sonara AI Mood',
         trackCount: 42,
         coverUrl:
             'https://lh3.googleusercontent.com/aida-public/AB6AXuAEdWZlzyvtMzooqvM1KU_NOYjKE0X-fDFAEm2O4iX5gmh5uHHrLCAXRSd4fDWUKqE4o-EKVbw5-05saRA-mq8vtTHJFyj-CRAUgKPUetrqhhNnPLJclsyTdS2O9Xu6dMkXewtID00XBX-dMApXRl1o20oXGoF5X5VP3dh6k8oulFwqlTS9d2hgXp8GVDfaLjmxYC4ZfUaCmJLl2qOVcYeJM5o8yW1PkWifyqdZXIChuyTeseviy0nPag',

@@ -66,7 +66,7 @@ class PlaylistHeroArtwork extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'AI LIVE MIX',
+                        'SONARA AI MIX',
                         style: AppTextStyles.labelSm.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w800,

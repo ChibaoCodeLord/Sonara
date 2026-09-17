@@ -25,59 +25,43 @@ class PlaylistTrackTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surfaceCrisp,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x081A1A1A),
-              blurRadius: 6,
-              offset: Offset(0, 2),
-            ),
-          ],
+          border: Border.all(color: AppColors.borderSubtle),
         ),
         child: Row(
           children: [
-            // Track index number
             SizedBox(
               width: 20,
               child: Text(
                 '${track.index}',
+                textAlign: TextAlign.center,
                 style: AppTextStyles.labelMd.copyWith(
                   color: AppColors.textMuted,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(width: 8),
-
-            // Artwork
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                AppNetworkImage(
-                  imageUrl: track.coverUrl,
-                  width: 48,
-                  height: 48,
-                  borderRadius: 10,
-                ),
-              ],
+            AppNetworkImage(
+              imageUrl: track.coverUrl,
+              width: 48,
+              height: 48,
+              borderRadius: 10,
             ),
             const SizedBox(width: 12),
-
-            // Track details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Flexible(
+                      Expanded(
                         child: Text(
                           track.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.labelLg.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       const SizedBox(width: 6),
@@ -104,25 +88,17 @@ class PlaylistTrackTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Row(
                     children: [
-                      Flexible(
+                      Expanded(
                         child: Text(
                           track.artist,
-                          style: AppTextStyles.bodySm.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          '•',
                           style: AppTextStyles.bodySm.copyWith(
                             color: AppColors.textSecondary,
                           ),
                         ),
                       ),
+                      const SizedBox(width: 6),
                       Text(
                         track.durationText,
                         style: AppTextStyles.bodySm.copyWith(
@@ -131,36 +107,25 @@ class PlaylistTrackTile extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 2),
+                  Text(
+                    track.matchPercentage,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.labelSm.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ],
               ),
             ),
-
-            // Match percentage pill
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Text(
-                track.matchPercentage,
-                style: AppTextStyles.labelSm.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            const SizedBox(width: 4),
-
-            // More button
-            IconButton(
-              icon: const Icon(
-                Icons.more_vert_rounded,
+            if (onMoreTap != null)
+              IconButton(
+                icon: const Icon(Icons.more_vert_rounded, size: 20),
                 color: AppColors.textSecondary,
-                size: 20,
+                onPressed: onMoreTap,
               ),
-              onPressed: onMoreTap ?? () {},
-            ),
           ],
         ),
       ),

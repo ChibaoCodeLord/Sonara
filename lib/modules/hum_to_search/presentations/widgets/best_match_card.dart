@@ -94,7 +94,10 @@ class _BestMatchCardState extends State<BestMatchCard>
                   children: [
                     Flexible(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 5,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withValues(alpha: 0.10),
                           borderRadius: BorderRadius.circular(999),
@@ -124,7 +127,10 @@ class _BestMatchCardState extends State<BestMatchCard>
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.surfaceContainer,
                         borderRadius: BorderRadius.circular(6),
@@ -177,7 +183,9 @@ class _BestMatchCardState extends State<BestMatchCard>
                                 height: 34,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: AppColors.primary.withValues(alpha: 0.9),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.9,
+                                  ),
                                 ),
                                 child: Icon(
                                   widget.isSnippetPlaying
@@ -224,10 +232,14 @@ class _BestMatchCardState extends State<BestMatchCard>
                                 size: 14,
                               ),
                               const SizedBox(width: 4),
-                              Text(
-                                match.album,
-                                style: AppTextStyles.bodySm.copyWith(
-                                  color: AppColors.textSecondary,
+                              Expanded(
+                                child: Text(
+                                  match.album,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.bodySm.copyWith(
+                                    color: AppColors.textSecondary,
+                                  ),
                                 ),
                               ),
                             ],
@@ -251,22 +263,29 @@ class _BestMatchCardState extends State<BestMatchCard>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.equalizer_rounded,
-                                color: AppColors.primary,
-                                size: 16,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                match.matchReason,
-                                style: AppTextStyles.labelMd.copyWith(
-                                  fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.equalizer_rounded,
+                                  color: AppColors.primary,
+                                  size: 16,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    match.matchReason,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyles.labelMd.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          const SizedBox(width: 8),
                           Text(
                             '${match.matchPercentage}%',
                             style: AppTextStyles.labelMd.copyWith(
@@ -300,23 +319,28 @@ class _BestMatchCardState extends State<BestMatchCard>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text.rich(
-                            TextSpan(
-                              text: 'Đoạn phát hiện: ',
-                              style: AppTextStyles.bodySm.copyWith(
-                                color: AppColors.textMuted,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: match.detectionSegment,
-                                  style: AppTextStyles.bodySm.copyWith(
-                                    color: AppColors.textCharcoal,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          Expanded(
+                            child: Text.rich(
+                              TextSpan(
+                                text: 'Đoạn phát hiện: ',
+                                style: AppTextStyles.bodySm.copyWith(
+                                  color: AppColors.textMuted,
                                 ),
-                              ],
+                                children: [
+                                  TextSpan(
+                                    text: match.detectionSegment,
+                                    style: AppTextStyles.bodySm.copyWith(
+                                      color: AppColors.textCharcoal,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          const SizedBox(width: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 7,
@@ -345,7 +369,9 @@ class _BestMatchCardState extends State<BestMatchCard>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerHigh.withValues(alpha: 0.5),
+                    color: AppColors.surfaceContainerHigh.withValues(
+                      alpha: 0.5,
+                    ),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Column(
@@ -353,22 +379,29 @@ class _BestMatchCardState extends State<BestMatchCard>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.music_note_rounded,
-                                color: AppColors.primary,
-                                size: 16,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                'Nghe thử đoạn khớp (15 giây)',
-                                style: AppTextStyles.labelMd.copyWith(
-                                  fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.music_note_rounded,
+                                  color: AppColors.primary,
+                                  size: 16,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    'Nghe thử đoạn khớp (15 giây)',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyles.labelMd.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          const SizedBox(width: 8),
                           Text(
                             '00:06 / 00:15',
                             style: AppTextStyles.labelSm.copyWith(
@@ -408,16 +441,39 @@ class _BestMatchCardState extends State<BestMatchCard>
                                 return SizedBox(
                                   height: 28,
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: List.generate(20, (i) {
                                       final isPlayed = i < 10;
                                       final baseHeight = [
-                                        10.0, 18.0, 24.0, 20.0, 14.0, 26.0, 16.0,
-                                        12.0, 22.0, 24.0, 18.0, 14.0, 20.0, 10.0,
-                                        24.0, 18.0, 14.0, 20.0, 12.0, 8.0
+                                        10.0,
+                                        18.0,
+                                        24.0,
+                                        20.0,
+                                        14.0,
+                                        26.0,
+                                        16.0,
+                                        12.0,
+                                        22.0,
+                                        24.0,
+                                        18.0,
+                                        14.0,
+                                        20.0,
+                                        10.0,
+                                        24.0,
+                                        18.0,
+                                        14.0,
+                                        20.0,
+                                        12.0,
+                                        8.0,
                                       ][i];
-                                      final animHeight = (widget.isSnippetPlaying && isPlayed)
-                                          ? (baseHeight + (i % 2 == 0 ? v * 6 : -v * 6)).clamp(4.0, 28.0)
+                                      final animHeight =
+                                          (widget.isSnippetPlaying && isPlayed)
+                                          ? (baseHeight +
+                                                    (i % 2 == 0
+                                                        ? v * 6
+                                                        : -v * 6))
+                                                .clamp(4.0, 28.0)
                                           : baseHeight;
 
                                       return Container(
@@ -426,8 +482,11 @@ class _BestMatchCardState extends State<BestMatchCard>
                                         decoration: BoxDecoration(
                                           color: isPlayed
                                               ? AppColors.primary
-                                              : AppColors.surfaceContainerHighest,
-                                          borderRadius: BorderRadius.circular(2),
+                                              : AppColors
+                                                    .surfaceContainerHighest,
+                                          borderRadius: BorderRadius.circular(
+                                            2,
+                                          ),
                                         ),
                                       );
                                     }),
@@ -458,7 +517,10 @@ class _BestMatchCardState extends State<BestMatchCard>
                               borderRadius: BorderRadius.circular(999),
                             ),
                           ),
-                          icon: const Icon(Icons.play_circle_filled_rounded, size: 20),
+                          icon: const Icon(
+                            Icons.play_circle_filled_rounded,
+                            size: 20,
+                          ),
                           label: Text(
                             'Phát toàn bài',
                             style: AppTextStyles.labelLg.copyWith(
@@ -482,7 +544,9 @@ class _BestMatchCardState extends State<BestMatchCard>
                           match.isFavorite
                               ? Icons.favorite_rounded
                               : Icons.favorite_border_rounded,
-                          color: match.isFavorite ? AppColors.primary : AppColors.textCharcoal,
+                          color: match.isFavorite
+                              ? AppColors.primary
+                              : AppColors.textCharcoal,
                           size: 22,
                         ),
                         onPressed: widget.onToggleFavorite,

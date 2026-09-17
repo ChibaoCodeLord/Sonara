@@ -75,10 +75,14 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
               child: Column(
                 children: [
                   // Top row: Badge & growth info
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 6,
                     children: [
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
                             width: 24,
@@ -180,12 +184,16 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
                                     const SizedBox(width: 2.5),
                                     _buildWaveBar(12 - val * 5),
                                     const SizedBox(width: 6),
-                                    Text(
-                                      widget.spotlight.matchRateText,
-                                      style: AppTextStyles.labelSm.copyWith(
-                                        color: Colors.white.withValues(alpha: 0.9),
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
+                                    Flexible(
+                                      child: Text(
+                                        widget.spotlight.matchRateText,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTextStyles.labelSm.copyWith(
+                                          color: Colors.white.withValues(alpha: 0.9),
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                   ],

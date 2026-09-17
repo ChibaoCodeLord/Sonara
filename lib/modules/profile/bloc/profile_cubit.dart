@@ -11,7 +11,7 @@ class ProfileCubit extends Cubit<ProfileState> {
               name: 'Lê Hải Đăng',
               avatarUrl:
                   'https://lh3.googleusercontent.com/aida/AEtjO1X3qwyfSRQVs-auxre7zJ1pvmkl_plHcWqsPoWiFZVllOIBbTNSdxuCFpJbEYIdVvGKMjz5IIGghG1q26Ugd8vq4lqAj3UHNH9r84-7EH4kULF1-RqxGB5272qQIqlfdC2ZdkNECgGzKWvLBxwJ_y1Bb_-HkpiJc6Rkuak5rl6UMpR3zpm9jk64V10hO2353MHXFF7EPh22rwaxl3VzDGJwzG88qWYuYoAmYTyZaJIr2QYdC_6a47pkvMZ2',
-              vipTier: 'Resonance VIP (Lossless)',
+              vipTier: 'Sonara VIP (Lossless)',
               isVerified: true,
               listeningHours: 480,
               humMatchesCount: 142,

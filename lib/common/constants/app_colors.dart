@@ -53,8 +53,8 @@ class AppColors {
   // Text & Content
   static const Color textCharcoal = Color(0xFF1A1A1A);
   static const Color onSurface = Color(0xFF1B1C1B);
-  static const Color textMuted = Color(0xFF9CA3AF);
-  static const Color textSecondary = Color(0xFF8A8A8A);
+  static const Color textMuted = Color(0xFF71747B);
+  static const Color textSecondary = Color(0xFF62656B);
 
   // Borders & Dividers
   static const Color borderSubtle = Color(0xFFF0ECE9);

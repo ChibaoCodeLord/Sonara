@@ -52,10 +52,10 @@ class _PlaylistFloatingHumCapsuleState
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
+          Expanded(
+            child: Row(
+              children: [
               AnimatedBuilder(
                 animation: _animController,
                 builder: (context, _) {
@@ -73,27 +73,36 @@ class _PlaylistFloatingHumCapsuleState
                 },
               ),
               const SizedBox(width: 12),
-              Column(
+              Expanded(
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     'Tìm kiếm giai điệu?',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.labelMd.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   Text(
                     'Ngân nga một đoạn bất kỳ',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.bodySm.copyWith(
                       color: AppColors.textSecondary,
                       fontSize: 11,
                     ),
                   ),
                 ],
+                ),
               ),
-            ],
+              ],
+            ),
           ),
+
+          const SizedBox(width: 8),
 
           // Mic FAB
           GestureDetector(

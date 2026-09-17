@@ -35,10 +35,7 @@ class LibraryScreen extends StatelessWidget {
           return Column(
             children: [
               // Header
-              LibraryHeader(
-                onSearchTap: () {},
-                onProfileTap: onProfileTap,
-              ),
+              LibraryHeader(onProfileTap: onProfileTap),
 
               // Scrollable content
               Expanded(
@@ -48,10 +45,6 @@ class LibraryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Top Bar Action Row
-                      _buildTopBarActions(context),
-                      const SizedBox(height: 16),
-
                       // Filter Chips
                       LibraryFilterChips(
                         selectedFilter: state.selectedFilter,
@@ -66,16 +59,15 @@ class LibraryScreen extends StatelessWidget {
                         count: state.likedSongsCount,
                         onPlayTap: () {
                           context.read<PlayerCubit>().playSong(
-                                const PlayingSongModel(
-                                  id: 'liked_mix',
-                                  title: 'Bài Hát Yêu Thích',
-                                  artist: 'Offline Lossless 96kHz',
-                                  coverUrl:
-                                      'https://lh3.googleusercontent.com/aida-public/AB6AXuDxJ0wA0Fjahrr-T10lBJmzSJyD1-I_F65RxQ5qSW9LuTm9l95D7b9MlDneeNTtMuBQJP7GYI2jS-kgKSebfUQmz12_-fD9LQzOQg_6SVoWsoQcKPP5AkMGfWm3q49lka_CxuFH42rd7wZwCRGmSIMyvCeqe9l_jANsetnGUZiNLOG8zBC0u-KFmrTSRklqw9aAoqRoBVqr5Q2GMnVpIvK3g7uQOgXazrEjzg_g5yA9t6asMuns9yhCXg',
-                                  durationSeconds: 240,
-                                  currentSeconds: 0,
-                                ),
-                              );
+                            const PlayingSongModel(
+                              id: 'liked_mix',
+                              title: 'Bài Hát Yêu Thích',
+                              artist: 'Offline Lossless 96kHz',
+                              coverUrl: 'assets/images/sonara_ai_mix.jpg',
+                              durationSeconds: 240,
+                              currentSeconds: 0,
+                            ),
+                          );
                           onOpenNowPlaying();
                         },
                         onTap: () {
@@ -90,28 +82,28 @@ class LibraryScreen extends StatelessWidget {
                         totalCount: state.humHistoryCount,
                         onPlayTap: () {
                           context.read<PlayerCubit>().playSong(
-                                PlayingSongModel(
-                                  id: state.recentHum.id,
-                                  title: state.recentHum.title,
-                                  artist: state.recentHum.artist,
-                                  coverUrl: state.recentHum.coverUrl,
-                                  durationSeconds: 210,
-                                  currentSeconds: 0,
-                                ),
-                              );
+                            PlayingSongModel(
+                              id: state.recentHum.id,
+                              title: state.recentHum.title,
+                              artist: state.recentHum.artist,
+                              coverUrl: state.recentHum.coverUrl,
+                              durationSeconds: 210,
+                              currentSeconds: 0,
+                            ),
+                          );
                           onOpenNowPlaying();
                         },
                         onTap: () {
                           context.read<PlayerCubit>().playSong(
-                                PlayingSongModel(
-                                  id: state.recentHum.id,
-                                  title: state.recentHum.title,
-                                  artist: state.recentHum.artist,
-                                  coverUrl: state.recentHum.coverUrl,
-                                  durationSeconds: 210,
-                                  currentSeconds: 0,
-                                ),
-                              );
+                            PlayingSongModel(
+                              id: state.recentHum.id,
+                              title: state.recentHum.title,
+                              artist: state.recentHum.artist,
+                              coverUrl: state.recentHum.coverUrl,
+                              durationSeconds: 210,
+                              currentSeconds: 0,
+                            ),
+                          );
                           onOpenNowPlaying();
                         },
                       ),
@@ -120,7 +112,6 @@ class LibraryScreen extends StatelessWidget {
                       // Following Artists Section
                       FollowingArtistsRow(
                         artists: state.artists,
-                        onSeeAllTap: () {},
                         onAddArtistTap: () {},
                       ),
                       const SizedBox(height: 24),
@@ -145,94 +136,27 @@ class LibraryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopBarActions(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Thư viện của tôi',
-          style: AppTextStyles.headlineMd.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.surfaceContainer,
-              ),
-              child: const Icon(
-                Icons.search_rounded,
-                color: AppColors.textCharcoal,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 8),
-            Container(
-              height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(999),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x338B001E),
-                    blurRadius: 8,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.add_rounded,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Tạo mới',
-                    style: AppTextStyles.labelMd.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   Widget _buildPlaylistsSection(BuildContext context, LibraryState state) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 4,
           children: [
-            Row(
-              children: [
-                Text(
-                  'Danh sách phát',
-                  style: AppTextStyles.headlineSm.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  '(8 playlists)',
-                  style: AppTextStyles.bodySm.copyWith(
-                    color: AppColors.textMuted,
-                  ),
-                ),
-              ],
+            Text(
+              'Danh sách phát',
+              style: AppTextStyles.headlineSm.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              '(8 danh sách)',
+              style: AppTextStyles.bodySm.copyWith(
+                color: AppColors.textMuted,
+              ),
             ),
             Row(
               children: [
@@ -269,15 +193,15 @@ class LibraryScreen extends StatelessWidget {
               },
               onPlayTap: () {
                 context.read<PlayerCubit>().playSong(
-                      PlayingSongModel(
-                        id: playlist.id,
-                        title: playlist.title,
-                        artist: playlist.creator,
-                        coverUrl: playlist.coverUrl,
-                        durationSeconds: 225,
-                        currentSeconds: 0,
-                      ),
-                    );
+                  PlayingSongModel(
+                    id: playlist.id,
+                    title: playlist.title,
+                    artist: playlist.creator,
+                    coverUrl: playlist.coverUrl,
+                    durationSeconds: 225,
+                    currentSeconds: 0,
+                  ),
+                );
                 onOpenNowPlaying();
               },
             );

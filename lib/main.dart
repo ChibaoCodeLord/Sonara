@@ -22,11 +22,11 @@ void main() {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
-  runApp(const ResonanceMusicApp());
+  runApp(const SonaraApp());
 }
 
-class ResonanceMusicApp extends StatelessWidget {
-  const ResonanceMusicApp({super.key});
+class SonaraApp extends StatelessWidget {
+  const SonaraApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class ResonanceMusicApp extends StatelessWidget {
         BlocProvider<ProfileCubit>(create: (_) => ProfileCubit()),
       ],
       child: MaterialApp(
-        title: 'Resonance AI',
+        title: 'Sonara',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         onGenerateRoute: AppRouter.onGenerateRoute,
