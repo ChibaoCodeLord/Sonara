@@ -27,25 +27,11 @@ class TrendingChartCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'CẬP NHẬT MỖI NGÀY',
-                  style: AppTextStyles.labelSm.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Bảng Xếp Hạng Xu Hướng',
-                  style: AppTextStyles.headlineSm.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+            Text(
+              'Xu hướng',
+              style: AppTextStyles.headlineSm.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
             // Segmented pill: Tuần / Tháng
             Container(

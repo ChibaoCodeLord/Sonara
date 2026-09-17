@@ -76,18 +76,18 @@ class ChartsScreen extends StatelessWidget {
                           id: 'radar_spotlight',
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 32),
 
                       // Top 1-5 Chart Section
                       _buildTopChartSection(context, state),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 32),
 
                       // Mood & Genre Discovery Grid
                       MoodGenreGrid(
                         moods: state.moodGenres,
                         onMoodTap: (mood) {},
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 32),
 
                       // AI Hum Quick Invitation Strip
                       HumQuickInviteCard(
@@ -112,47 +112,21 @@ class ChartsScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Text(
-                  'Bảng Xếp Hạng',
-                  style: AppTextStyles.headlineSm.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryFixed,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    'TOP 5',
-                    style: AppTextStyles.labelSm.copyWith(
-                      color: AppColors.primary,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ],
+            Text(
+              'Top 5 tuần này',
+              style: AppTextStyles.headlineSm.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            Row(
-              children: [
-                Text(
-                  'Xem 50 bài',
-                  style: AppTextStyles.labelMd.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
+            GestureDetector(
+              onTap: () {},
+              child: Text(
+                'Xem tất cả',
+                style: AppTextStyles.labelMd.copyWith(
                   color: AppColors.primary,
-                  size: 18,
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
+              ),
             ),
           ],
         ),

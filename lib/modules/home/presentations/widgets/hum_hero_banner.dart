@@ -42,9 +42,9 @@ class _HumHeroBannerState extends State<HumHeroBanner>
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.35),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: AppColors.primary.withValues(alpha: 0.25),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -93,26 +93,26 @@ class _HumHeroBannerState extends State<HumHeroBanner>
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
+                          color: Colors.white.withValues(alpha: 0.18),
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             const Icon(
-                              Icons.auto_awesome,
+                              Icons.mic_none_rounded,
                               color: Colors.white,
                               size: 14,
                             ),
                             const SizedBox(width: 6),
                             Flexible(
                               child: Text(
-                                'Resonance AI Engine 3.0',
+                                'Tìm kiếm bằng giai điệu',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.labelSm.copyWith(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
@@ -131,17 +131,17 @@ class _HumHeroBannerState extends State<HumHeroBanner>
                 const SizedBox(height: 14),
                 // Heading
                 Text(
-                  'Không nhớ lời?\nChỉ cần ngân nga!',
+                  'Không nhớ tên bài hát?\nNgân nga để tìm ngay',
                   style: AppTextStyles.headlineMd.copyWith(
                     color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    height: 1.2,
+                    fontWeight: FontWeight.w700,
+                    height: 1.25,
                   ),
                 ),
                 const SizedBox(height: 6),
                 // Subtitle
                 Text(
-                  'Nhận diện bài hát chuẩn xác chỉ sau 3 giây từ tiếng huýt sáo hoặc giai điệu ngân nga trong đầu bạn.',
+                  'Nhận diện bài hát chính xác từ tiếng huýt sáo hoặc điệu ngân nga của bạn.',
                   style: AppTextStyles.bodySm.copyWith(
                     color: Colors.white.withValues(alpha: 0.88),
                     height: 1.4,
@@ -189,8 +189,8 @@ class _HumHeroBannerState extends State<HumHeroBanner>
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: AppColors.primary,
-                      elevation: 4,
-                      shadowColor: Colors.black.withValues(alpha: 0.2),
+                      elevation: 2,
+                      shadowColor: Colors.black.withValues(alpha: 0.15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(999),
                       ),
@@ -201,10 +201,10 @@ class _HumHeroBannerState extends State<HumHeroBanner>
                       size: 20,
                     ),
                     label: Text(
-                      'Thử Hum-Search ngay',
+                      'Thử tìm kiếm ngay',
                       style: AppTextStyles.labelLg.copyWith(
                         color: AppColors.primary,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),

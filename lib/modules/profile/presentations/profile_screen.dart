@@ -105,24 +105,11 @@ class ProfileScreen extends StatelessWidget {
 
                       // App Version & Neural Core Footer
                       Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Resonance Audio Platform • v2.4.0 (AI Build 8420)',
-                              style: AppTextStyles.labelSm.copyWith(
-                                color: AppColors.textMuted,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              'Engine Acoustic Neural Core v4.2 • Powered by Resonance',
-                              style: AppTextStyles.labelSm.copyWith(
-                                color: AppColors.textMuted.withValues(alpha: 0.7),
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'Sonara • Phiên bản 1.0.0',
+                          style: AppTextStyles.labelSm.copyWith(
+                            color: AppColors.textMuted,
+                          ),
                         ),
                       ),
                     ],

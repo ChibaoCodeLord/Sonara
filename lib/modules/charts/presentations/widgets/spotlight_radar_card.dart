@@ -45,9 +45,9 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x52B3122E),
-            blurRadius: 24,
-            offset: Offset(0, 8),
+            color: Color(0x339A1B2F),
+            blurRadius: 18,
+            offset: Offset(0, 6),
           ),
         ],
       ),
@@ -97,11 +97,10 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'AI RADAR TUẦN NÀY',
-                            style: AppTextStyles.labelSm.copyWith(
+                            'Radar tuần này',
+                            style: AppTextStyles.labelMd.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.8,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -112,7 +111,7 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
                           vertical: 3,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
+                          color: Colors.white.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
@@ -120,7 +119,7 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
                           style: AppTextStyles.labelSm.copyWith(
                             color: Colors.white,
                             fontSize: 10,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -131,38 +130,11 @@ class _SpotlightRadarCardState extends State<SpotlightRadarCard>
                   // Bottom row: Cover, Title, Visualizer & Play Button
                   Row(
                     children: [
-                      // Cover with Hum #1 badge
-                      Stack(
-                        children: [
-                          AppNetworkImage(
-                            imageUrl: widget.spotlight.coverUrl,
-                            width: 64,
-                            height: 64,
-                            borderRadius: 12,
-                          ),
-                          Positioned(
-                            bottom: 4,
-                            left: 4,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                                vertical: 1.5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withValues(alpha: 0.6),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                'HUM #1',
-                                style: AppTextStyles.labelSm.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 8,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      AppNetworkImage(
+                        imageUrl: widget.spotlight.coverUrl,
+                        width: 64,
+                        height: 64,
+                        borderRadius: 12,
                       ),
                       const SizedBox(width: 14),
 

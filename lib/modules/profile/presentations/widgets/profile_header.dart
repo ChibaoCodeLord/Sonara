@@ -50,26 +50,11 @@ class ProfileHeader extends StatelessWidget {
               const SizedBox(width: 10),
               // App Title & Subtitle
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'RESONANCE AI',
-                      style: AppTextStyles.labelSm.copyWith(
-                        color: AppColors.primary,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Hồ Sơ',
-                      style: AppTextStyles.headlineSm.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  'Hồ Sơ Cá Nhân',
+                  style: AppTextStyles.headlineSm.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
               // Search button

@@ -191,11 +191,10 @@ class HumToSearchScreen extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'AI ENGINE 2.4 ACTIVE',
+                'Đang lắng nghe',
                 style: AppTextStyles.labelSm.copyWith(
                   color: AppColors.primary,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.8,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
@@ -239,7 +238,7 @@ class HumToSearchScreen extends StatelessWidget {
               Formatters.formatSeconds(recorded),
               style: AppTextStyles.headlineMd.copyWith(
                 color: AppColors.primary,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(width: 6),
@@ -286,8 +285,8 @@ class HumToSearchScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
-              elevation: 4,
-              shadowColor: AppColors.primary.withValues(alpha: 0.35),
+              elevation: 2,
+              shadowColor: AppColors.primary.withValues(alpha: 0.25),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(999),
               ),

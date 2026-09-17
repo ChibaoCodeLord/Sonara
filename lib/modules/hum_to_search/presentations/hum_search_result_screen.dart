@@ -255,10 +255,10 @@ class HumSearchResultScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        'Độ tin cậy AI: $confidence%',
+                        'Độ khớp: $confidence%',
                         style: AppTextStyles.bodySm.copyWith(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],

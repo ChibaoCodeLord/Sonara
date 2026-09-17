@@ -30,17 +30,14 @@ class ChartRankTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surfaceCrisp,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x0D1A1A1A),
-              blurRadius: 16,
-              offset: Offset(0, 4),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: AppColors.primary.withValues(alpha: 0.15),
+            width: 1,
+          ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           child: Stack(
             children: [
               // Left gradient highlight border bar
@@ -91,35 +88,11 @@ class ChartRankTile extends StatelessWidget {
                     const SizedBox(width: 10),
 
                     // Artwork with crown badge
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        AppNetworkImage(
-                          imageUrl: item.imageUrl,
-                          width: 56,
-                          height: 56,
-                          borderRadius: 14,
-                        ),
-                        Positioned(
-                          top: -4,
-                          right: -4,
-                          child: Container(
-                            width: 18,
-                            height: 18,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: AppColors.aiGradient,
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.workspace_premium_rounded,
-                                color: Colors.white,
-                                size: 11,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    AppNetworkImage(
+                      imageUrl: item.imageUrl,
+                      width: 56,
+                      height: 56,
+                      borderRadius: 14,
                     ),
                     const SizedBox(width: 14),
 
@@ -243,14 +216,11 @@ class ChartRankTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
           color: AppColors.surfaceCrisp,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x081A1A1A),
-              blurRadius: 8,
-              offset: Offset(0, 2),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: AppColors.borderSubtle,
+            width: 1,
+          ),
         ),
         child: Row(
           children: [

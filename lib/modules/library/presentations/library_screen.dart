@@ -149,25 +149,11 @@ class LibraryScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'KHO NHẠC CÁ NHÂN',
-              style: AppTextStyles.labelSm.copyWith(
-                color: AppColors.primary,
-                letterSpacing: 0.8,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              'Thư viện của tôi',
-              style: AppTextStyles.headlineMd.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
+        Text(
+          'Thư viện của tôi',
+          style: AppTextStyles.headlineMd.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         Row(
           children: [

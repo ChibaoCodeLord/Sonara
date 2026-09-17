@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
-import '../../../common/widgets/pulsing_dot.dart';
 import '../../player/bloc/player_cubit.dart';
 import '../../player/models/playing_song_model.dart';
 import '../bloc/home_cubit.dart';
@@ -54,15 +53,15 @@ class HomeScreen extends StatelessWidget {
                       HumHeroBanner(
                         onHumSearchTap: onOpenHumSearch,
                       ),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 32),
 
                       // Section 1: AI Recommended Playlists
                       _buildAiMixesSection(context, state),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 32),
 
                       // Section 2: Recommended Tracks Matching Taste
                       _buildRecommendedTracksSection(context, state),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 32),
 
                       // Section 3: Trending Charts
                       TrendingChartCard(
@@ -97,62 +96,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildGreetingBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'CHÀO BUỔI TỐI',
-              style: AppTextStyles.labelSm.copyWith(
-                color: AppColors.textMuted,
-                letterSpacing: 0.8,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              'Giai điệu khơi nguồn cảm xúc',
-              style: AppTextStyles.headlineSm.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ],
-        ),
-        // AI Active status pill
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            color: AppColors.surfaceContainer,
-            borderRadius: BorderRadius.circular(999),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x0A000000),
-                blurRadius: 4,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const PulsingDot(
-                color: AppColors.primary,
-                size: 7,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'AI Active',
-                style: AppTextStyles.labelSm.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return Text(
+      'Chào buổi tối 👋',
+      style: AppTextStyles.headlineMd.copyWith(
+        fontWeight: FontWeight.w700,
+      ),
     );
   }
 
@@ -164,25 +112,11 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'DÀNH RIÊNG CHO BẠN',
-                  style: AppTextStyles.labelSm.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Resonance AI Mixes',
-                  style: AppTextStyles.headlineSm.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+            Text(
+              'Mixes cho bạn',
+              style: AppTextStyles.headlineSm.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
             GestureDetector(
               onTap: () {},
@@ -258,54 +192,11 @@ class HomeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'KHÁM PHÁ MỚI',
-                  style: AppTextStyles.labelSm.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Gợi ý khớp với gu bạn',
-                  style: AppTextStyles.headlineSm.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceContainer,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.tune_rounded,
-                    color: AppColors.textMuted,
-                    size: 15,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Tùy chỉnh',
-                    style: AppTextStyles.labelMd.copyWith(
-                      color: AppColors.textMuted,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        Text(
+          'Gợi ý cho bạn',
+          style: AppTextStyles.headlineSm.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         const SizedBox(height: 12),
         ListView.builder(

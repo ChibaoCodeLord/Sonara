@@ -57,7 +57,7 @@ class HumQuickInviteCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Chạm nút AI Hum để Resonance tìm kiếm',
+                  'Ngân nga hoặc huýt sáo để tìm kiếm',
                   style: AppTextStyles.bodySm.copyWith(
                     color: AppColors.textMuted,
                   ),
@@ -75,11 +75,11 @@ class HumQuickInviteCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: BorderRadius.circular(999),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                    color: Color(0x338B001E),
+                    color: AppColors.primary.withValues(alpha: 0.25),
                     blurRadius: 6,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),

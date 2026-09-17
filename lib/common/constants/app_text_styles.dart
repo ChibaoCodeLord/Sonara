@@ -89,7 +89,7 @@ class AppTextStyles {
         fontSize: 10,
         height: 12 / 10,
         letterSpacing: 0.04 * 10,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
         color: AppColors.textMuted,
       );
 }

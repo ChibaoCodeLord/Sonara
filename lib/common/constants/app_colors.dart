@@ -4,7 +4,7 @@ class AppColors {
   AppColors._();
 
   // Primary brand palette
-  static const Color primary = Color(0xFF8B001E);
+  static const Color primary = Color(0xFF9A1B2F);
   static const Color primaryContainer = Color(0xFFB3122E);
   static const Color primaryFixed = Color(0xFFFFDAD9);
   static const Color primaryFixedDim = Color(0xFFFFB3B3);
@@ -53,7 +53,7 @@ class AppColors {
   // Text & Content
   static const Color textCharcoal = Color(0xFF1A1A1A);
   static const Color onSurface = Color(0xFF1B1C1B);
-  static const Color textMuted = Color(0xFF71717A);
+  static const Color textMuted = Color(0xFF9CA3AF);
   static const Color textSecondary = Color(0xFF8A8A8A);
 
   // Borders & Dividers

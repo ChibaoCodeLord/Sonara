@@ -31,11 +31,10 @@ class ChartTabSwitcher extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  lastUpdatedText.toUpperCase(),
+                  lastUpdatedText,
                   style: AppTextStyles.labelSm.copyWith(
                     color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -43,13 +42,13 @@ class ChartTabSwitcher extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.equalizer_rounded,
+                  Icons.sync_rounded,
                   color: AppColors.textMuted,
-                  size: 16,
+                  size: 15,
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'AI Sonic Realtime',
+                  'Cập nhật trực tiếp',
                   style: AppTextStyles.labelSm.copyWith(
                     color: AppColors.textMuted,
                     fontWeight: FontWeight.w500,
@@ -109,11 +108,11 @@ class ChartTabSwitcher extends StatelessWidget {
           color: isActive ? AppColors.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(999),
           boxShadow: isActive
-            ? const [
+            ? [
                 BoxShadow(
-                  color: Color(0x338B001E),
+                  color: AppColors.primary.withValues(alpha: 0.25),
                   blurRadius: 6,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ]
             : null,

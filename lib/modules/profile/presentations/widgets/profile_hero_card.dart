@@ -22,11 +22,15 @@ class ProfileHeroCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceCrisp,
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.borderSubtle,
+          width: 1,
+        ),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x0A1A1A1A),
-            blurRadius: 10,
-            offset: Offset(0, 2),
+            color: Color(0x051A1A1A),
+            blurRadius: 6,
+            offset: Offset(0, 1),
           ),
         ],
       ),
@@ -100,7 +104,7 @@ class ProfileHeroCard extends StatelessWidget {
                           child: Text(
                             profile.name,
                             style: AppTextStyles.headlineSm.copyWith(
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -119,35 +123,35 @@ class ProfileHeroCard extends StatelessWidget {
                     const SizedBox(height: 4),
 
                     // VIP Lossless pill
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const PulsingDot(
-                            color: AppColors.primary,
-                            size: 6,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            profile.vipTier.toUpperCase(),
-                            style: AppTextStyles.labelSm.copyWith(
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const PulsingDot(
                               color: AppColors.primary,
-                              fontSize: 9,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.6,
+                              size: 5,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 5),
+                            Text(
+                              profile.vipTier.toUpperCase(),
+                              style: AppTextStyles.labelSm.copyWith(
+                                color: AppColors.primary,
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.3,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                     const SizedBox(height: 8),
 
                     // Edit profile button
@@ -253,7 +257,7 @@ class ProfileHeroCard extends StatelessWidget {
           value,
           style: AppTextStyles.headlineSm.copyWith(
             color: isPrimaryColor ? AppColors.primary : AppColors.textCharcoal,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 2),

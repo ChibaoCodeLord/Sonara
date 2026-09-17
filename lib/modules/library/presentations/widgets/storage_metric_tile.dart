@@ -42,11 +42,10 @@ class StorageMetricTile extends StatelessWidget {
           GestureDetector(
             onTap: onManageTap,
             child: Text(
-              'QUẢN LÝ',
-              style: AppTextStyles.labelSm.copyWith(
+              'Quản lý',
+              style: AppTextStyles.labelMd.copyWith(
                 color: AppColors.primary,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.8,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

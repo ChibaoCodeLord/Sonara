@@ -7,7 +7,6 @@ void main() {
     await tester.pump();
 
     // Verify key elements exist on home tab
-    expect(find.text('RESONANCE AI'), findsOneWidget);
     expect(find.text('Khám Phá'), findsWidgets);
     expect(find.text('AI HUM'), findsOneWidget);
 
@@ -27,6 +26,6 @@ void main() {
     await tester.tap(find.text('Hồ sơ'));
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Lê Hải Đăng'), findsOneWidget);
-    expect(find.text('Resonance AI Engine'), findsOneWidget);
+    expect(find.text('Hiệu ứng âm thanh'), findsOneWidget);
   });
 }

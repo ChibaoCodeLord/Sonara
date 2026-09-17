@@ -21,31 +21,13 @@ class MoodGenreGrid extends StatelessWidget {
         // Section header
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tâm Trạng & Thể Loại',
-                    style: AppTextStyles.headlineMd.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'Tùy chọn phong cách theo tần số cảm xúc của bạn',
-                    style: AppTextStyles.bodySm.copyWith(
-                      color: AppColors.textMuted,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+            Text(
+              'Tâm trạng & Thể loại',
+              style: AppTextStyles.headlineSm.copyWith(
+                fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(width: 8),
             const Icon(
               Icons.tune_rounded,
               color: AppColors.textMuted,
@@ -75,14 +57,11 @@ class MoodGenreGrid extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceCrisp,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x081A1A1A),
-                      blurRadius: 10,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: AppColors.borderSubtle,
+                    width: 1,
+                  ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

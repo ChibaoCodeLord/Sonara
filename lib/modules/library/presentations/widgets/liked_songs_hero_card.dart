@@ -94,16 +94,26 @@ class LikedSongsHeroCard extends StatelessWidget {
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
+                            color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(999),
                           ),
-                          child: Text(
-                            'OFFLINE LOSSLESS',
-                            style: AppTextStyles.labelSm.copyWith(
-                              color: Colors.white,
-                              letterSpacing: 0.8,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.download_done_rounded,
+                                color: Colors.white,
+                                size: 14,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Ngoại tuyến',
+                                style: AppTextStyles.labelSm.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

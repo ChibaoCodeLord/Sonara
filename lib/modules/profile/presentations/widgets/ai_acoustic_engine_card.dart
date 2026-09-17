@@ -30,14 +30,14 @@ class AiAcousticEngineCard extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(
-                    Icons.graphic_eq_rounded,
+                    Icons.tune_rounded,
                     color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 8),
                   Flexible(
                     child: Text(
-                      'Resonance AI Engine',
+                      'Hiệu ứng âm thanh',
                       style: AppTextStyles.headlineSm.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -46,15 +46,6 @@ class AiAcousticEngineCard extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              'ACOUSTIC PRO',
-              style: AppTextStyles.labelSm.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.8,
               ),
             ),
           ],
@@ -67,11 +58,15 @@ class AiAcousticEngineCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surfaceCrisp,
             borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: AppColors.borderSubtle,
+              width: 1,
+            ),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x0A1A1A1A),
-                blurRadius: 10,
-                offset: Offset(0, 2),
+                color: Color(0x051A1A1A),
+                blurRadius: 6,
+                offset: Offset(0, 1),
               ),
             ],
           ),
