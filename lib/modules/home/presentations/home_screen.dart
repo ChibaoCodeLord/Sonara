@@ -16,11 +16,15 @@ import 'widgets/trending_chart_card.dart';
 class HomeScreen extends StatelessWidget {
   final VoidCallback onOpenHumSearch;
   final VoidCallback onOpenNowPlaying;
+  final ValueChanged<String>? onOpenPlaylistDetail;
+  final VoidCallback? onProfileTap;
 
   const HomeScreen({
     super.key,
     required this.onOpenHumSearch,
     required this.onOpenNowPlaying,
+    this.onOpenPlaylistDetail,
+    this.onProfileTap,
   });
 
   @override
@@ -33,7 +37,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               HomeHeader(
                 onNotificationTap: () {},
-                onProfileTap: () {},
+                onProfileTap: onProfileTap,
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -214,17 +218,21 @@ class HomeScreen extends StatelessWidget {
               return PlaylistCard(
                 playlist: playlist,
                 onTap: () {
-                  context.read<PlayerCubit>().playSong(
-                        PlayingSongModel(
-                          id: playlist.id,
-                          title: playlist.title,
-                          artist: 'Resonance AI Curated',
-                          coverUrl: playlist.imageUrl,
-                          durationSeconds: 220,
-                          currentSeconds: 0,
-                        ),
-                      );
-                  onOpenNowPlaying();
+                  if (onOpenPlaylistDetail != null) {
+                    onOpenPlaylistDetail!(playlist.id);
+                  } else {
+                    context.read<PlayerCubit>().playSong(
+                          PlayingSongModel(
+                            id: playlist.id,
+                            title: playlist.title,
+                            artist: 'Resonance AI Curated',
+                            coverUrl: playlist.imageUrl,
+                            durationSeconds: 220,
+                            currentSeconds: 0,
+                          ),
+                        );
+                    onOpenNowPlaying();
+                  }
                 },
                 onPlayTap: () {
                   context.read<PlayerCubit>().playSong(

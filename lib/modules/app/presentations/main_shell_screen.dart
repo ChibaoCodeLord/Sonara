@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
-import '../../../common/constants/app_text_styles.dart';
+import '../../charts/presentations/charts_screen.dart';
 import '../../home/presentations/home_screen.dart';
 import '../../hum_to_search/bloc/hum_search_cubit.dart';
 import '../../hum_to_search/presentations/hum_to_search_screen.dart';
+import '../../library/presentations/library_screen.dart';
 import '../../player/bloc/player_cubit.dart';
 import '../../player/bloc/player_state.dart';
 import '../../player/presentations/now_playing_screen.dart';
 import '../../player/presentations/widgets/mini_player_bar.dart';
+import '../../playlist/presentations/playlist_detail_screen.dart';
+import '../../profile/presentations/profile_screen.dart';
 import '../bloc/app_cubit.dart';
 import '../bloc/app_state.dart';
 import 'widgets/main_bottom_nav_bar.dart';
@@ -31,10 +34,22 @@ class MainShellScreen extends StatelessWidget {
                   HomeScreen(
                     onOpenHumSearch: () => _openHumToSearch(context),
                     onOpenNowPlaying: () => _openNowPlaying(context),
+                    onOpenPlaylistDetail: (id) =>
+                        _openPlaylistDetail(context, id),
+                    onProfileTap: () => context.read<AppCubit>().setTab(3),
                   ),
-                  _buildPlaceholderScreen('Thư viện', Icons.library_music_rounded),
-                  _buildPlaceholderScreen('Bảng xếp hạng', Icons.trending_up_rounded),
-                  _buildPlaceholderScreen('Hồ sơ cá nhân', Icons.person_rounded),
+                  LibraryScreen(
+                    onOpenNowPlaying: () => _openNowPlaying(context),
+                    onOpenPlaylistDetail: (id) =>
+                        _openPlaylistDetail(context, id),
+                    onProfileTap: () => context.read<AppCubit>().setTab(3),
+                  ),
+                  ChartsScreen(
+                    onOpenNowPlaying: () => _openNowPlaying(context),
+                    onOpenHumSearch: () => _openHumToSearch(context),
+                    onProfileTap: () => context.read<AppCubit>().setTab(3),
+                  ),
+                  const ProfileScreen(),
                 ],
               ),
 
@@ -109,40 +124,10 @@ class MainShellScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceholderScreen(String title, IconData icon) {
-    return Scaffold(
-      backgroundColor: AppColors.surface,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 72,
-                height: 72,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.surfaceContainer,
-                ),
-                child: Icon(icon, color: AppColors.primary, size: 36),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                title,
-                style: AppTextStyles.headlineMd.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'Tính năng đang được Resonance AI phát triển',
-                style: AppTextStyles.bodySm.copyWith(
-                  color: AppColors.textMuted,
-                ),
-              ),
-            ],
-          ),
-        ),
+  void _openPlaylistDetail(BuildContext context, String playlistId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => PlaylistDetailScreen(playlistId: playlistId),
       ),
     );
   }

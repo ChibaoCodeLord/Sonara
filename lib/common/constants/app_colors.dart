@@ -12,9 +12,11 @@ class AppColors {
 
   // Secondary & Accents
   static const Color secondary = Color(0xFFBB0015);
+  static const Color secondaryFixed = Color(0xFFFFDAD6);
   static const Color secondaryContainer = Color(0xFFE9091F);
   static const Color secondaryFixedDim = Color(0xFFFFB4AC);
   static const Color tertiary = Color(0xFF8B0012);
+  static const Color emeraldActive = Color(0xFF10B981);
 
   // AI Gradient tokens
   static const Color aiGradientStart = Color(0xFFB3122E);
