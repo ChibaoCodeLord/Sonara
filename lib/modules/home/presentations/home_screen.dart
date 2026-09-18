@@ -44,9 +44,6 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Greeting & AI Status Bar
-                      _buildGreetingBar(),
-                      const SizedBox(height: 16),
 
                       // Hum & Whistle Hero Banner
                       HumHeroBanner(
@@ -94,20 +91,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGreetingBar() {
-    final hour = DateTime.now().hour;
-    final greeting = hour < 11
-        ? 'Chào buổi sáng'
-        : hour < 18
-            ? 'Chào buổi chiều'
-            : 'Chào buổi tối';
-    return Text(
-      '$greeting 👋',
-      style: AppTextStyles.headlineMd.copyWith(
-        fontWeight: FontWeight.w700,
-      ),
-    );
-  }
 
   Widget _buildAiMixesSection(BuildContext context, HomeState state) {
     return Column(
