@@ -16,6 +16,7 @@
 8. [Phân Tích Kiến Trúc Dữ Liệu & State Management](#8-phân-tích-kiến-trúc-dữ-liệu--state-management)
 9. [Báo Cáo Mức Độ Hoàn Thiện & Các Điểm Cần Nâng Cấp](#9-báo-cáo-mức-độ-hoàn-thiện--các-điểm-cần-nâng-cấp)
 10. [Hướng Dẫn Tiếp Cận Mã Nguồn (Developer Onboarding)](#10-hướng-dẫn-tiếp-cận-mã-nguồn-developer-onboarding)
+11. [Danh Sách Màn Hình Cần Bổ Sung (Product Roadmap)](#11-danh-sách-màn-hình-cần-bổ-sung-để-hoàn-thiện-ứng-dụng-product-roadmap)
 
 ---
 
@@ -350,3 +351,109 @@ flowchart TD
 4. **Bước 4 - Tính năng cốt lõi AI Hum:** Đọc [lib/modules/hum_to_search/bloc/hum_search_cubit.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/hum_to_search/bloc/hum_search_cubit.dart), [hum_to_search_screen.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/hum_to_search/presentations/hum_to_search_screen.dart) và [hum_search_result_screen.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/hum_to_search/presentations/hum_search_result_screen.dart).
 5. **Bước 5 - Các trang nội dung:** Duyệt qua [home_screen.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/home/presentations/home_screen.dart), [charts_screen.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/charts/presentations/charts_screen.dart), [library_screen.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/library/presentations/library_screen.dart) và [profile_screen.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/modules/profile/presentations/profile_screen.dart).
 6. **Bước 6 - Định tuyến & Hệ thống Design:** Xem [lib/core/routes/app_router.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/core/routes/app_router.dart) và [lib/common/constants/app_colors.dart](file:///e:/HOCKY7/PBL6/SORANA-CODE/Sonara/Frontend/lib/common/constants/app_colors.dart).
+
+---
+
+## 11. Danh Sách Màn Hình Cần Bổ Sung Để Hoàn Thiện Ứng Dụng (Product Roadmap)
+
+Dựa trên việc đối chiếu với các nền tảng streaming âm nhạc hàng đầu (**Spotify, Apple Music, Zing MP3, YouTube Music, Tidal**), ứng dụng **Sonara** cần bổ sung **19 màn hình** được phân loại thành **7 nhóm nghiệp vụ** để trở thành sản phẩm thương mại hoàn chỉnh (Production-Ready):
+
+### 11.1. Nhóm Xác Thực & Khởi Tạo Tài Khoản (Authentication & Onboarding)
+*Backend đã triển khai sẵn JWT, bcrypt và User Model tại `Backend/src/models/user.model.js`.*
+
+1. **Màn hình Chào Mừng & Onboarding (Welcome / Splash Screen):**
+   * *Mục đích:* Giới thiệu ngắn gọn 3 điểm đắt giá nhất của Sonara qua Carousel: Lossless 24-bit Hi-Res, Tìm bài hát bằng giọng ngân nga (AI Hum-to-Search) và Âm vòm Spatial 3D.
+   * *Thành phần:* Banner động, chỉ báo trang (dots), 2 nút kêu gọi hành động (CTA): `Đăng ký miễn phí` & `Đăng nhập`.
+2. **Màn hình Đăng Nhập (Sign In / Login Screen):**
+   * *Mục đích:* Xác thực tài khoản người dùng đã có.
+   * *Thành phần:* Form Email/Username & Mật khẩu, hiển thị/ẩn mật khẩu, nút `Quên mật khẩu`, Social Logins (Google, Apple ID, Facebook), nút chuyển sang Đăng ký.
+3. **Màn hình Đăng Ký & Xác Thực OTP (Sign Up & OTP Verification Screen):**
+   * *Mục đích:* Thu thập thông tin người dùng mới và chống tài khoản ảo.
+   * *Thành phần:* Họ tên, Email, Mật khẩu (kiểm tra độ mạnh), ô nhập mã OTP 6 số gửi về email xác minh kèm đếm ngược 60 giây gửi lại mã.
+4. **Màn hình Chọn Gu Âm Nhạc Ban Đầu (Taste Picker Screen):**
+   * *Mục đích:* Cá nhân hóa thuật toán gợi ý ngay khi người dùng đăng ký tài khoản thành công.
+   * *Thành phần:* Lưới thẻ nghệ sĩ và thể loại (Pop, Ballad, Indie, R&B, Lo-fi, Rap Việt...), yêu cầu chọn tối thiểu 3 mục để mở khóa trang Home cá nhân.
+
+### 11.2. Nhóm Tìm Kiếm & Khám Phá Chuyên Sâu (Search & Browse)
+*Hiện tại app chỉ có nút AI Hum, chưa có tìm kiếm văn bản toàn diện.*
+
+5. **Màn hình Tìm Kiếm Toàn Diện (Search Screen):**
+   * *Mục đích:* Tìm bài hát, nghệ sĩ, album qua từ khóa gõ phím.
+   * *Thành phần:* Thanh Search Input với cơ chế debounce 300ms, danh sách Lịch sử tìm kiếm gần đây (Recent Searches) kèm nút Xóa tất cả, lưới chủ đề khám phá (Browse Categories: Tâm trạng, Thư giãn, Tập luyện, Cafe, Nhạc Trẻ...).
+6. **Màn hình Kết Quả Tìm Kiếm Phân Loại (Search Results Screen):**
+   * *Mục đích:* Trình bày danh sách kết quả trực quan theo loại đối tượng.
+   * *Thành phần:* Tab bar phân loại: `Tất cả` | `Bài hát` | `Nghệ sĩ` | `Album` | `Playlist`, card Top Result nổi bật nhất và danh sách bài hát khớp từ khóa.
+
+### 11.3. Nhóm Chi Tiết Thực Thể Âm Nhạc (Music Entities)
+*Hiện tại app mới có `PlaylistDetailScreen`, người dùng bấm vào Tên Nghệ Sĩ hoặc Album chưa có trang đích.*
+
+7. **Trang Nghệ Sĩ Chi Tiết (Artist Profile / Detail Screen):**
+   * *Mục đích:* Trang thông tin cá nhân của ca sĩ / nhạc sĩ / ban nhạc.
+   * *Thành phần:* Ảnh bìa lớn có hiệu ứng mờ Parallax cuộn trang, badge Nghệ sĩ đã xác minh, nút `Theo dõi (Follow)`, số người nghe hàng tháng; Danh sách Top 5-10 Bài hát phổ biến nhất; Danh mục Đĩa nhạc (Discography: Albums, Singles & EPs); Mục `Xuất hiện trong` và `Nghệ sĩ tương tự`.
+8. **Màn Hình Chi Tiết Album (Album Detail Screen):**
+   * *Mục đích:* Xem thông tin đĩa nhạc phát hành chính thức.
+   * *Thành phần:* Ảnh bìa vuông chuẩn gốc, năm phát hành, hãng thu âm, badge chất lượng FLAC/Lossless; Danh sách Tracklist đánh số thứ tự từ bài 1 đến hết kèm thời lượng và lượt phát; Nút Tải toàn bộ Album và Lưu vào Thư viện.
+9. **Modal Tạo & Chỉnh Sửa Playlist Cá Nhân (Create / Edit Playlist Modal):**
+   * *Mục đích:* Cho phép người dùng tự tổ chức bộ sưu tập nhạc cá nhân.
+   * *Thành phần:* Đặt tên danh sách phát, mô tả, chọn ảnh bìa từ thư viện máy, bật/tắt chế độ `Công khai (Public)` hoặc `Cộng tác (Collaborative)` cho phép bạn bè cùng thêm bài.
+
+### 11.4. Nhóm Trình Phát Mở Rộng & Tiện Ích Âm Thanh (Player Extensions)
+*Bổ sung các tiện ích con mà người yêu nhạc sử dụng liên tục trên `NowPlayingScreen`.*
+
+10. **Hàng Đợi Phát Nhạc (Playback Queue / Up Next Sheet):**
+    * *Mục đích:* Kiểm soát và điều phối danh sách bài hát đang phát dở và chuẩn bị phát.
+    * *Thành phần:* Bài hát đang phát (Now Playing), danh sách bài hát kế tiếp (Up Next); Hỗ trợ kéo thả (Reorder) thay đổi thứ tự phát; Vuốt để xóa bài khỏi hàng đợi; Nút bật/tắt tính năng `Tự động phát bài hát tương tự (Autoplay)` khi hết danh sách.
+11. **Màn Hình Lời Bài Hát Toàn Màn Hình & Karaoke (Full-Screen Lyrics & Karaoke Mode):**
+    * *Mục đích:* Hát theo lời và hiển thị tương tác visual sống động.
+    * *Thành phần:* Lời bài hát chạy chữ theo thời gian thực (Synced Lyrics), chế độ chữ lớn; Nút bật **Chế độ Karaoke (AI Stem Separation)** giảm vocal ca sĩ giữ lại nhạc beat; Công cụ tạo Card trích dẫn câu hát yêu thích (Lyric Quote Card) để chia sẻ lên Story.
+12. **Bộ Chỉnh Âm & Cấu Hình Âm Học (Equalizer & Sound FX Screen):**
+    * *Mục đích:* Tinh chỉnh trải nghiệm âm thanh chuyên sâu cho tai nghe / loa ngoài.
+    * *Thành phần:* Graphic Equalizer 5-band / 10-band với preset (*Bass Boost, Treble Boost, Acoustic, Vocal, Rock, EDM...*); Điều chỉnh độ trễ Crossfade (chuyển bài mượt không khoảng lặng từ 1s - 12s); Chuẩn hóa âm lượng (Normalize Volume).
+13. **Hẹn Giờ Tắt Nhạc (Sleep Timer Bottom Sheet):**
+    * *Mục đích:* Tự động ngắt phát nhạc khi người dùng đi ngủ.
+    * *Thành phần:* Các mốc thời gian: *15 phút, 30 phút, 45 phút, 1 giờ* hoặc *Sau khi hết bài hát này*, đồng hồ đếm ngược trực quan.
+
+### 11.5. Nhóm Quản Lý Ngoại Tuyến & Lịch Sử (Offline & History)
+
+14. **Màn Hình Nhạc Đã Tải Ngoại Tuyến (Offline Music & Download Manager):**
+    * *Mục đích:* Nghe nhạc khi không có kết nối Internet / mạng di động.
+    * *Thành phần:* Danh sách bài hát/album đã tải về bộ nhớ trong; Thanh đo dung lượng bộ nhớ đã sử dụng (Storage Meter); Tùy chọn quản lý chất lượng tải xuống (320kbps vs FLAC Lossless); Nút xóa bộ nhớ đệm (Clear Audio Cache).
+15. **Lịch Sử Nghe Gần Đây (Listening History / Recently Played):**
+    * *Mục đích:* Giúp người dùng tìm lại bài hát đã từng nghe qua.
+    * *Thành phần:* Dòng thời gian chi tiết theo ngày (*Hôm nay, Hôm qua, 7 ngày trước*); Nút xóa lịch sử hoặc lưu nhanh toàn bộ vào một Playlist mới.
+
+### 11.6. Nhóm Thương Mại & Cài Đặt Tài Khoản (Monetization & Settings)
+
+16. **Màn Hình Nâng Cấp Gói Cước VIP (Sonara Premium / Subscription Screen):**
+    * *Mục đích:* Chuyển đổi người dùng miễn phí sang trả phí để tạo doanh thu.
+    * *Thành phần:* Bảng so sánh tính năng Free vs VIP (Chất lượng 320kbps vs Hi-Res FLAC 24-bit/192kHz, Không quảng cáo, Nghe offline không giới hạn, Tìm kiếm AI Hum không giới hạn); Các gói cước: Tháng, Năm, Học sinh/Sinh viên, Gói Gia đình (Family); Cổng thanh toán: MoMo, ZaloPay, Thẻ ngân hàng, In-App Purchase.
+17. **Cài Đặt Ứng Dụng & Tài Khoản (Settings & Preferences):**
+    * *Mục đích:* Quản trị tài khoản và thiết lập kỹ thuật.
+    * *Thành phần:* Đổi mật khẩu, quản lý phiên đăng nhập thiết bị (Connected Devices); Cấu hình chất lượng phát trực tuyến khi dùng Wi-Fi vs Mạng di động 4G/5G; Cài đặt thông báo (Push Notifications: bài hát mới từ nghệ sĩ theo dõi, tin tức cập nhật).
+
+### 11.7. Nhóm Xã Hội & Tính Năng Độc Quyền AI (Viral & Community)
+
+18. **Sonara Recap / Wrapped (Tổng Kết Âm Nhạc Định Kỳ):**
+    * *Mục đích:* Tạo hiệu ứng lan tỏa (viral) trên mạng xã hội tương tự Spotify Wrapped.
+    * *Thành phần:* Các slide câu chuyện (Story dạng vuốt ngang): Tổng số phút nghe nhạc, Top 5 bài hát, Top 3 nghệ sĩ thân thiết nhất, Thể loại nhạc phản ánh tính cách do AI phân tích; Nút xuất ảnh story sắc nét chia sẻ lên Instagram, Facebook, TikTok.
+19. **Quét Mã Sóng Âm (Sonara Wave Code Scanner):**
+    * *Mục đích:* Chia sẻ nhạc nhanh chóng giữa bạn bè mà không cần gõ tìm kiếm.
+    * *Thành phần:* Mỗi bài hát/playlist có một mã vạch sóng âm đặc thù (Wave Code); Màn hình bật camera quét mã của bạn bè để ngay lập tức điều hướng đến bài hát.
+
+---
+
+### 11.8. Bảng Ma Trận Ưu Tiên Triển Khai (Implementation Priority Matrix)
+
+| Mức Độ | Mã Màn Hình | Tên Màn Hình | Lý Do & Giá Trị Mang Lại |
+| :---: | :---: | :--- | :--- |
+| **P0 (Cực Kỳ Cấp Thiết)** | `SCR-05` | Tìm Kiếm Toàn Diện (Search Screen) | Chức năng bắt buộc của mọi app nghe nhạc, bổ trợ trực tiếp cho AI Hum. |
+| **P0 (Cực Kỳ Cấp Thiết)** | `SCR-07` | Trang Nghệ Sĩ Chi Tiết (Artist Profile) | Kết nối luồng nghe nhạc từ Home, Charts và Now Playing. |
+| **P0 (Cực Kỳ Cấp Thiết)** | `SCR-10` | Hàng Đợi Phát Nhạc (Playback Queue) | Đảm bảo trải nghiệm phát nhạc liền mạch không gián đoạn. |
+| **P0 (Cực Kỳ Cấp Thiết)** | `SCR-02` & `SCR-03` | Đăng Nhập & Đăng Ký Tài Khoản | Kết nối dữ liệu người dùng thật với Backend Express/MongoDB có sẵn. |
+| **P1 (Quan Trọng)** | `SCR-08` | Chi Tiết Album (Album Detail) | Tôn vinh các đĩa nhạc nghệ thuật và chất lượng Hi-Res Lossless. |
+| **P1 (Quan Trọng)** | `SCR-11` | Lời Bài Hát Toàn Màn Hình & Karaoke | Tính năng giữ chân người dùng tương tác sâu nhất trên app. |
+| **P1 (Quan Trọng)** | `SCR-09` | Tạo & Quản Lý Playlist Cá Nhân | Tăng tính sở hữu và cá nhân hóa trải nghiệm âm nhạc. |
+| **P1 (Quan Trọng)** | `SCR-14` | Nhạc Đã Tải Ngoại Tuyến (Offline Mode) | Đáp ứng nhu cầu nghe nhạc khi đi tàu xe, máy bay hoặc nơi mất sóng. |
+| **P2 (Nâng Cao / Thương Mại)** | `SCR-16` | Nâng Cấp Gói Cước VIP (Monetization) | Mô hình kinh doanh tạo dòng tiền từ dịch vụ thuê bao Lossless. |
+| **P2 (Nâng Cao / Thương Mại)** | `SCR-12` | Bộ Chỉnh Âm Equalizer & Crossfade | Phục vụ nhóm người dùng Audiophile nghe nhạc chất lượng cao. |
+| **P2 (Nâng Cao / Thương Mại)** | `SCR-18` | Sonara Recap / Wrapped | Đòn bẩy tiếp thị tự nhiên (Organic Marketing) cực mạnh vào cuối năm. |

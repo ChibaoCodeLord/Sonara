@@ -45,5 +45,9 @@ flutter run -d chrome    # Chạy trên Trình duyệt Web
 
 ---
 
-## 📖 Tài Liệu Tham Khảo Chi Tiết
-* Chi tiết phân tích toàn bộ 9 giao diện, kiến trúc BLoC / Cubit, ma trận kiểm thử và luồng hoạt động người dùng của Frontend: xem tại **[Frontend/README.md](Frontend/README.md)**.
+## 📖 Tài Liệu Tham Khảo Chi Tiết & Xuất Bản PDF
+
+* **Tài liệu Markdown chi tiết:** Xem tại **[Frontend/README.md](Frontend/README.md)** (Phân tích toàn diện 9 giao diện hiện có, cấu trúc BLoC/Cubit, ma trận kiểm thử và **Roadmap 19 màn hình cần bổ sung**).
+* **Tài liệu xuất bản định dạng PDF (A4):**
+  * Tải trực tiếp tại: **[Sonara_Screens_and_Features_Documentation.pdf](Sonara_Screens_and_Features_Documentation.pdf)** (Được dàn trang chuyên nghiệp, có số trang tự động, bảng biểu và ma trận tính năng hoàn chỉnh).
+* **Thư mục ảnh chụp màn hình UI:** Toàn bộ 8 màn hình thực tế của ứng dụng đã được chụp sắc nét và lưu tại thư mục **[`screenshots/`](screenshots/)**.

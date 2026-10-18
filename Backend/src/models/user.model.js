@@ -3,60 +3,66 @@ import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, 'Vui lòng cung cấp họ và tên'],
-      trim: true,
-      maxlength: [50, 'Tên không được vượt quá 50 ký tự'],
-    },
     email: {
       type: String,
-      required: [true, 'Vui lòng cung cấp địa chỉ email'],
+      required: [true, 'Email là bắt buộc'],
       unique: true,
       lowercase: true,
       trim: true,
-      match: [
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        'Địa chỉ email không hợp lệ',
-      ],
     },
-    password: {
+    password_hash: {
       type: String,
-      required: [true, 'Vui lòng cung cấp mật khẩu'],
-      minlength: [6, 'Mật khẩu phải có ít nhất 6 ký tự'],
-      select: false, // Ẩn mật khẩu khi query trừ khi được gọi rõ ràng
+      required: [true, 'Mật khẩu là bắt buộc'],
+      select: false,
     },
-    avatar: {
+    display_name: {
+      type: String,
+      required: [true, 'Tên hiển thị là bắt buộc'],
+      trim: true,
+    },
+    avatar_url: {
       type: String,
       default: '',
     },
-    role: {
+    country: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      default: 'VN',
+      trim: true,
     },
-    favoriteSongs: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Song',
-      },
-    ],
+    created_at: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
-    timestamps: true,
+    timestamps: false,
+    versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-// Tự động mã hóa mật khẩu trước khi lưu vào CSDL
+// Tự động hash mật khẩu trước khi lưu vào CSDL
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 12);
+  if (!this.isModified('password_hash')) return next();
+  this.password_hash = await bcrypt.hash(this.password_hash, 12);
   next();
 });
 
-// Phương thức đối soát mật khẩu người dùng nhập vào
+// Phương thức so khớp mật khẩu
 userSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+  return await bcrypt.compare(candidatePassword, this.password_hash);
 };
 
-export const User = mongoose.model('User', userSchema);
+// Aliases để tương thích với auth controller cũ
+userSchema.virtual('name').get(function () {
+  return this.display_name;
+}).set(function (v) {
+  this.display_name = v;
+});
+
+userSchema.virtual('password').set(function (v) {
+  this.password_hash = v;
+});
+
+export const User = mongoose.model('User', userSchema, 'users');
