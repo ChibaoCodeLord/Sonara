@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../modules/app/presentations/main_shell_screen.dart';
+import '../../modules/hum_to_search/bloc/hum_search_cubit.dart';
 import '../../modules/hum_to_search/presentations/hum_to_search_screen.dart';
 import '../../modules/hum_to_search/presentations/hum_search_result_screen.dart';
 import '../../modules/player/presentations/now_playing_screen.dart';
@@ -19,9 +21,19 @@ class AppRouter {
       case shell:
         return MaterialPageRoute(builder: (_) => const MainShellScreen());
       case humToSearch:
-        return MaterialPageRoute(builder: (_) => const HumToSearchScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => HumSearchCubit(),
+            child: const HumToSearchScreen(),
+          ),
+        );
       case humSearchResult:
-        return MaterialPageRoute(builder: (_) => const HumSearchResultScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => HumSearchCubit(),
+            child: const HumSearchResultScreen(),
+          ),
+        );
       case nowPlaying:
         return MaterialPageRoute(builder: (_) => const NowPlayingScreen());
       case playlistDetail:
