@@ -96,10 +96,14 @@ class LibraryPlaylistTile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        '${playlist.trackCount} bài hát',
-                        style: AppTextStyles.bodySm.copyWith(
-                          color: AppColors.textMuted,
+                      Flexible(
+                        child: Text(
+                          '${playlist.trackCount} bài hát',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.bodySm.copyWith(
+                            color: AppColors.textMuted,
+                          ),
                         ),
                       ),
                     ],

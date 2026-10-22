@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../common/constants/app_colors.dart';
 import '../../../../common/constants/app_text_styles.dart';
+import '../../../core/routes/app_navigator.dart';
+import '../../../core/routes/app_router.dart';
+import '../../auth/presentations/sign_out_flow.dart';
+import '../../player/presentations/sheets/audio_device_sheet.dart';
 import '../bloc/profile_cubit.dart';
 import '../bloc/profile_state.dart';
 import 'widgets/ai_acoustic_engine_card.dart';
 import 'widgets/preferences_list_card.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/profile_hero_card.dart';
+import 'widgets/profile_quick_links.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -23,7 +28,10 @@ class ProfileScreen extends StatelessWidget {
           return Column(
             children: [
               // Header
-              const ProfileHeader(),
+              ProfileHeader(
+                onSettingsTap: () =>
+                    AppNavigator.push(context, AppRouter.settings),
+              ),
 
               // Scrollable content
               Expanded(
@@ -36,8 +44,13 @@ class ProfileScreen extends StatelessWidget {
                       // Profile Hero Card
                       ProfileHeroCard(
                         profile: state.profile,
-                        onEditProfileTap: () {},
+                        onEditProfileTap: () =>
+                            AppNavigator.push(context, AppRouter.editProfile),
                       ),
+                      const SizedBox(height: 20),
+
+                      // Recap, Premium & shortcuts
+                      const ProfileQuickLinks(),
                       const SizedBox(height: 20),
 
                       // AI Acoustic Intelligence Engine Section
@@ -55,18 +68,17 @@ class ProfileScreen extends StatelessWidget {
                       PreferencesListCard(
                         settings: state.settings,
                         onThemeChanged: (theme) => cubit.setThemeMode(theme),
+                        onHumHistoryTap: () =>
+                            AppNavigator.push(context, AppRouter.humHistory),
+                        onDevicesTap: () => AudioDeviceSheet.show(context),
+                        onEqualizerTap: () =>
+                            AppNavigator.push(context, AppRouter.equalizer),
                       ),
                       const SizedBox(height: 20),
 
                       // Logout button
                       GestureDetector(
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Đã đăng xuất tài khoản'),
-                            ),
-                          );
-                        },
+                        onTap: () => confirmAndSignOut(context),
                         child: Container(
                           height: 50,
                           decoration: BoxDecoration(

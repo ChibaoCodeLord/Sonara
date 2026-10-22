@@ -7,11 +7,13 @@ import '../../models/hum_search_result_model.dart';
 class CandidateTrackCard extends StatelessWidget {
   final SongMatchModel candidate;
   final VoidCallback onPlayTap;
+  final VoidCallback? onMoreTap;
 
   const CandidateTrackCard({
     super.key,
     required this.candidate,
     required this.onPlayTap,
+    this.onMoreTap,
   });
 
   @override
@@ -114,7 +116,7 @@ class CandidateTrackCard extends StatelessWidget {
               color: AppColors.textMuted,
               size: 20,
             ),
-            onPressed: () {},
+            onPressed: onMoreTap,
             splashRadius: 18,
           ),
         ],

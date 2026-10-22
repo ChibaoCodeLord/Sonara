@@ -44,4 +44,42 @@ class ProfileCubit extends Cubit<ProfileState> {
       settings: state.settings.copyWith(themeMode: theme),
     ));
   }
+
+  void setPairedDevice(String device) {
+    emit(state.copyWith(
+      settings: state.settings.copyWith(pairedDevice: device),
+    ));
+  }
+
+  void setEqualizerProfile(String profile) {
+    emit(state.copyWith(
+      settings: state.settings.copyWith(equalizerProfile: profile),
+    ));
+  }
+
+  void setStreamingQuality(String quality) {
+    emit(state.copyWith(
+      settings: state.settings.copyWith(streamingQuality: quality),
+    ));
+  }
+
+  void updateProfile({
+    String? name,
+    String? avatarUrl,
+    String? email,
+    String? bio,
+  }) {
+    emit(state.copyWith(
+      profile: state.profile.copyWith(
+        name: name,
+        avatarUrl: avatarUrl,
+        email: email,
+        bio: bio,
+      ),
+    ));
+  }
+
+  void setVipTier(String tier) {
+    emit(state.copyWith(profile: state.profile.copyWith(vipTier: tier)));
+  }
 }

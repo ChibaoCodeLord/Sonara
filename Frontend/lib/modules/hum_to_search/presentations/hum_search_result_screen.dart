@@ -5,7 +5,10 @@ import '../../../common/constants/app_text_styles.dart';
 import '../../../common/widgets/pulsing_dot.dart';
 import '../../player/bloc/player_cubit.dart';
 import '../../player/models/playing_song_model.dart';
+import '../../../core/routes/app_navigator.dart';
 import '../../player/presentations/now_playing_screen.dart';
+import '../../player/presentations/sheets/song_options_sheet.dart';
+import '../../playlist/presentations/sheets/add_to_playlist_sheet.dart';
 import '../bloc/hum_search_cubit.dart';
 import '../bloc/hum_search_state.dart';
 import 'hum_to_search_screen.dart';
@@ -69,14 +72,16 @@ class HumSearchResultScreen extends StatelessWidget {
                           onToggleSnippet: () => cubit.toggleSnippetPlay(),
                           onToggleFavorite: () =>
                               cubit.toggleFavorite(result.bestMatch.id),
-                          onAddToPlaylist: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Đã thêm vào danh sách phát'),
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-                          },
+                          onAddToPlaylist: () => AddToPlaylistSheet.show(
+                            context,
+                            PlayingSongModel(
+                              id: result.bestMatch.id,
+                              title: result.bestMatch.title,
+                              artist: result.bestMatch.artist,
+                              coverUrl: result.bestMatch.coverUrl,
+                              album: result.bestMatch.album,
+                            ),
+                          ),
                           onPlayFull: () {
                             context.read<PlayerCubit>().playSong(
                               PlayingSongModel(
@@ -110,14 +115,8 @@ class HumSearchResultScreen extends StatelessWidget {
                         // Smart Troubleshooting Hint
                         TroubleshootingCard(
                           onRetryHum: () => _retryHum(context, cubit),
-                          onSearchByLyrics: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Mở tìm kiếm bằng từ khóa...'),
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-                          },
+                          onSearchByLyrics: () =>
+                              AppNavigator.openSearch(context),
                         ),
                         const SizedBox(height: 24),
                       ],
@@ -261,8 +260,19 @@ class HumSearchResultScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ...result.otherCandidates.map<Widget>((candidate) {
+          final song = PlayingSongModel(
+            id: candidate.id,
+            title: candidate.title,
+            artist: candidate.artist,
+            coverUrl: candidate.coverUrl,
+            album: candidate.album,
+            durationSeconds: 210,
+            currentSeconds: 0,
+            contextHint: 'AI Hum Match (${candidate.matchPercentage}%)',
+          );
           return CandidateTrackCard(
             candidate: candidate,
+            onMoreTap: () => SongOptionsSheet.show(context, song),
             onPlayTap: () {
               context.read<PlayerCubit>().playSong(
                 PlayingSongModel(

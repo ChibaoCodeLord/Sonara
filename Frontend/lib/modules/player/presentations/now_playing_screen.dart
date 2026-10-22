@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
+import '../../../core/routes/app_navigator.dart';
+import '../../../core/routes/app_router.dart';
+import '../../playlist/presentations/sheets/add_to_playlist_sheet.dart';
 import '../bloc/player_cubit.dart';
 import '../bloc/player_state.dart';
+import 'sheets/audio_device_sheet.dart';
+import 'sheets/song_options_sheet.dart';
+import 'widgets/player_utility_row.dart';
 import 'widgets/acoustic_route_chips.dart';
 import 'widgets/album_artwork_hero.dart';
 import 'widgets/playback_controls_row.dart';
@@ -86,13 +92,19 @@ class NowPlayingScreen extends StatelessWidget {
                                     ],
                                   ),
                                   const SizedBox(height: 3),
-                                  Text(
-                                    song.artist,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTextStyles.bodyMd.copyWith(
-                                      color: AppColors.textMuted,
-                                      fontWeight: FontWeight.w500,
+                                  GestureDetector(
+                                    onTap: () => AppNavigator.openArtistByLabel(
+                                      context,
+                                      song.artist,
+                                    ),
+                                    child: Text(
+                                      song.artist,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppTextStyles.bodyMd.copyWith(
+                                        color: AppColors.textMuted,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -107,14 +119,8 @@ class NowPlayingScreen extends StatelessWidget {
                                     color: AppColors.textCharcoal,
                                     size: 26,
                                   ),
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Đã thêm vào danh sách phát'),
-                                        duration: Duration(seconds: 1),
-                                      ),
-                                    );
-                                  },
+                                  onPressed: () =>
+                                      AddToPlaylistSheet.show(context, song),
                                 ),
                                 IconButton(
                                   icon: Icon(
@@ -164,14 +170,19 @@ class NowPlayingScreen extends StatelessWidget {
                           isSpatialActive: state.isSpatialActive,
                           routeDevice: state.audioRouteDevice,
                           onSpatialToggle: () => playerCubit.toggleSpatialAudio(),
-                          onRouteTap: () {},
+                          onRouteTap: () => AudioDeviceSheet.show(context),
                         ),
+                        const SizedBox(height: 16),
+
+                        // Queue, sleep timer, EQ & share shortcuts
+                        PlayerUtilityRow(state: state),
                         const SizedBox(height: 24),
 
                         // Synced Lyrics Preview Card
                         SyncedLyricsCard(
                           lyrics: state.lyrics,
-                          onFullScreenTap: () {},
+                          onFullScreenTap: () =>
+                              AppNavigator.push(context, AppRouter.lyrics),
                         ),
                         const SizedBox(height: 20),
                       ],
@@ -244,7 +255,11 @@ class NowPlayingScreen extends StatelessWidget {
               color: AppColors.textCharcoal,
               size: 26,
             ),
-            onPressed: () {},
+            onPressed: () => SongOptionsSheet.show(
+              context,
+              context.read<PlayerCubit>().state.song,
+              isNowPlaying: true,
+            ),
           ),
         ],
       ),

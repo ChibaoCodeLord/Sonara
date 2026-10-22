@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
+import '../../../core/routes/app_navigator.dart';
+import '../../../core/routes/app_router.dart';
 import '../../player/bloc/player_cubit.dart';
 import '../../player/models/playing_song_model.dart';
 import '../bloc/home_cubit.dart';
@@ -36,6 +38,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               HomeHeader(
                 onProfileTap: onProfileTap,
+                onSearchTap: () => AppNavigator.openSearch(context),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -112,7 +115,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () {},
+              onTap: () => AppNavigator.push(context, AppRouter.allMixes),
               child: Row(
                 children: [
                   Text(

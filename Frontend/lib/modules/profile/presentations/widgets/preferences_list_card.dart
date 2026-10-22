@@ -6,11 +6,17 @@ import '../../models/acoustic_settings_model.dart';
 class PreferencesListCard extends StatelessWidget {
   final AcousticSettingsModel settings;
   final ValueChanged<String> onThemeChanged;
+  final VoidCallback onHumHistoryTap;
+  final VoidCallback onDevicesTap;
+  final VoidCallback onEqualizerTap;
 
   const PreferencesListCard({
     super.key,
     required this.settings,
     required this.onThemeChanged,
+    required this.onHumHistoryTap,
+    required this.onDevicesTap,
+    required this.onEqualizerTap,
   });
 
   @override
@@ -45,7 +51,7 @@ class PreferencesListCard extends StatelessWidget {
                 icon: Icons.history_toggle_off_rounded,
                 title: 'Lịch sử nhận diện Hum & Giọng hát',
                 subtitle: '142 bản ghi phân tích âm phổ',
-                onTap: () {},
+                onTap: onHumHistoryTap,
               ),
               const Divider(
                 height: 1,
@@ -58,7 +64,7 @@ class PreferencesListCard extends StatelessWidget {
                 icon: Icons.headphones_rounded,
                 title: 'Thiết bị đã ghép đôi',
                 deviceName: settings.pairedDevice,
-                onTap: () {},
+                onTap: onDevicesTap,
               ),
               const Divider(
                 height: 1,
@@ -72,7 +78,7 @@ class PreferencesListCard extends StatelessWidget {
                 title: 'Bộ cân bằng (Sonara EQ)',
                 subtitle: settings.equalizerProfile,
                 subtitleColor: AppColors.primary,
-                onTap: () {},
+                onTap: onEqualizerTap,
               ),
               const Divider(
                 height: 1,

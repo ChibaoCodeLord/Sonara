@@ -6,10 +6,18 @@ import 'app_network_image.dart';
 
 /// The same compact page header across the four main tabs.
 class MainSectionHeader extends StatelessWidget {
-  const MainSectionHeader({super.key, required this.title, this.onProfileTap});
+  const MainSectionHeader({
+    super.key,
+    required this.title,
+    this.onProfileTap,
+    this.onSearchTap,
+    this.actions = const [],
+  });
 
   final String title;
   final VoidCallback? onProfileTap;
+  final VoidCallback? onSearchTap;
+  final List<Widget> actions;
 
   static const _avatarUrl =
       'https://lh3.googleusercontent.com/aida-public/AB6AXuD7duxPs1DpjO6pOuSivTM7hDgDn1CrarsTO1-5t9k7n2pg7ZEjcFNr0ZMzHssB3UfCVaaynS09o4TvAh4O56tfzkxG4SJ3rD8eoWA1yYo-gtp2XHrwxfF32iOaFhIwlbcUO5uiYmtpyfMS9ttmmhvuj4x2Ys3hI6QZhz4CEWhLoVRag1dpg3ctZI21MA9bTvRyZaPt9vMXhbTVVeV9NJSNSESPTHqdkpo4VvrQkJ-dsh-WastTqTnNlQ';
@@ -52,6 +60,16 @@ class MainSectionHeader extends StatelessWidget {
                   ),
                 ),
               ),
+              if (onSearchTap != null)
+                IconButton(
+                  tooltip: 'Tìm kiếm',
+                  icon: const Icon(
+                    Icons.search_rounded,
+                    color: AppColors.textCharcoal,
+                  ),
+                  onPressed: onSearchTap,
+                ),
+              ...actions,
               if (onProfileTap != null)
                 Semantics(
                   button: true,

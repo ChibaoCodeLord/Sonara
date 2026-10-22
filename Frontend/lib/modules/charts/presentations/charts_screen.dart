@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
+import '../../../core/catalog/catalog_models.dart';
+import '../../../core/routes/app_navigator.dart';
+import '../../../core/routes/app_router.dart';
 import '../../player/bloc/player_cubit.dart';
 import '../../player/models/playing_song_model.dart';
 import '../bloc/charts_cubit.dart';
@@ -39,6 +42,7 @@ class ChartsScreen extends StatelessWidget {
               // Header
               ChartsHeader(
                 onProfileTap: onProfileTap,
+                onSearchTap: () => AppNavigator.openSearch(context),
               ),
 
               // Scrollable content
@@ -84,7 +88,20 @@ class ChartsScreen extends StatelessWidget {
                       // Mood & Genre Discovery Grid
                       MoodGenreGrid(
                         moods: state.moodGenres,
-                        onMoodTap: (mood) {},
+                        onMoodTap: (mood) => AppNavigator.push(
+                          context,
+                          AppRouter.categoryDetail,
+                          arguments: CatalogCategory(
+                            id: mood.id,
+                            title: mood.title,
+                            subtitle: mood.subtitle,
+                            icon: mood.icon,
+                            colors: [
+                              AppColors.tertiary,
+                              mood.dotColor.withValues(alpha: 1),
+                            ],
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 32),
 
@@ -123,7 +140,11 @@ class ChartsScreen extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () {},
+              onTap: () => AppNavigator.push(
+                context,
+                AppRouter.fullChart,
+                arguments: state.activeTab,
+              ),
               child: Text(
                 'Xem tất cả',
                 style: AppTextStyles.labelMd.copyWith(

@@ -9,6 +9,11 @@ class PlayerState {
   final bool isSpatialActive;
   final String audioRouteDevice;
   final List<LyricLineModel> lyrics;
+  final List<PlayingSongModel> queue;
+  final bool isAutoplay;
+  final bool isKaraokeMode;
+  final Duration? sleepRemaining;
+  final bool sleepAfterCurrentTrack;
 
   const PlayerState({
     required this.song,
@@ -18,7 +23,14 @@ class PlayerState {
     this.isSpatialActive = true,
     this.audioRouteDevice = 'AirPods Pro',
     this.lyrics = const [],
+    this.queue = const [],
+    this.isAutoplay = true,
+    this.isKaraokeMode = false,
+    this.sleepRemaining,
+    this.sleepAfterCurrentTrack = false,
   });
+
+  bool get hasSleepTimer => sleepRemaining != null || sleepAfterCurrentTrack;
 
   PlayerState copyWith({
     PlayingSongModel? song,
@@ -28,6 +40,12 @@ class PlayerState {
     bool? isSpatialActive,
     String? audioRouteDevice,
     List<LyricLineModel>? lyrics,
+    List<PlayingSongModel>? queue,
+    bool? isAutoplay,
+    bool? isKaraokeMode,
+    Duration? sleepRemaining,
+    bool? sleepAfterCurrentTrack,
+    bool clearSleepTimer = false,
   }) {
     return PlayerState(
       song: song ?? this.song,
@@ -37,6 +55,14 @@ class PlayerState {
       isSpatialActive: isSpatialActive ?? this.isSpatialActive,
       audioRouteDevice: audioRouteDevice ?? this.audioRouteDevice,
       lyrics: lyrics ?? this.lyrics,
+      queue: queue ?? this.queue,
+      isAutoplay: isAutoplay ?? this.isAutoplay,
+      isKaraokeMode: isKaraokeMode ?? this.isKaraokeMode,
+      sleepRemaining:
+          clearSleepTimer ? null : (sleepRemaining ?? this.sleepRemaining),
+      sleepAfterCurrentTrack: clearSleepTimer
+          ? false
+          : (sleepAfterCurrentTrack ?? this.sleepAfterCurrentTrack),
     );
   }
 }
