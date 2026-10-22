@@ -109,29 +109,41 @@ class ProfileMenuRow extends StatelessWidget {
             children: [
               Icon(icon, color: tint, size: 22),
               const SizedBox(width: 14),
+              // Title and value share one Expanded so the value is always
+              // right-aligned and the trailing chevron/switch lines up.
               Expanded(
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.labelLg.copyWith(
-                    color: tint,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Row(
+                  // A short title leaves unused flex space; spaceBetween puts
+                  // it before the value so the value always ends flush right.
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.labelLg.copyWith(
+                          color: tint,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    if (value != null) ...[
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          value!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.right,
+                          style: AppTextStyles.bodySm,
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
-              if (value != null) ...[
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    value!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.bodySm,
-                  ),
-                ),
-              ],
+              const SizedBox(width: 4),
               if (trailing != null)
                 trailing!
               else if (onTap != null)
