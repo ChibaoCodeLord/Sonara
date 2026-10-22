@@ -94,12 +94,19 @@ class AppRouter {
           ),
         );
       case humSearchResult:
-        return page(const HumSearchResultScreen());
+        return page(
+          BlocProvider(
+            create: (_) => HumSearchCubit()..stopAndAnalyze(),
+            child: const HumSearchResultScreen(),
+          ),
+        );
       case nowPlaying:
         return page(const NowPlayingScreen());
       case playlistDetail:
         return page(
-          PlaylistDetailScreen(playlistId: (args as String?) ?? 'ai_curated_01'),
+          PlaylistDetailScreen(
+            playlistId: (args as String?) ?? 'ai_curated_01',
+          ),
         );
 
       // Authentication & Onboarding
@@ -122,7 +129,8 @@ class AppRouter {
       case categoryDetail:
         return page(
           CategoryDetailScreen(
-            category: (args as CatalogCategory?) ??
+            category:
+                (args as CatalogCategory?) ??
                 MusicCatalog.browseCategories.first,
           ),
         );
