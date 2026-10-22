@@ -60,7 +60,13 @@ class _FullChartScreenState extends State<FullChartScreen> {
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
               itemCount: _items.length + 1,
-              separatorBuilder: (_, _) => const SizedBox(height: 10),
+              separatorBuilder: (_, index) => index == 0
+                  ? const SizedBox(height: 12)
+                  : const Divider(
+                      height: 1,
+                      indent: 108,
+                      color: AppColors.borderSubtle,
+                    ),
               itemBuilder: (context, index) {
                 if (index == 0) return _buildHeader(context);
                 final item = _items[index - 1];

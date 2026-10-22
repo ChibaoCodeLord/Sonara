@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../common/constants/app_colors.dart';
 import '../../../../common/constants/app_text_styles.dart';
 
+/// Compact call-to-action for AI Hum-to-Search: copy on the left, a pulsing
+/// mic on the right. The whole card is tappable.
 class HumHeroBanner extends StatefulWidget {
   final VoidCallback onHumSearchTap;
 
@@ -16,20 +18,20 @@ class HumHeroBanner extends StatefulWidget {
 
 class _HumHeroBannerState extends State<HumHeroBanner>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animController;
+  late final AnimationController _pulseController;
 
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
+    _pulseController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    )..repeat(reverse: true);
+      duration: const Duration(milliseconds: 2200),
+    )..repeat();
   }
 
   @override
   void dispose() {
-    _animController.dispose();
+    _pulseController.dispose();
     super.dispose();
   }
 
@@ -37,194 +39,138 @@ class _HumHeroBannerState extends State<HumHeroBanner>
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         gradient: AppColors.heroGradient,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.25),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
+            color: AppColors.primary.withValues(alpha: 0.18),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
-      child: Stack(
-        clipBehavior: Clip.antiAlias,
-        children: [
-          // Ambient blurred glow circles
-          Positioned(
-            right: -30,
-            bottom: -30,
-            child: Container(
-              width: 140,
-              height: 140,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.aiGradientEnd.withValues(alpha: 0.35),
-              ),
-            ),
-          ),
-          Positioned(
-            left: -20,
-            top: -20,
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryFixed.withValues(alpha: 0.25),
-              ),
-            ),
-          ),
-          // Content
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: widget.onHumSearchTap,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 16, 20),
+            child: Row(
               children: [
-                // Engine 3.0 chip & EQ icon
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Container(
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Ngân nga để\ntìm bài hát',
+                        style: AppTextStyles.headlineMd.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Chỉ cần vài giây huýt sáo',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.bodySm.copyWith(
+                          color: Colors.white.withValues(alpha: 0.8),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
+                          horizontal: 16,
+                          vertical: 9,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.18),
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(999),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.mic_none_rounded,
-                              color: Colors.white,
-                              size: 14,
-                            ),
-                            const SizedBox(width: 6),
-                            Flexible(
-                              child: Text(
-                                'Tìm kiếm bằng giai điệu',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.labelSm.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'Thử ngay',
+                          style: AppTextStyles.labelLg.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    const Icon(
-                      Icons.graphic_eq_rounded,
-                      color: Colors.white70,
-                      size: 22,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-                // Heading
-                Text(
-                  'Không nhớ tên bài hát?\nNgân nga để tìm ngay',
-                  style: AppTextStyles.headlineMd.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    height: 1.25,
+                    ],
                   ),
                 ),
-                const SizedBox(height: 6),
-                // Subtitle
-                Text(
-                  'Nhận diện bài hát chính xác từ tiếng huýt sáo hoặc điệu ngân nga của bạn.',
-                  style: AppTextStyles.bodySm.copyWith(
-                    color: Colors.white.withValues(alpha: 0.88),
-                    height: 1.4,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                // Live Reactive Waveform Mini Visualization
-                AnimatedBuilder(
-                  animation: _animController,
-                  builder: (context, child) {
-                    final v = _animController.value;
+                const SizedBox(width: 12),
+                _PulsingMic(animation: _pulseController),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PulsingMic extends StatelessWidget {
+  final Animation<double> animation;
+
+  const _PulsingMic({required this.animation});
+
+  static const double _size = 108;
+  static const double _core = 60;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: _size,
+      height: _size,
+      child: AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Two staggered rings expanding out of the mic.
+              for (final offset in const [0.0, 0.5])
+                Builder(
+                  builder: (context) {
+                    final t = (animation.value + offset) % 1;
+                    final diameter = _core + (_size - _core) * t;
                     return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
+                      width: diameter,
+                      height: diameter,
                       decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _buildWaveBar(10 + v * 12, Colors.white70),
-                          _buildWaveBar(18 - v * 10, Colors.white),
-                          _buildWaveBar(12 + v * 8, AppColors.secondaryFixedDim),
-                          _buildWaveBar(22 - v * 12, Colors.white),
-                          _buildWaveBar(16 + v * 6, Colors.white70),
-                          _buildWaveBar(10 - v * 4, AppColors.secondaryFixedDim),
-                          _buildWaveBar(20 + v * 8, Colors.white),
-                          _buildWaveBar(8 + v * 10, Colors.white70),
-                          _buildWaveBar(16 - v * 6, AppColors.secondaryFixedDim),
-                        ],
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.18 * (1 - t)),
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 16),
-                // Hum-Search CTA Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton.icon(
-                    onPressed: widget.onHumSearchTap,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: AppColors.primary,
-                      elevation: 2,
-                      shadowColor: Colors.black.withValues(alpha: 0.15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.mic_rounded,
-                      color: AppColors.primary,
-                      size: 20,
-                    ),
-                    label: Text(
-                      'Thử tìm kiếm ngay',
-                      style: AppTextStyles.labelLg.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              child!,
+            ],
+          );
+        },
+        child: Container(
+          width: _core,
+          height: _core,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x33000000),
+                blurRadius: 12,
+                offset: Offset(0, 4),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWaveBar(double height, Color color) {
-    return Container(
-      width: 3.5,
-      height: height.clamp(4.0, 24.0),
-      margin: const EdgeInsets.symmetric(horizontal: 2),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(4),
+          child: const Icon(
+            Icons.mic_rounded,
+            color: AppColors.primary,
+            size: 30,
+          ),
+        ),
       ),
     );
   }
