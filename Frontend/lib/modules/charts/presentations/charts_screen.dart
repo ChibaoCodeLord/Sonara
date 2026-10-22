@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
+import '../../../core/catalog/catalog_models.dart';
+import '../../../core/routes/app_navigator.dart';
+import '../../../core/routes/app_router.dart';
 import '../../player/bloc/player_cubit.dart';
 import '../../player/models/playing_song_model.dart';
 import '../bloc/charts_cubit.dart';
 import '../bloc/charts_state.dart';
+import '../models/chart_item_model.dart';
 import 'widgets/chart_category_pills.dart';
 import 'widgets/chart_rank_tile.dart';
 import 'widgets/chart_tab_switcher.dart';
@@ -39,6 +43,7 @@ class ChartsScreen extends StatelessWidget {
               // Header
               ChartsHeader(
                 onProfileTap: onProfileTap,
+                onSearchTap: () => AppNavigator.openSearch(context),
               ),
 
               // Scrollable content
@@ -49,20 +54,12 @@ class ChartsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Subheader switcher & realtime status
+                      // Region switcher
                       ChartTabSwitcher(
                         activeTab: state.activeTab,
                         onTabChanged: (tab) => cubit.switchTab(tab),
-                        lastUpdatedText: state.lastUpdatedText,
                       ),
-                      const SizedBox(height: 14),
-
-                      // Category Pills
-                      ChartCategoryPills(
-                        selectedCategory: state.selectedCategory,
-                        onCategorySelected: (cat) => cubit.selectCategory(cat),
-                      ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 16),
 
                       // Spotlight Banner: AI Radar Tuần Này
                       SpotlightRadarCard(
@@ -75,18 +72,31 @@ class ChartsScreen extends StatelessWidget {
                           id: 'radar_spotlight',
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 28),
 
                       // Top 1-5 Chart Section
                       _buildTopChartSection(context, state),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 28),
 
                       // Mood & Genre Discovery Grid
                       MoodGenreGrid(
                         moods: state.moodGenres,
-                        onMoodTap: (mood) {},
+                        onMoodTap: (mood) => AppNavigator.push(
+                          context,
+                          AppRouter.categoryDetail,
+                          arguments: CatalogCategory(
+                            id: mood.id,
+                            title: mood.title,
+                            subtitle: mood.subtitle,
+                            icon: mood.icon,
+                            colors: [
+                              AppColors.tertiary,
+                              mood.dotColor.withValues(alpha: 1),
+                            ],
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 28),
 
                       // AI Hum Quick Invitation Strip
                       HumQuickInviteCard(
@@ -104,31 +114,48 @@ class ChartsScreen extends StatelessWidget {
   }
 
   Widget _buildTopChartSection(BuildContext context, ChartsState state) {
+    final cubit = context.read<ChartsCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Section Header
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: Text(
-                'Top 5 tuần này',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.headlineSm.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Top 5 tuần này',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.headlineSm.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    state.lastUpdatedText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.labelSm,
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () {},
+              onTap: () => AppNavigator.push(
+                context,
+                AppRouter.fullChart,
+                arguments: state.activeTab,
+              ),
               child: Text(
                 'Xem tất cả',
                 style: AppTextStyles.labelMd.copyWith(
                   color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -136,35 +163,61 @@ class ChartsScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
 
-        // List of Chart Items
-        ListView.separated(
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: state.chartItems.length,
-          separatorBuilder: (_, _) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            final item = state.chartItems[index];
-            return ChartRankTile(
-              item: item,
-              onPlayTap: () => _playTrack(
-                context,
-                title: item.title,
-                artist: item.artist,
-                coverUrl: item.imageUrl,
-                id: item.rank,
-              ),
-              onTap: () => _playTrack(
-                context,
-                title: item.title,
-                artist: item.artist,
-                coverUrl: item.imageUrl,
-                id: item.rank,
-              ),
-            );
-          },
+        // Category filter sits right above the list it filters
+        ChartCategoryPills(
+          selectedCategory: state.selectedCategory,
+          onCategorySelected: cubit.selectCategory,
+        ),
+        const SizedBox(height: 12),
+
+        // Chart rows grouped in one card
+        Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: AppColors.surfaceCrisp,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: AppColors.borderSubtle),
+          ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: Column(
+              children: [
+                for (var i = 0; i < state.chartItems.length; i++) ...[
+                  if (i > 0)
+                    const Divider(
+                      height: 1,
+                      indent: 108,
+                      color: AppColors.borderSubtle,
+                    ),
+                  _buildRow(context, state.chartItems[i]),
+                ],
+              ],
+            ),
+          ),
         ),
       ],
+    );
+  }
+
+  Widget _buildRow(BuildContext context, ChartItemModel item) {
+    final song = PlayingSongModel(
+      id: item.rank,
+      title: item.title,
+      artist: item.artist,
+      coverUrl: item.imageUrl,
+      durationSeconds: 228,
+      currentSeconds: 0,
+    );
+    return ChartRankTile(
+      item: item,
+      onPlayTap: () => context.read<PlayerCubit>().playSong(song),
+      onTap: () => _playTrack(
+        context,
+        title: item.title,
+        artist: item.artist,
+        coverUrl: item.imageUrl,
+        id: item.rank,
+      ),
     );
   }
 

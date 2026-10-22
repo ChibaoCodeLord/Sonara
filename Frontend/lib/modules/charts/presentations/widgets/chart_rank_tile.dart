@@ -4,6 +4,9 @@ import '../../../../common/constants/app_text_styles.dart';
 import '../../../../common/widgets/app_network_image.dart';
 import '../../models/chart_item_model.dart';
 
+/// One flat chart row: rank + movement, cover, title/artist, play.
+///
+/// Rows are meant to sit inside a shared card separated by dividers.
 class ChartRankTile extends StatelessWidget {
   final ChartItemModel item;
   final VoidCallback onPlayTap;
@@ -16,247 +19,40 @@ class ChartRankTile extends StatelessWidget {
     this.onTap,
   });
 
+  bool get _isTop3 => (int.tryParse(item.rank) ?? 99) <= 3;
+
   @override
   Widget build(BuildContext context) {
-    if (item.isLeader) {
-      return _buildLeaderCard();
-    }
-    return _buildStandardCard();
-  }
-
-  Widget _buildLeaderCard() {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surfaceCrisp,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.15),
-            width: 1,
-          ),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Stack(
-            children: [
-              // Left gradient highlight border bar
-              Positioned(
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: 6,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.aiGradientStart,
-                        AppColors.aiGradientEnd,
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                ),
-              ),
-
-              // Card contents
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
-                child: Row(
-                  children: [
-                    // Big typography rank
-                    SizedBox(
-                      width: 48,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            item.rank,
-                            maxLines: 1,
-                            softWrap: false,
-                            style: AppTextStyles.displayLgMobile.copyWith(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 29,
-                              height: 1.0,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          const Icon(
-                            Icons.military_tech_rounded,
-                            color: AppColors.primary,
-                            size: 14,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-
-                    // Artwork with crown badge
-                    AppNetworkImage(
-                      imageUrl: item.imageUrl,
-                      width: 56,
-                      height: 56,
-                      borderRadius: 14,
-                    ),
-                    const SizedBox(width: 14),
-
-                    // Info
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  item.title,
-                                  style: AppTextStyles.labelLg.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 6,
-                                  vertical: 1.5,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  item.badgeLabel ?? 'No.1',
-                                  style: AppTextStyles.labelSm.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            item.artist,
-                            style: AppTextStyles.bodySm.copyWith(
-                              color: AppColors.textMuted,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              _buildRankDelta(),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 5,
-                                ),
-                                child: Text(
-                                  '•',
-                                  style: AppTextStyles.bodySm.copyWith(
-                                    color: AppColors.borderMuted,
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  item.playsText,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyles.bodySm.copyWith(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // Play Button
-                    GestureDetector(
-                      onTap: onPlayTap,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.surfaceContainerLow,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x0D000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.play_arrow_rounded,
-                            color: AppColors.primary,
-                            size: 24,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStandardCard() {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceCrisp,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.borderSubtle, width: 1),
-        ),
+    return InkWell(
+      onTap: onTap ?? onPlayTap,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 10, 4, 10),
         child: Row(
           children: [
-            // Big typography rank
             SizedBox(
-              width: 46,
-              child: Center(
-                child: Text(
-                  item.rank,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: AppTextStyles.displayLgMobile.copyWith(
-                    color: AppColors.textCharcoal.withValues(alpha: 0.8),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 25,
+              width: 38,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    item.rank,
+                    style: AppTextStyles.headlineSm.copyWith(
+                      color: _isTop3 ? AppColors.primary : AppColors.textCharcoal,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
+                  _RankDelta(delta: item.rankDelta),
+                ],
               ),
             ),
-            const SizedBox(width: 10),
-
-            // Artwork
+            const SizedBox(width: 8),
             AppNetworkImage(
               imageUrl: item.imageUrl,
-              width: 48,
-              height: 48,
-              borderRadius: 12,
+              width: 52,
+              height: 52,
+              borderRadius: 10,
             ),
             const SizedBox(width: 12),
-
-            // Info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,31 +62,21 @@ class ChartRankTile extends StatelessWidget {
                       Flexible(
                         child: Text(
                           item.title,
-                          style: AppTextStyles.labelMd.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.labelLg.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                       if (item.isHumHot) ...[
                         const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 1.5,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                          child: Text(
-                            item.badgeLabel ?? 'Hum Hot',
-                            style: AppTextStyles.labelSm.copyWith(
-                              color: AppColors.primary,
-                              fontSize: 9,
-                              fontWeight: FontWeight.w700,
-                            ),
+                        const Tooltip(
+                          message: 'Được ngân nga nhiều',
+                          child: Icon(
+                            Icons.graphic_eq_rounded,
+                            color: AppColors.primary,
+                            size: 15,
                           ),
                         ),
                       ],
@@ -298,60 +84,23 @@ class ChartRankTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    item.artist,
-                    style: AppTextStyles.bodySm.copyWith(
-                      color: AppColors.textMuted,
-                    ),
+                    '${item.artist} • ${item.playsText}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 3),
-                  Row(
-                    children: [
-                      _buildRankDelta(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          '•',
-                          style: AppTextStyles.bodySm.copyWith(
-                            color: AppColors.borderMuted,
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          item.playsText,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.bodySm.copyWith(
-                            color: AppColors.textSecondary,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                    ],
+                    style: AppTextStyles.bodySm.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
             ),
-
-            // Play button
-            GestureDetector(
-              onTap: onPlayTap,
-              child: Container(
-                width: 36,
-                height: 36,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.surfaceContainerLow,
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.play_arrow_rounded,
-                    color: AppColors.textCharcoal,
-                    size: 20,
-                  ),
-                ),
+            IconButton(
+              tooltip: 'Phát',
+              onPressed: onPlayTap,
+              icon: const Icon(
+                Icons.play_arrow_rounded,
+                color: AppColors.textCharcoal,
+                size: 26,
               ),
             ),
           ],
@@ -359,68 +108,36 @@ class ChartRankTile extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildRankDelta() {
-    if (item.rankDelta > 0) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.arrow_upward_rounded,
-            color: AppColors.secondary,
-            size: 13,
-          ),
-          const SizedBox(width: 2),
-          Text(
-            '+${item.rankDelta} bậc',
-            style: AppTextStyles.labelSm.copyWith(
-              color: AppColors.secondary,
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      );
-    } else if (item.rankDelta == 0) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.horizontal_rule_rounded,
-            color: AppColors.textMuted,
-            size: 13,
-          ),
-          const SizedBox(width: 2),
-          Text(
-            'Giữ hạng',
-            style: AppTextStyles.labelSm.copyWith(
-              color: AppColors.textMuted,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      );
-    } else {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.arrow_downward_rounded,
-            color: AppColors.textMuted,
-            size: 13,
-          ),
-          const SizedBox(width: 2),
-          Text(
-            '${item.rankDelta} bậc',
-            style: AppTextStyles.labelSm.copyWith(
-              color: AppColors.textMuted,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      );
+class _RankDelta extends StatelessWidget {
+  final int delta;
+
+  const _RankDelta({required this.delta});
+
+  @override
+  Widget build(BuildContext context) {
+    if (delta == 0) {
+      return const Icon(Icons.remove_rounded, size: 12, color: AppColors.textMuted);
     }
+    final isUp = delta > 0;
+    final color = isUp ? AppColors.emeraldActive : AppColors.primary;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          isUp ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
+          size: 16,
+          color: color,
+        ),
+        Text(
+          '${delta.abs()}',
+          style: AppTextStyles.labelSm.copyWith(
+            color: color,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ],
+    );
   }
 }
