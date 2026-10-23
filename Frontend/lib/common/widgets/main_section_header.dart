@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
 import 'app_network_image.dart';
+import 'sonara_logo.dart';
 
 /// The same compact page header across the four main tabs.
 class MainSectionHeader extends StatelessWidget {
@@ -36,19 +37,7 @@ class MainSectionHeader extends StatelessWidget {
           height: 60,
           child: Row(
             children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  gradient: AppColors.aiGradient,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
-                  Icons.graphic_eq_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
+              const SonaraLogo(size: 32),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
