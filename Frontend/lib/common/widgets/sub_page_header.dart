@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_text_styles.dart';
+import 'sonara_logo.dart';
 
 /// Back-button header shared by every pushed (non-tab) page.
 class SubPageHeader extends StatelessWidget {
@@ -41,19 +42,7 @@ class SubPageHeader extends StatelessWidget {
                 onPressed: onBackTap ?? () => Navigator.of(context).maybePop(),
               ),
               if (showLogo) ...[
-                Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.aiGradient,
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                  child: const Icon(
-                    Icons.graphic_eq_rounded,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                ),
+                const SonaraLogo(size: 28),
                 const SizedBox(width: 10),
               ],
               Expanded(

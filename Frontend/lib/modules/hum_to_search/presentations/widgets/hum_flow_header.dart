@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../common/constants/app_colors.dart';
 import '../../../../common/constants/app_text_styles.dart';
+import '../../../../common/widgets/sonara_logo.dart';
 
 class HumFlowHeader extends StatelessWidget {
   const HumFlowHeader({super.key, required this.onBackTap});
@@ -25,19 +26,7 @@ class HumFlowHeader extends StatelessWidget {
               tooltip: 'Quay lại',
             ),
             const SizedBox(width: 4),
-            Container(
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                gradient: AppColors.aiGradient,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.graphic_eq_rounded,
-                color: Colors.white,
-                size: 16,
-              ),
-            ),
+            const SonaraLogo(size: 28),
             const SizedBox(width: 10),
             Expanded(
               child: Text(

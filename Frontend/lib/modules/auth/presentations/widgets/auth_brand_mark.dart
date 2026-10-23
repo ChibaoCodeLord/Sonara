@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../common/constants/app_colors.dart';
 import '../../../../common/constants/app_text_styles.dart';
+import '../../../../common/widgets/sonara_logo.dart';
 
 class AuthBrandMark extends StatelessWidget {
   final double size;
@@ -12,26 +12,7 @@ class AuthBrandMark extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            gradient: AppColors.aiGradient,
-            borderRadius: BorderRadius.circular(size * 0.3),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x33B3122E),
-                blurRadius: 12,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Icon(
-            Icons.graphic_eq_rounded,
-            color: Colors.white,
-            size: size * 0.6,
-          ),
-        ),
+        SonaraLogo(size: size, showShadow: true),
         SizedBox(width: size * 0.3),
         Flexible(
           child: Text(
