@@ -1,8 +1,11 @@
+import '../../../core/catalog/catalog_images.dart';
 import '../models/following_artist_model.dart';
 import '../models/library_playlist_model.dart';
 import '../models/recent_hum_history_model.dart';
 
 class LibraryMockService {
+  String get defaultPlaylistCover => CatalogImages.sonaraAiMix;
+
   List<FollowingArtistModel> getFollowingArtists() {
     return const [
       FollowingArtistModel(

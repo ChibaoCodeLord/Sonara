@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../common/constants/app_colors.dart';
 import '../../../../common/constants/app_text_styles.dart';
+import '../../../../common/widgets/sonara_logo.dart';
 
 class PlaylistDetailHeader extends StatelessWidget {
   final VoidCallback onBackTap;
@@ -43,22 +44,7 @@ class PlaylistDetailHeader extends StatelessWidget {
                 onPressed: onBackTap,
               ),
               const SizedBox(width: 4),
-              // Logo icon
-              Container(
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  gradient: AppColors.aiGradient,
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.graphic_eq_rounded,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                ),
-              ),
+              const SonaraLogo(size: 28),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(

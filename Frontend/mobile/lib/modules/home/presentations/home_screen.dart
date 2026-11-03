@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants/app_colors.dart';
 import '../../../common/constants/app_text_styles.dart';
+import '../../../core/routes/app_navigator.dart';
+import '../../../core/routes/app_router.dart';
+import '../../../core/catalog/music_catalog.dart';
 import '../../player/bloc/player_cubit.dart';
+import '../../player/models/catalog_song_playback.dart';
+import '../../profile/bloc/profile_cubit.dart';
 import '../../player/models/playing_song_model.dart';
 import '../bloc/home_cubit.dart';
 import '../bloc/home_state.dart';
 import 'widgets/home_header.dart';
-import 'widgets/hum_hero_banner.dart';
+import 'widgets/home_search_prompt.dart';
 import 'widgets/playlist_card.dart';
+import 'widgets/recent_quick_grid.dart';
 import 'widgets/recommended_track_item.dart';
 import 'widgets/trending_chart_card.dart';
 
@@ -34,9 +40,8 @@ class HomeScreen extends StatelessWidget {
         builder: (context, state) {
           return Column(
             children: [
-              HomeHeader(
-                onProfileTap: onProfileTap,
-              ),
+              // Search lives in the prompt below, so the header skips it.
+              HomeHeader(onProfileTap: onProfileTap),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -44,10 +49,25 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Greeting + search pill (mic opens AI Hum)
+                      HomeSearchPrompt(
+                        userName: context
+                            .watch<ProfileCubit>()
+                            .state
+                            .profile
+                            .name,
+                        onSearchTap: () => AppNavigator.openSearch(context),
+                        onHumTap: onOpenHumSearch,
+                      ),
+                      const SizedBox(height: 20),
 
-                      // Hum & Whistle Hero Banner
-                      HumHeroBanner(
-                        onHumSearchTap: onOpenHumSearch,
+                      // Recently played, content first
+                      RecentQuickGrid(
+                        songs: MusicCatalog.songs.take(6).toList(),
+                        onSongTap: (song) => AppNavigator.playAndOpen(
+                          context,
+                          song.toPlayingSong(contextHint: 'Nghe gần đây'),
+                        ),
                       ),
                       const SizedBox(height: 32),
 
@@ -68,15 +88,15 @@ class HomeScreen extends StatelessWidget {
                         },
                         onTrackTap: (chartItem) {
                           context.read<PlayerCubit>().playSong(
-                                PlayingSongModel(
-                                  id: chartItem.rank,
-                                  title: chartItem.title,
-                                  artist: chartItem.artist,
-                                  coverUrl: chartItem.imageUrl,
-                                  durationSeconds: 215,
-                                  currentSeconds: 0,
-                                ),
-                              );
+                            PlayingSongModel(
+                              id: chartItem.rank,
+                              title: chartItem.title,
+                              artist: chartItem.artist,
+                              coverUrl: chartItem.imageUrl,
+                              durationSeconds: 215,
+                              currentSeconds: 0,
+                            ),
+                          );
                           onOpenNowPlaying();
                         },
                       ),
@@ -90,7 +110,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildAiMixesSection(BuildContext context, HomeState state) {
     return Column(
@@ -112,7 +131,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             GestureDetector(
-              onTap: () {},
+              onTap: () => AppNavigator.push(context, AppRouter.allMixes),
               child: Row(
                 children: [
                   Text(
@@ -149,29 +168,29 @@ class HomeScreen extends StatelessWidget {
                     onOpenPlaylistDetail!(playlist.id);
                   } else {
                     context.read<PlayerCubit>().playSong(
-                          PlayingSongModel(
-                            id: playlist.id,
-                            title: playlist.title,
-                            artist: 'Sonara AI tuyển chọn',
-                            coverUrl: playlist.imageUrl,
-                            durationSeconds: 220,
-                            currentSeconds: 0,
-                          ),
-                        );
+                      PlayingSongModel(
+                        id: playlist.id,
+                        title: playlist.title,
+                        artist: 'Sonara AI tuyển chọn',
+                        coverUrl: playlist.imageUrl,
+                        durationSeconds: 220,
+                        currentSeconds: 0,
+                      ),
+                    );
                     onOpenNowPlaying();
                   }
                 },
                 onPlayTap: () {
                   context.read<PlayerCubit>().playSong(
-                        PlayingSongModel(
-                          id: playlist.id,
-                          title: playlist.title,
-                          artist: 'Sonara AI tuyển chọn',
-                          coverUrl: playlist.imageUrl,
-                          durationSeconds: 220,
-                          currentSeconds: 0,
-                        ),
-                      );
+                    PlayingSongModel(
+                      id: playlist.id,
+                      title: playlist.title,
+                      artist: 'Sonara AI tuyển chọn',
+                      coverUrl: playlist.imageUrl,
+                      durationSeconds: 220,
+                      currentSeconds: 0,
+                    ),
+                  );
                 },
               );
             },
@@ -187,9 +206,7 @@ class HomeScreen extends StatelessWidget {
       children: [
         Text(
           'Gợi ý cho bạn',
-          style: AppTextStyles.headlineSm.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+          style: AppTextStyles.headlineSm.copyWith(fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 12),
         ListView.builder(
@@ -206,28 +223,28 @@ class HomeScreen extends StatelessWidget {
               },
               onTap: () {
                 context.read<PlayerCubit>().playSong(
-                      PlayingSongModel(
-                        id: track.id,
-                        title: track.title,
-                        artist: track.artist,
-                        coverUrl: track.imageUrl,
-                        durationSeconds: 235,
-                        currentSeconds: 0,
-                      ),
-                    );
+                  PlayingSongModel(
+                    id: track.id,
+                    title: track.title,
+                    artist: track.artist,
+                    coverUrl: track.imageUrl,
+                    durationSeconds: 235,
+                    currentSeconds: 0,
+                  ),
+                );
                 onOpenNowPlaying();
               },
               onPlayTap: () {
                 context.read<PlayerCubit>().playSong(
-                      PlayingSongModel(
-                        id: track.id,
-                        title: track.title,
-                        artist: track.artist,
-                        coverUrl: track.imageUrl,
-                        durationSeconds: 235,
-                        currentSeconds: 0,
-                      ),
-                    );
+                  PlayingSongModel(
+                    id: track.id,
+                    title: track.title,
+                    artist: track.artist,
+                    coverUrl: track.imageUrl,
+                    durationSeconds: 235,
+                    currentSeconds: 0,
+                  ),
+                );
               },
             );
           },

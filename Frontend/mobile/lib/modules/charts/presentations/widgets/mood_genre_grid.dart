@@ -18,31 +18,13 @@ class MoodGenreGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section header
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                'Tâm trạng & Thể loại',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.headlineSm.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.tune_rounded,
-              color: AppColors.textMuted,
-              size: 20,
-            ),
-          ],
+        Text(
+          'Tâm trạng & Thể loại',
+          style: AppTextStyles.headlineSm.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
-        const SizedBox(height: 14),
-
-        // 2x2 Grid
+        const SizedBox(height: 12),
         GridView.builder(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
@@ -50,106 +32,63 @@ class MoodGenreGrid extends StatelessWidget {
           itemCount: moods.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 1.25,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            mainAxisExtent: 64,
           ),
           itemBuilder: (context, index) {
             final mood = moods[index];
-            return GestureDetector(
-              onTap: () => onMoodTap?.call(mood),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceCrisp,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: AppColors.borderSubtle,
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Top row: Icon container + indicator dot / HOT badge
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 38,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            color: mood.isHot
-                                ? AppColors.secondaryFixed
-                                : AppColors.surfaceContainer,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            mood.icon,
-                            color: mood.isHot
-                                ? AppColors.primary
-                                : AppColors.textCharcoal,
-                            size: 20,
-                          ),
+            return Material(
+              color: AppColors.surfaceCrisp,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: const BorderSide(color: AppColors.borderSubtle),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () => onMoodTap?.call(mood),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryFixed.withValues(alpha: 0.6),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        if (mood.isHot)
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.secondaryFixed,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              'HOT',
-                              style: AppTextStyles.labelSm.copyWith(
-                                color: AppColors.primary,
-                                fontSize: 9,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.8,
+                        child: Icon(
+                          mood.icon,
+                          color: AppColors.primary,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              mood.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.labelMd.copyWith(
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
-                          )
-                        else
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: mood.dotColor,
+                            Text(
+                              mood.subtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.labelSm,
                             ),
-                          ),
-                      ],
-                    ),
-
-                    // Bottom info
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          mood.title,
-                          style: AppTextStyles.labelLg.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          ],
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          mood.subtitle,
-                          style: AppTextStyles.bodySm.copyWith(
-                            color: AppColors.textMuted,
-                            fontSize: 11,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

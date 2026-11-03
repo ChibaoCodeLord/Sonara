@@ -19,6 +19,12 @@ void main() {
     await tester.pumpWidget(const SonaraApp());
     await tester.pump();
 
+    // App opens on Welcome; continue as a guest
+    expect(find.text('Đăng ký miễn phí'), findsOneWidget);
+    await tester.tap(find.text('Dùng thử'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
     // Verify key elements exist on home tab
     expect(find.text('Khám phá'), findsWidgets);
     expect(find.text('AI HUM'), findsOneWidget);

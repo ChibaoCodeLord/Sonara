@@ -13,17 +13,17 @@ class LibraryFilterChips extends StatelessWidget {
   });
 
   static const _filters = [
-    {'key': 'all', 'label': 'Tất cả'},
-    {'key': 'playlist', 'label': 'Danh sách phát'},
-    {'key': 'liked', 'label': 'Bài hát đã thích (328)'},
-    {'key': 'ai-hum', 'label': 'Lịch sử AI Hum (14)'},
-    {'key': 'artists', 'label': 'Nghệ sĩ & Album'},
+    ('all', 'Tất cả'),
+    ('playlist', 'Playlist'),
+    ('liked', 'Đã thích'),
+    ('ai-hum', 'AI Hum'),
+    ('artists', 'Nghệ sĩ'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 38,
+      height: 34,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -31,37 +31,27 @@ class LibraryFilterChips extends StatelessWidget {
         itemCount: _filters.length,
         separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
-          final filter = _filters[index];
-          final isSelected = selectedFilter == filter['key'];
+          final (key, label) = _filters[index];
+          final isSelected = selectedFilter == key;
 
           return GestureDetector(
-            onTap: () => onFilterSelected(filter['key']!),
+            onTap: () => onFilterSelected(key),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              duration: const Duration(milliseconds: 180),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? AppColors.textCharcoal
-                    : AppColors.surfaceContainer,
+                color: isSelected ? AppColors.primary : AppColors.surfaceCrisp,
                 borderRadius: BorderRadius.circular(999),
-                boxShadow: isSelected
-                    ? const [
-                        BoxShadow(
-                          color: Color(0x1F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                        ),
-                      ]
-                    : null,
+                border: Border.all(
+                  color: isSelected ? AppColors.primary : AppColors.borderMuted,
+                ),
               ),
-              child: Center(
-                child: Text(
-                  filter['label']!,
-                  style: AppTextStyles.labelMd.copyWith(
-                    color: isSelected ? Colors.white : AppColors.textMuted,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                  ),
+              child: Text(
+                label,
+                style: AppTextStyles.labelMd.copyWith(
+                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
                 ),
               ),
             ),

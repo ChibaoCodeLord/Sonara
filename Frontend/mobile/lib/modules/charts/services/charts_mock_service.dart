@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../common/constants/app_colors.dart';
+import '../../../core/catalog/music_catalog.dart';
 import '../models/chart_item_model.dart';
 import '../models/mood_genre_model.dart';
 import '../models/spotlight_radar_model.dart';
@@ -138,5 +139,26 @@ class ChartsMockService {
         dotColor: AppColors.tertiary,
       ),
     ];
+  }
+
+  /// Full Top 50: the curated top 5 followed by catalog fillers.
+  List<ChartItemModel> getFullChart(String tab) {
+    final top = tab == 'vn' ? getVnChartItems() : getGlobalChartItems();
+    final songs = MusicCatalog.songs;
+    final seed = tab == 'vn' ? 3 : 7;
+    final fillers = [
+      for (var rank = top.length + 1; rank <= 50; rank++)
+        ChartItemModel(
+          rank: rank.toString().padLeft(2, '0'),
+          title: songs[(rank * seed) % songs.length].title,
+          artist: songs[(rank * seed) % songs.length].artistName,
+          rankDelta: ((rank * seed) % 7) - 3,
+          playsText: '${(800 - rank * 14).clamp(40, 800)}K lượt nghe',
+          imageUrl: songs[(rank * seed) % songs.length].coverUrl,
+          isHumHot: rank % 9 == 0,
+          badgeLabel: rank % 9 == 0 ? 'Hum Hot' : null,
+        ),
+    ];
+    return [...top, ...fillers];
   }
 }
