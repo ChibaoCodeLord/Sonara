@@ -1,6 +1,7 @@
 import app from './app.js';
 import { ENV } from './config/env.js';
 import { connectDB } from './config/db.js';
+import {recoverAudits} from './services/adminOps.service.js';
 
 // Xử lý lỗi uncaughtException (lỗi đồng bộ chưa bắt)
 process.on('uncaughtException', (err) => {
@@ -11,6 +12,7 @@ process.on('uncaughtException', (err) => {
 const startServer = async () => {
   // 1. Kết nối cơ sở dữ liệu MongoDB
   await connectDB();
+  await recoverAudits();
 
   // 2. Lắng nghe cổng HTTP
   const server = app.listen(ENV.PORT, () => {

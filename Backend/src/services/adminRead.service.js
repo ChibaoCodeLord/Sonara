@@ -1,0 +1,30 @@
+import {Track,Artist,Album,TrackArtist,AlbumTrack,ContentReport,AdminAuditLog,User,UserSession} from '../models/index.js';
+import {ApiError} from '../utils/apiError.js';
+import {objectId,text,choice,pagination,escapeRegex} from '../utils/validation.js';
+import {activeCatalogSetting} from './catalogPolicy.service.js';
+import {enrichTracks} from './track.service.js';
+import {pageInfo} from './catalogBrowse.service.js';
+export const businessStatus=t=>t.deleted_at||t.moderation_status==='ARCHIVED'&&t.status==='hidden'?'ARCHIVED':t.status==='unreleased'?'UNRELEASED':t.status==='active'?'PUBLISHED':t.moderation_status==='BANNED'?'BANNED':'HIDDEN';
+export async function adminScope(query={}){
+  const setting=await activeCatalogSetting();const dataset=query.dataset===undefined?'current':text(query.dataset,'dataset',{max:150});
+  return dataset==='all'?{}:dataset==='current'?(setting?.dataset?{catalog_dataset:setting.dataset}:{}):{catalog_dataset:dataset};
+}
+export async function songFilter(query={}){
+  const filter=await adminScope(query);
+  if(query.source)filter.catalog_source=text(query.source,'source',{max:40});
+  if(query.status){const s=choice(query.status,'status',['PUBLISHED','BANNED','ARCHIVED','UNRELEASED','HIDDEN']);Object.assign(filter,s==='PUBLISHED'?{status:'active',deleted_at:null}:s==='UNRELEASED'?{status:'unreleased'}:s==='ARCHIVED'?{$or:[{deleted_at:{$ne:null}},{moderation_status:'ARCHIVED',status:'hidden'}]}:s==='BANNED'?{status:'hidden',moderation_status:'BANNED',deleted_at:null}:{status:'hidden',deleted_at:null,moderation_status:{$nin:['BANNED','ARCHIVED']}});}
+  if(query.q!==undefined){const q={$regex:escapeRegex(text(query.q,'q',{min:0,max:200})),$options:'i'};const artists=await Artist.distinct('_id',{name:q});const linked=await TrackArtist.distinct('track_id',{artist_id:{$in:artists}});const search={$or:[{title:q},{_id:{$in:linked}}]};return {$and:[filter,search]};}
+  return filter;
+}
+const cacheDTO=t=>t.audio_cache?Object.fromEntries(['storage','size_bytes','sha256','duration_seconds','full_decode_passed','verified_at','ready_at'].filter(k=>t.audio_cache[k]!==undefined).map(k=>[k,t.audio_cache[k]])):null;
+export async function adminTrackDTO(track){const [dto]=await enrichTracks([track]);return {...dto,revision:track.revision||0,business_status:businessStatus(track),moderation_status:track.moderation_status||null,deleted_at:track.deleted_at||null,source_key:track.source_key||'',catalog_dataset:track.catalog_dataset||'',imported_at:track.imported_at||null,catalog_metadata:track.catalog_metadata?Object.fromEntries(['source_id','source_url','license_url','license_label','download_allowed','content_kind','fetched_at','artist_credit_kind','album_credit_kind'].filter(k=>track.catalog_metadata[k]!==undefined).map(k=>[k,track.catalog_metadata[k]])):null,audio_cache:cacheDTO(track),source_url:track.catalog_metadata?.source_url||track.youtube?.url||'',license_url:track.catalog_metadata?.license_url||'',license_label:track.catalog_metadata?.license_label||'',download_allowed:track.catalog_metadata?.download_allowed===true};}
+export async function songs(query){const {page,limit}=pagination(query),filter=await songFilter(query),sort=choice(query.sort||'title','sort',['title','-title','-imported_at','-popularity']);const [rows,total]=await Promise.all([Track.find(filter).sort(sort+' _id').skip((page-1)*limit).limit(limit).lean(),Track.countDocuments(filter)]);const enriched=await enrichTracks(rows);return {songs:rows.map((t,i)=>({...enriched[i],business_status:businessStatus(t),catalog_dataset:t.catalog_dataset,catalog_source:t.catalog_source,revision:t.revision||0,audio_storage:t.audio_cache?.storage||(/^https?:/.test(t.audio_url||'')?'remote':''),verified:t.audio_cache?.full_decode_passed===true})),pagination:pageInfo(total,page,limit)};}
+export async function songDetail(id){const track=await Track.findById(objectId(id,'Track ID')).lean();if(!track)throw new ApiError(404,'Không tìm thấy bài hát.');return adminTrackDTO(track);}
+export async function overview(query){
+  const scope=await adminScope(query);const [statuses,sources,pending,users,logs,missingAudio]=await Promise.all([Track.find(scope).select('status moderation_status deleted_at').lean(),Track.aggregate([{$match:scope},{$group:{_id:'$catalog_source',count:{$sum:1}}},{$sort:{count:-1}}]),ContentReport.countDocuments({status:'PENDING'}),User.countDocuments(),AdminAuditLog.find().sort({created_at:-1,_id:-1}).limit(6).populate('actor_id','display_name').lean(),Track.countDocuments({...scope,$or:[{audio_url:{$in:['',null]}},{audio_url:{$exists:false}}]})]);
+  const counts={total:statuses.length,PUBLISHED:0,BANNED:0,ARCHIVED:0,UNRELEASED:0,HIDDEN:0};for(const row of statuses)counts[businessStatus(row)]++;return {counts,sources,pending_reports:pending,users,missing_audio:missingAudio,recent_activity:logs,updated_at:new Date(),dataset:query.dataset||'current'};
+}
+export async function reportDetail(id){const report=await ContentReport.findById(objectId(id,'Report ID')).populate('user_id','display_name').populate('resolved_by','display_name').lean();if(!report)throw new ApiError(404,'Không tìm thấy báo cáo.');const track=await Track.findById(report.track_id).select('title status moderation_status deleted_at cover_url').lean();return {...report,id:String(report._id),track:track?{...track,id:String(track._id),business_status:businessStatus(track)}:null};}
+export function dateFilter(query,field='created_at'){
+  const result={};for(const [key,op]of [['from','$gte'],['to','$lt']])if(query[key]!==undefined){const v=text(query[key],key,{min:10,max:10});if(!/^\d{4}-\d{2}-\d{2}$/.test(v))throw new ApiError(400,'Ngày phải theo YYYY-MM-DD.');const d=new Date(v+'T00:00:00Z');if(!Number.isFinite(d.getTime())||d.toISOString().slice(0,10)!==v)throw new ApiError(400,'Ngày không hợp lệ.');if(key==='to')d.setUTCDate(d.getUTCDate()+1);result[op]=d;}if(result.$gte&&result.$lt&&result.$gte>=result.$lt)throw new ApiError(400,'Khoảng ngày không hợp lệ.');return Object.keys(result).length?{[field]:result}:{};
+}

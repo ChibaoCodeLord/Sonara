@@ -12,6 +12,7 @@ const playlistSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Tên playlist là bắt buộc'],
       trim: true,
+      maxlength:200,
     },
     description: {
       type: String,
@@ -29,6 +30,10 @@ const playlistSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    collaborator_ids: {type:[mongoose.Schema.Types.ObjectId],ref:'User',default:[]},
+    revision: {type:Number,default:0},
+    is_ai_generated: {type:Boolean,default:false},
+    updated_at: {type:Date,default:Date.now},
     created_at: {
       type: Date,
       default: Date.now,

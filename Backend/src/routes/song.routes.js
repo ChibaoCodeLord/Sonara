@@ -1,37 +1,19 @@
-import { Router } from 'express';
-import {
-  getSongs,
-  getSongById,
-  createSong,
-  toggleLike,
-  streamSong,
-} from '../controllers/song.controller.js';
-import { protect, restrictTo } from '../middlewares/auth.middleware.js';
-import { upload } from '../middlewares/upload.middleware.js';
-
-const router = Router();
-
-// Lấy danh sách bài hát (hỗ trợ phân trang, tìm kiếm)
-router.get('/', getSongs);
-
-// Lấy chi tiết bài hát theo ID
-router.get('/:id', getSongById);
-
-// Phát trực tuyến bài hát (HTTP 206 Partial Content Stream)
-router.get('/:id/stream', streamSong);
-
-// Thả tim / Bỏ thích bài hát (yêu cầu đăng nhập)
-router.post('/:id/like', protect, toggleLike);
-
-// Thêm bài hát mới (kèm file audio và ảnh bìa)
-router.post(
-  '/',
-  protect,
-  upload.fields([
-    { name: 'audio', maxCount: 1 },
-    { name: 'cover', maxCount: 1 },
-  ]),
-  createSong
-);
-
+import {Router} from 'express';
+import * as controller from '../controllers/song.controller.js';
+import {protect,restrictTo} from '../middlewares/auth.middleware.js';
+import {receiveTrackUpload} from '../middlewares/upload.middleware.js';
+import {asyncHandler} from '../utils/asyncHandler.js';
+import {ApiResponse} from '../utils/apiResponse.js';
+import {getPublicTrack} from '../services/track.service.js';
+import {snippet} from '../services/snippet.service.js';
+const router=Router();
+router.get('/',controller.getSongs);
+router.get('/:id',controller.getSongById);
+router.get('/:id/stream',controller.streamSong);
+router.get('/:id/lyrics',asyncHandler(async(req,res)=>{const track=await getPublicTrack(req.params.id);res.json(new ApiResponse(200,{track_id:track.id||String(track._id),lines:track.synced_lyrics||[],time_unit:'milliseconds'},'Thành công.'));}));
+router.get('/:id/snippet',asyncHandler((req,res)=>snippet(req.params.id,req.headers.range,res)));
+router.post('/:id/like',protect,controller.toggleLike);
+router.put('/:id/like',protect,controller.setLiked(true));
+router.delete('/:id/like',protect,controller.setLiked(false));
+router.post('/',protect,restrictTo('admin'),receiveTrackUpload,controller.createSong);
 export default router;

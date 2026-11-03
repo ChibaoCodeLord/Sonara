@@ -37,5 +37,6 @@ const playlistTrackSchema = new mongoose.Schema(
 );
 
 playlistTrackSchema.index({ playlist_id: 1, position: 1 });
+playlistTrackSchema.index({playlist_id:1,track_id:1},{unique:true});
 
 export const PlaylistTrack = mongoose.model('PlaylistTrack', playlistTrackSchema, 'playlist_tracks');

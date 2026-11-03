@@ -1,24 +1,10 @@
-import * as authService from '../services/auth.service.js';
-import { ApiResponse } from '../utils/apiResponse.js';
-import { asyncHandler } from '../utils/asyncHandler.js';
-
-export const register = asyncHandler(async (req, res) => {
-  const result = await authService.register(req.body);
-  res
-    .status(201)
-    .json(new ApiResponse(201, result, 'Đăng ký tài khoản thành công!'));
-});
-
-export const login = asyncHandler(async (req, res) => {
-  const result = await authService.login(req.body);
-  res
-    .status(200)
-    .json(new ApiResponse(200, result, 'Đăng nhập thành công!'));
-});
-
-export const getMe = asyncHandler(async (req, res) => {
-  const user = await authService.getProfile(req.user._id);
-  res
-    .status(200)
-    .json(new ApiResponse(200, user, 'Lấy thông tin tài khoản thành công!'));
-});
+import * as service from '../services/auth.service.js';
+import {ApiResponse} from '../utils/apiResponse.js';
+import {asyncHandler} from '../utils/asyncHandler.js';
+export const register=asyncHandler(async(req,res)=>res.status(201).json(new ApiResponse(201,await service.register(req.body),'Đăng ký thành công.')));
+export const login=asyncHandler(async(req,res)=>res.json(new ApiResponse(200,await service.login(req.body),'Đăng nhập thành công.')));
+export const getMe=asyncHandler(async(req,res)=>res.json(new ApiResponse(200,await service.getProfile(req.user._id),'Lấy hồ sơ thành công.')));
+export const refresh=asyncHandler(async(req,res)=>res.json(new ApiResponse(200,await service.refresh(req.body),'Đã làm mới phiên.')));
+export const logout=asyncHandler(async(req,res)=>{await service.logout(req.user._id,req.auth.sessionId);res.json(new ApiResponse(200,null,'Đã đăng xuất.'));});
+export const updateProfile=asyncHandler(async(req,res)=>res.json(new ApiResponse(200,await service.updateProfile(req.user._id,req.body),'Đã cập nhật hồ sơ.')));
+export const changePassword=asyncHandler(async(req,res)=>{await service.changePassword(req.user._id,req.body);res.json(new ApiResponse(200,null,'Đã đổi mật khẩu. Hãy đăng nhập lại.'));});

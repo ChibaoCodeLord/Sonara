@@ -1,4 +1,5 @@
 export { User } from './user.model.js';
+export { UserSession } from './userSession.model.js';
 export { Artist } from './artist.model.js';
 export { Album } from './album.model.js';
 export { Track, Song } from './track.model.js';
@@ -11,3 +12,5 @@ export { LikedTrack } from './likedTrack.model.js';
 export { FollowedArtist } from './followedArtist.model.js';
 export { ListeningHistory } from './listeningHistory.model.js';
 export { PlaybackState } from './playbackState.model.js';
+export {SearchHistory,PlaybackSession,PlaybackEvent,UserSettings,ContentReport,AdminAuditLog,CatalogSettings} from './domain.model.js';
+export {Genre,AudioAudit} from './admin.model.js';

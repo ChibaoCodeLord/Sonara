@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import { useAppStore } from '../src/store/useAppStore.js';
+import { usePlayerStore } from '../src/store/usePlayerStore.js';
+import { songsData } from './fixtures/tracks.mjs';
+
+const initialApp = useAppStore.getState(), initialPlayer = usePlayerStore.getState();
+useAppStore.setState({playlists:[{id:'test_curated',title:'Test curated',owned:false,songIds:[]}]});
+const app = () => useAppStore.getState(), player = () => usePlayerStore.getState();
+try {
+  app().signInDemo('Tester', 'test@example.test');
+  assert.equal(app().session.demo,true);
+  const id = app().createPlaylist({title:'  Bình yên  '});
+  assert.equal(app().playlists.find(item=>item.id===id).title,'Bình yên');
+  const copied = app().createPlaylist({...app().playlists[0],id:undefined,owned:false,title:'Bản sao'});
+  assert(app().playlists.some(item=>item.id===copied&&item.owned));
+  assert.equal(app().addTrack(id,songsData[0].id),true);
+  assert.equal(app().addTrack(id,songsData[0].id),false);
+  app().addTrack(id,songsData[1].id);app().moveTrack(id,1,-1);
+  assert.equal(app().playlists.find(item=>item.id===id).songIds[0],songsData[1].id);
+  app().removeTrack(id,songsData[0].id);
+  assert.deepEqual(app().playlists.find(item=>item.id===id).songIds,[songsData[1].id]);
+  const curated = app().playlists.find(item=>!item.owned);
+  app().updatePlaylist(curated.id,{title:'Should not change'});app().deletePlaylist(curated.id);
+  assert.equal(app().playlists.find(item=>item.id===curated.id).title,curated.title);
+  app().deletePlaylist(id);assert(!app().playlists.some(item=>item.id===id));
+  app().recordListen(songsData[0].id);app().recordListen(songsData[0].id);
+  assert.equal(app().history.filter(item=>item.songId===songsData[0].id).length,1);
+  app().toggleSaved('savedAlbumIds','test-album');app().toggleSaved('savedAlbumIds','test-album');assert(!app().savedAlbumIds.includes('test-album'));
+  player().setQueue(songsData.slice(0,3));player().moveQueueItem(0,2);
+  assert.equal(player().queueIndex,2);assert.equal(player().queue[player().queueIndex].id,player().currentSong.id);
+  player().removeQueueItem(0);assert.equal(player().queueIndex,1);
+  player().clearQueue();assert.equal(player().queue.length,1);assert.equal(player().queue[0].id,player().currentSong.id);
+  player().setQueue([songsData[0],songsData[1],songsData[0]],2);
+  assert.equal(player().queueIndex,2,'Selecting a duplicate track keeps the selected queue position');
+  player().nextSong();assert.equal(player().queueIndex,0);
+  app().signOut();assert.equal(app().session,null);assert(!app().playlists.some(item=>item.id===copied));
+  assert(app().accountLibraries['test@example.test'].playlists.some(item=>item.id===copied));
+  app().signInDemo('Tester', 'test@example.test');assert(app().playlists.some(item=>item.id===copied));
+  console.log('Workspace scenarios passed: 10 groups (playlist CRUD, copy, deduplication, ordering, curated protection, history, saved items, queue edits, logout).');
+} finally { useAppStore.setState(initialApp,true);usePlayerStore.setState(initialPlayer,true); }

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (() => {
+        let preference = 'system';
+        try { const saved = localStorage.getItem('sonara-theme'); if (['light', 'dark', 'system'].includes(saved)) preference = saved; } catch { /* Use the device preference when storage is unavailable. */ }
+        const dark = preference === 'dark' || (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      })();
+    </script>
+    <style>html{background:#0a0c10;color:#f1f5f9}html[data-theme="light"]{background:#f5f6fa;color:#182033}</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sonara - Nền tảng âm nhạc trực tuyến chất lượng cao Hi-Res Lossless và nhận diện giai điệu AI Hum-to-Search độc quyền." />
+    <title>Sonara - Âm Nhạc Trực Tuyến & AI Hum-to-Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E11D48'><rect width='24' height='24' rx='6' fill='%239A1B2F'/><path d='M6 10v4M9 7v10M12 4v16M15 7v10M18 10v4' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>" />
+  </head>
+  <body class="bg-sonara-base text-sonara-text font-sans antialiased selection:bg-rose-600 selection:text-white overflow-hidden">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
