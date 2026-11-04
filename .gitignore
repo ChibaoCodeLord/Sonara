@@ -1,0 +1,164 @@
+# ==============================================================================
+# Sonara Root .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Custom Project Exclusions (Requested)
+# ------------------------------------------------------------------------------
+# Music Crawler scripts, data, seeds, and run outputs
+music_crawl/
+music_crawl/**
+
+# Project documentation, plans, and reports
+documents/
+documents/**
+document/
+document/**
+
+# AI Agent workflows, skills, configurations & IDE assistant metadata
+.agents/
+.agent/
+.gemini/
+.antigravity/
+.cursor/
+.windsurf/
+
+# ------------------------------------------------------------------------------
+# 2. Environment Variables & Secrets
+# ------------------------------------------------------------------------------
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!*.env.example
+
+# ------------------------------------------------------------------------------
+# 3. Dependencies & Package Managers
+# ------------------------------------------------------------------------------
+node_modules/
+*/node_modules/
+.pnp
+.pnp.js
+
+# ------------------------------------------------------------------------------
+# 4. Logs & Debug
+# ------------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ------------------------------------------------------------------------------
+# 5. Media, Uploads & Local Caches
+# ------------------------------------------------------------------------------
+# Backend & storage uploads
+uploads/
+**/uploads/
+temp/
+**/temp/
+tmp/
+**/tmp/
+
+# Audio/Video media binaries (avoid pushing heavy raw music/video files)
+*.mp3
+*.flac
+*.wav
+*.aac
+*.ogg
+*.m4a
+*.mp4
+*.webm
+
+# SQLite / Local Databases
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# ------------------------------------------------------------------------------
+# 6. Build Outputs & Compilations
+# ------------------------------------------------------------------------------
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist/
+.output/
+ui-review-artifacts/
+*.tsbuildinfo
+
+# ------------------------------------------------------------------------------
+# 7. Flutter & Dart (Frontend Mobile)
+# ------------------------------------------------------------------------------
+.dart_tool/
+**/.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+**/build/
+coverage/
+
+# Android Studio & Gradle
+.gradle/
+**/android/.gradle/
+android/captures/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+
+# iOS / Xcode
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.framework
+**/ios/Flutter/Flutter.framework
+**/ios/DerivedData/
+
+# Mobile release / symbolication artifacts
+app.*.symbols
+app.*.map.json
+*.apk
+*.aab
+*.ipa
+
+# ------------------------------------------------------------------------------
+# 8. Editor & Operating System Files
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# VS Code & JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+

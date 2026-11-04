@@ -1,14 +1,13 @@
 import { Router } from 'express';
-import { register, login, getMe } from '../controllers/auth.controller.js';
+import * as controller from '../controllers/auth.controller.js';
 import { protect } from '../middlewares/auth.middleware.js';
-
+import { rateLimit } from '../middlewares/rateLimit.middleware.js';
 const router = Router();
-
-// Endpoint công khai
-router.post('/register', register);
-router.post('/login', login);
-
-// Endpoint yêu cầu đăng nhập
-router.get('/me', protect, getMe);
-
+router.post('/register', rateLimit({ limit: 10 }), controller.register);
+router.post('/login', rateLimit({ limit: 5, failedOnly: true }), controller.login);
+router.post('/refresh-token', rateLimit({ limit: 30 }), controller.refresh);
+router.get('/me', protect, controller.getMe);
+router.post('/logout', protect, controller.logout);
+router.patch('/profile', protect, controller.updateProfile);
+router.post('/change-password', protect, rateLimit({ limit: 5 }), controller.changePassword);
 export default router;

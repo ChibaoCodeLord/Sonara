@@ -1,20 +1,20 @@
-import { Router } from 'express';
+import {Router} from 'express';
+import mongoose from 'mongoose';
 import authRoutes from './auth.routes.js';
+import trackRoutes from './track.routes.js';
 import songRoutes from './song.routes.js';
-
-const router = Router();
-
-// Health check endpoint
-router.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'Sonara Music API is running smoothly 🚀',
-    timestamp: new Date().toISOString(),
-  });
-});
-
-// Gắn các module route
-router.use('/auth', authRoutes);
-router.use('/songs', songRoutes);
-
+import catalogRoutes from './catalog.routes.js';
+import adminRoutes from './admin.routes.js';
+import coreRoutes from './core.routes.js';
+const router=Router();
+const health=(_req,res)=>{const ready=mongoose.connection.readyState===1;res.status(ready?200:503).json({status:ready?'OK':'UNAVAILABLE',db_status:ready?'connected':'disconnected',timestamp:new Date().toISOString()});};
+router.get('/health',health);
+router.get('/ready',health);
+router.get('/live',(_req,res)=>res.json({status:'OK',timestamp:new Date().toISOString()}));
+router.use('/auth',authRoutes);
+router.use('/tracks',trackRoutes);
+router.use('/catalog',catalogRoutes);
+router.use('/songs',songRoutes);
+router.use('/admin',adminRoutes);
+router.use(coreRoutes);
 export default router;

@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 
 const albumArtistSchema = new mongoose.Schema(
   {
+    credit_kind: { type: String },
+    source_url: { type: String },
+    derived_from_track_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Track' },
     album_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Album',

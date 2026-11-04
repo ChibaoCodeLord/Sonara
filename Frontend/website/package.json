@@ -1,0 +1,46 @@
+{
+  "name": "website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test:library:ui": "node tests/test-library-seed-ui.cjs",
+    "test:categories:ui": "node tests/test-category-ui.cjs",
+    "test:theme:ui": "node tests/test-theme-ui.cjs",
+    "test:archive:ui": "node tests/test-archive-ui.cjs",
+    "dev": "vite",
+    "catalog:youtube": "node scripts/sync-youtube-catalog.mjs",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "test:ui": "node tests/review-ui.cjs",
+    "test:player": "node tests/test-player.mjs",
+    "test:workspace": "node tests/test-workspace.mjs",
+    "test:listening": "node --test tests/test-listening.mjs",
+    "test:youtube": "node --test tests/test-youtube.mjs",
+    "test:catalog": "node --test tests/test-remote-catalog.mjs",
+    "test:catalog:active:ui": "node tests/test-active-catalog-ui.cjs",
+    "test:catalog:ui": "node tests/test-audio-native-ui.cjs",
+    "test:audio:ui": "node tests/test-audio-native-ui.cjs",
+    "test:screens": "npm run build && node tests/test-screens.cjs",
+    "test:listening:ui": "node tests/test-listening-ui.cjs",
+    "test": "node --test tests/test-listening.mjs tests/test-remote-catalog.mjs tests/test-youtube.mjs tests/test-active-catalog.mjs tests/test-library-seed.mjs && node tests/test-player.mjs && node tests/test-workspace.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.1",
+    "lucide-react": "^1.59.0",
+    "oxlint": "^1.81.0",
+    "postcss": "^8.5.30",
+    "react-router-dom": "^7.18.4",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.3.0",
+    "zustand": "^5.0.15"
+  }
+}

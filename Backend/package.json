@@ -7,8 +7,13 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "media": "node src/mediaServer.js",
     "db:init": "node scripts/initDb.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:migrate:core:check": "node scripts/migrate-core.mjs",
+    "db:migrate:core": "node scripts/migrate-core.mjs --apply",
+    "admin:create": "node scripts/create-admin.mjs",
+    "catalog:cloudinary": "node scripts/import-cloudinary-catalog.mjs",
+    "test": "node --check src/server.js src/app.js src/mediaServer.js"
   },
   "keywords": [
     "nodejs",
@@ -26,11 +31,9 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "marked": "^18.1.1",
     "mongoose": "^8.9.2",
     "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "puppeteer-core": "^25.14.0"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

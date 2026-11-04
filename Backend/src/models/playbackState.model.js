@@ -17,6 +17,8 @@ const playbackStateSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    current_index: {type:Number,default:0},
+    revision: {type:Number,default:0},
     is_playing: {
       type: Boolean,
       default: false,

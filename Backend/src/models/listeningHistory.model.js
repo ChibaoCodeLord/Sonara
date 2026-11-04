@@ -26,6 +26,8 @@ const listeningHistorySchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    play_id: {type:String},
+    completed_at: Date,
     source: {
       type: String,
       default: 'playlist',
@@ -42,6 +44,7 @@ const listeningHistorySchema = new mongoose.Schema(
 
 // Index phục vụ lấy lịch sử nghe gần nhất của user
 listeningHistorySchema.index({ user_id: 1, played_at: -1 });
+listeningHistorySchema.index({user_id:1,play_id:1},{unique:true,partialFilterExpression:{play_id:{$type:'string'}}});
 
 export const ListeningHistory = mongoose.model(
   'ListeningHistory',

@@ -1,121 +1,24 @@
-import fs from 'fs';
-import path from 'path';
-import { Song } from '../models/song.model.js';
-import { User } from '../models/user.model.js';
-import { ApiError } from '../utils/apiError.js';
-
-export const getAllSongs = async ({ query = '', genre = '', page = 1, limit = 20, sort = '-createdAt' }) => {
-  const filter = {};
-
-  if (query) {
-    filter.$or = [
-      { title: { $regex: query, $options: 'i' } },
-      { artist: { $regex: query, $options: 'i' } },
-    ];
-  }
-
-  if (genre) {
-    filter.genre = genre;
-  }
-
-  const skip = (Number(page) - 1) * Number(limit);
-
-  const [songs, total] = await Promise.all([
-    Song.find(filter).sort(sort).skip(skip).limit(Number(limit)),
-    Song.countDocuments(filter),
-  ]);
-
-  return {
-    songs,
-    pagination: {
-      total,
-      page: Number(page),
-      totalPages: Math.ceil(total / Number(limit)),
-      limit: Number(limit),
-    },
-  };
-};
-
-export const getSongById = async (id) => {
-  const song = await Song.findById(id);
-  if (!song) {
-    throw new ApiError(404, 'Không tìm thấy bài hát yêu cầu!');
-  }
-
-  // Tự động tăng lượt nghe
-  song.playsCount += 1;
-  await song.save();
-
-  return song;
-};
-
-export const createSong = async (songData) => {
-  return await Song.create(songData);
-};
-
-export const toggleLike = async (userId, songId) => {
-  const [song, user] = await Promise.all([
-    Song.findById(songId),
-    User.findById(userId),
-  ]);
-
-  if (!song) throw new ApiError(404, 'Không tìm thấy bài hát!');
-  if (!user) throw new ApiError(404, 'Không tìm thấy người dùng!');
-
-  const isLiked = user.favoriteSongs.includes(songId);
-
-  if (isLiked) {
-    user.favoriteSongs.pull(songId);
-    song.likesCount = Math.max(0, song.likesCount - 1);
-  } else {
-    user.favoriteSongs.push(songId);
-    song.likesCount += 1;
-  }
-
-  await Promise.all([user.save(), song.save()]);
-
-  return {
-    liked: !isLiked,
-    likesCount: song.likesCount,
-  };
-};
-
-export const streamSongAudio = (filePath, range, res) => {
-  if (!fs.existsSync(filePath)) {
-    throw new ApiError(404, 'Không tìm thấy file âm thanh trên hệ thống lưu trữ');
-  }
-
-  const stat = fs.statSync(filePath);
-  const fileSize = stat.size;
-
-  // Xử lý HTTP Range header (Partial Content 206) để phát nhạc streaming mượt mà
-  if (range) {
-    const parts = range.replace(/bytes=/, '').split('-');
-    const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-
-    if (start >= fileSize) {
-      res.status(416).send('Requested range not satisfiable\n' + start + ' >= ' + fileSize);
-      return;
-    }
-
-    const chunksize = end - start + 1;
-    const file = fs.createReadStream(filePath, { start, end });
-    const head = {
-      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-      'Accept-Ranges': 'bytes',
-      'Content-Length': chunksize,
-      'Content-Type': 'audio/mpeg',
-    };
-
-    res.writeHead(206, head);
-    file.pipe(res);
-  } else {
-    const head = {
-      'Content-Length': fileSize,
-      'Content-Type': 'audio/mpeg',
-    };
-    res.writeHead(200, head);
-    fs.createReadStream(filePath).pipe(res);
-  }
-};
+import mongoose from 'mongoose';
+import {ApiError} from '../utils/apiError.js';
+import {LikedTrack} from '../models/likedTrack.model.js';
+import {getAllTracks,getTrackById,getPublicTrack,toLegacySong} from './track.service.js';
+export {streamAudioFile as streamSongAudio} from './audioStream.service.js';
+export async function getAllSongs(query){const {tracks,...rest}=await getAllTracks(query);return {songs:tracks.map(toLegacySong),...rest};}
+export const getSongById=async id=>toLegacySong(await getTrackById(id));
+export async function toggleLike(userId,id){
+  const track=await getPublicTrack(id),session=await mongoose.startSession();let result;
+  try{for(let attempt=0;attempt<3;attempt++){try{await session.withTransaction(async()=>{
+    const filter={user_id:userId,track_id:track._id};
+    const previous=await LikedTrack.findOne(filter).session(session);
+    if(previous)await LikedTrack.deleteOne({_id:previous._id},{session});else await LikedTrack.create([filter],{session});
+    result={liked:!previous,likesCount:await LikedTrack.countDocuments({track_id:track._id}).session(session)};
+  });return result;}catch(error){if(error.code!==11000)throw error;}}
+  throw new ApiError(409,'Trạng thái thích vừa thay đổi. Hãy thử lại.');
+  }finally{await session.endSession();}
+}
+export async function setLiked(userId,id,liked){
+  const track=await getPublicTrack(id),filter={user_id:userId,track_id:track._id};
+  if(liked){try{await LikedTrack.updateOne(filter,{$setOnInsert:filter},{upsert:true});}catch(e){if(e.code!==11000)throw e;}}
+  else await LikedTrack.deleteOne(filter);
+  return {liked,likesCount:await LikedTrack.countDocuments({track_id:track._id})};
+}
